@@ -2,57 +2,37 @@
 @font-face {
   font-family: Montserrat-Black;
   font-display: auto;
-  src: url("/clone/fonts/Montserrat-Black.otf");
-  src: url("/clone/fonts/Montserrat-Black.eot");
-  src:
-    url("/clone/fonts/Montserrat-Black.eot?#iefix") format("embedded-opentype"),
-    url("/clone/fonts/Montserrat-Black.woff") format("woff"),
-    url("/clone/fonts/Montserrat-Black.ttf") format("truetype"),
-    url("/clone/fonts/Montserrat-Black.svg#svgFontName") format("svg");
+  src: url("/clone/fonts/Montserrat-Black.woff") format("woff"),
+       url("/clone/fonts/Montserrat-Black.ttf") format("truetype"),
+       url("/clone/fonts/Montserrat-Black.otf") format("opentype");
 }
 @font-face {
   font-family: Montserrat-Bold;
   font-display: auto;
-  src: url("/clone/fonts/Montserrat-Bold.otf");
-  src: url("/clone/fonts/Montserrat-Bold.eot");
-  src:
-    url("/clone/fonts/Montserrat-Bold.eot?#iefix") format("embedded-opentype"),
-    url("/clone/fonts/Montserrat-Bold.woff") format("woff"),
-    url("/clone/fonts/Montserrat-Bold.ttf") format("truetype"),
-    url("/clone/fonts/Montserrat-Bold.svg#svgFontName") format("svg");
+  src: url("/clone/fonts/Montserrat-Bold.woff") format("woff"),
+       url("/clone/fonts/Montserrat-Bold.ttf") format("truetype"),
+       url("/clone/fonts/Montserrat-Bold.otf") format("opentype");
 }
 @font-face {
   font-family: Montserrat-Regular;
   font-display: auto;
-  src: url("/clone/fonts/Montserrat-Regular.otf");
-  src: url("/clone/fonts/Montserrat-Regular.eot");
-  src:
-    url("/clone/fonts/Montserrat-Regular.eot?#iefix") format("embedded-opentype"),
-    url("/clone/fonts/Montserrat-Regular.woff") format("woff"),
-    url("/clone/fonts/Montserrat-Regular.ttf") format("truetype"),
-    url("/clone/fonts/Montserrat-Regular.svg#svgFontName") format("svg");
+  src: url("/clone/fonts/Montserrat-Regular.woff") format("woff"),
+       url("/clone/fonts/Montserrat-Regular.ttf") format("truetype"),
+       url("/clone/fonts/Montserrat-Regular.otf") format("opentype");
 }
 @font-face {
   font-family: Montserrat-Light;
   font-display: auto;
-  src: url("/clone/fonts/Montserrat-Light.otf");
-  src: url("/clone/fonts/Montserrat-Light.eot");
-  src:
-    url("/clone/fonts/Montserrat-Light.eot?#iefix") format("embedded-opentype"),
-    url("/clone/fonts/Montserrat-Light.woff") format("woff"),
-    url("/clone/fonts/Montserrat-Light.ttf") format("truetype"),
-    url("/clone/fonts/Montserrat-Light.svg#svgFontName") format("svg");
+  src: url("/clone/fonts/Montserrat-Light.woff") format("woff"),
+       url("/clone/fonts/Montserrat-Light.ttf") format("truetype"),
+       url("/clone/fonts/Montserrat-Light.otf") format("opentype");
 }
 @font-face {
   font-family: FranklinGothic;
   font-display: auto;
-  src: url("/clone/fonts/FranklinGothic-DemiCond.otf");
-  src: url("/clone/fonts/FranklinGothic-DemiCond.eot");
-  src:
-    url("/clone/fonts/FranklinGothic-DemiCond.eot?#iefix") format("embedded-opentype"),
-    url("/clone/fonts/FranklinGothic-DemiCond.woff") format("woff"),
-    url("/clone/fonts/FranklinGothic-DemiCond.ttf") format("truetype"),
-    url("/clone/fonts/FranklinGothic-DemiCond.svg#svgFontName") format("svg");
+  src: url("/clone/fonts/FranklinGothic-DemiCond.woff") format("woff"),
+       url("/clone/fonts/FranklinGothic-DemiCond.ttf") format("truetype"),
+       url("/clone/fonts/FranklinGothic-DemiCond.otf") format("opentype");
 }
 
 /* VARIABLES */

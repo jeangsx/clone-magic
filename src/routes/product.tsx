@@ -142,6 +142,7 @@ export default function ProductPage() {
       </header>
 
       <main
+        className="product-grid"
         style={{
           maxWidth: 1280,
           margin: "0 auto",
@@ -276,9 +277,64 @@ export default function ProductPage() {
             }}
           >
             {[
-              { t: "Reduce DHT", d: "Bloquea la dihidrotestosterona" },
-              { t: "100% Natural", d: "Sin químicos agresivos" },
-              { t: "Clínicamente Probado", d: "Testado por ConsumerLab" },
+              {
+                t: "Reduce DHT",
+                icon: (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={BLUE}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <polyline points="9 12 11 14 15 10" />
+                  </svg>
+                ),
+              },
+              {
+                t: "100% Natural",
+                icon: (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={BLUE}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.5 10-10 10Z" />
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                  </svg>
+                ),
+              },
+              {
+                t: "Clínicamente Probado",
+                icon: (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={BLUE}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M9 11H5a2 2 0 0 0-2 2v3c0 1.5 1 2.5 2 2.5h1" />
+                    <path d="M15 11h4a2 2 0 0 1 2 2v3c0 1.5-1 2.5-2 2.5h-1" />
+                    <path d="M12 2a3 3 0 0 0-3 3v0" />
+                    <path d="M12 2a3 3 0 0 1 3 3v0" />
+                    <rect x="8" y="8" width="8" height="14" rx="1" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                ),
+              },
             ].map((b) => (
               <div
                 key={b.t}
@@ -300,11 +356,9 @@ export default function ProductPage() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: BLUE,
-                    fontWeight: 900,
                   }}
                 >
-                  ✓
+                  {b.icon}
                 </div>
                 <div style={{ fontSize: 13, fontWeight: 800 }}>{b.t}</div>
               </div>
@@ -418,19 +472,19 @@ export default function ProductPage() {
                       <div>
                         <div style={{ fontWeight: 800, fontSize: 15 }}>{d.label}</div>
                         <div style={{ fontSize: 12, color: "#666" }}>
-                          ${d.perUnit.toFixed(2)}/botella · {d.months}
+                          S/ {d.perUnit.toFixed(2)}/botella · {d.months}
                         </div>
                       </div>
                     </div>
                     <div style={{ textAlign: "right" }}>
                       <div style={{ color: "#888", textDecoration: "line-through", fontSize: 13 }}>
-                        ${d.retail.toFixed(2)}
+                        S/ {d.retail.toFixed(2)}
                       </div>
                       <div style={{ fontWeight: 900, fontSize: 20, color: "#0b1a3a" }}>
-                        ${d.price.toFixed(2)}
+                        S/ {d.price.toFixed(2)}
                       </div>
                       <div style={{ color: BLUE, fontSize: 11, fontWeight: 700 }}>
-                        Ahorras ${(d.retail - d.price).toFixed(2)}
+                        Ahorras S/ {(d.retail - d.price).toFixed(2)}
                       </div>
                     </div>
                   </div>
@@ -466,16 +520,15 @@ export default function ProductPage() {
             </span>
             <div>
               <span style={{ color: "#888", textDecoration: "line-through", marginRight: 10 }}>
-                ${cur.retail.toFixed(2)}
+                S/ {cur.retail.toFixed(2)}
               </span>
               <span style={{ fontWeight: 900, fontSize: 28, color: "#0b1a3a" }}>
-                ${cur.price.toFixed(2)}
+                S/ {cur.price.toFixed(2)}
               </span>
-              <span style={{ color: "#666", marginLeft: 6 }}>USD</span>
             </div>
           </div>
           <div style={{ textAlign: "right", color: BLUE, fontWeight: 800, marginBottom: 14 }}>
-            Ahorras ${(cur.retail - cur.price).toFixed(2)}
+            Ahorras S/ {(cur.retail - cur.price).toFixed(2)}
           </div>
 
           <button

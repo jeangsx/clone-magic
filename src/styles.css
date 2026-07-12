@@ -142,3 +142,11 @@
     color: var(--color-foreground);
   }
 }
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 16px 12px !important;
+  }
+}

@@ -208,7 +208,7 @@ export default function CheckoutPage() {
               boxShadow: "0 8px 20px rgba(243,146,0,0.35)",
             }}
           >
-            PAGAR ${total.toFixed(2)} USD →
+            PAGAR S/ {total.toFixed(2)} →
           </button>
 
           <div
@@ -262,14 +262,14 @@ export default function CheckoutPage() {
                 {d.bottles} {d.bottles === 1 ? "botella" : "botellas"}
               </div>
             </div>
-            <div style={{ fontWeight: 900 }}>${d.price.toFixed(2)}</div>
+            <div style={{ fontWeight: 900 }}>S/ {d.price.toFixed(2)}</div>
           </div>
 
           <div style={{ marginTop: 14, fontSize: 14, display: "grid", gap: 6 }}>
-            <Row k="Subtotal" v={`$${d.price.toFixed(2)}`} />
-            <Row k="Descuento" v={`- $${(d.retail - d.price).toFixed(2)}`} color="#2f7a3a" />
+            <Row k="Subtotal" v={`S/ ${d.price.toFixed(2)}`} />
+            <Row k="Descuento" v={`- S/ ${(d.retail - d.price).toFixed(2)}`} color="#2f7a3a" />
             <Row k="Envío" v="GRATIS" color="#2f7a3a" />
-            <Row k="Impuestos" v={`$${tax.toFixed(2)}`} />
+            <Row k="Impuestos" v={`S/ ${tax.toFixed(2)}`} />
           </div>
           <div
             style={{
@@ -283,7 +283,7 @@ export default function CheckoutPage() {
           >
             <span style={{ fontWeight: 800 }}>Total</span>
             <span style={{ fontWeight: 900, fontSize: 22, color: BLUE }}>
-              ${total.toFixed(2)} <span style={{ fontSize: 12, color: "#666" }}>USD</span>
+              S/ {total.toFixed(2)}
             </span>
           </div>
 
