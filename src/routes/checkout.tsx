@@ -245,6 +245,7 @@ export default function CheckoutPage() {
 
         {/* Summary */}
         <aside
+          className="co-summary"
           style={{
             background: "#fff",
             borderRadius: 14,
