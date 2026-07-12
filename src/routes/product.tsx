@@ -110,7 +110,7 @@ export default function ProductPage() {
           .product-title { font-size: 24px !important; }
           .product-benefits { grid-template-columns: repeat(3,1fr) !important; gap: 6px !important; }
           .product-hotsale { flex-wrap: wrap !important; }
-          .product-gifts { grid-template-columns: 1fr !important; }
+          .product-gifts { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
           .product-trust { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
         }
       `}</style>
