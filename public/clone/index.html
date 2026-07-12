@@ -247,11 +247,75 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
     <div class="product_section" style="background: #fff; padding: 40px 0;">
       <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
         <!-- LEFT: Product Image -->
-        <div style="background: linear-gradient(135deg, #054497 0%, #0a5cc7 100%); border-radius: 20px; padding: 40px; position: relative; min-height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-          <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="ProstaGenix" style="max-width: 80%; max-height: 350px; object-fit: contain; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));">
-          <button style="margin-top: 20px; background: #fff; border: 2px solid #054497; color: #054497; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 18px;">🌿</span> Ingredientes
-          </button>
+        <div>
+          <div style="background: linear-gradient(135deg, #054497 0%, #0a5cc7 100%); border-radius: 20px; padding: 40px; position: relative; min-height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="ProstaGenix" style="max-width: 80%; max-height: 350px; object-fit: contain; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));">
+            <button style="margin-top: 20px; background: #fff; border: 2px solid #054497; color: #054497; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 18px;">🌿</span> Ingredientes
+            </button>
+          </div>
+
+          <!-- Stats debajo de la imagen -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px;">
+            <div style="text-align: center; padding: 16px 6px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee;">
+              <div style="font-weight: 900; font-size: 20px; color: #054497;">150K+</div>
+              <div style="font-size: 11px; color: #555; margin-top: 2px;">Clientes satisfechos</div>
+            </div>
+            <div style="text-align: center; padding: 16px 6px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee;">
+              <div style="font-weight: 900; font-size: 20px; color: #054497;">4.8/5</div>
+              <div style="font-size: 11px; color: #555; margin-top: 2px;">Calificación promedio</div>
+            </div>
+            <div style="text-align: center; padding: 16px 6px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee;">
+              <div style="font-weight: 900; font-size: 20px; color: #054497;">90 Días</div>
+              <div style="font-size: 11px; color: #555; margin-top: 2px;">Garantía de devolución</div>
+            </div>
+          </div>
+
+          <!-- Testimonios -->
+          <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="padding: 14px; border-radius: 12px; border: 1px solid #e3e6ee; background: #fff;">
+              <div style="color: #f39200; font-size: 13px; margin-bottom: 4px;">★★★★★</div>
+              <div style="font-size: 13px; color: #333; line-height: 1.5;">"Empecé hace 3 meses y la diferencia es notable. Ya no tengo que levantarme varias veces en la noche."</div>
+              <div style="margin-top: 6px; font-size: 12px; font-weight: 800; color: #555;">— Carlos R. <span style="color: #2f7a3a; font-weight: 700;">Verificado ✓</span></div>
+            </div>
+            <div style="padding: 14px; border-radius: 12px; border: 1px solid #e3e6ee; background: #fff;">
+              <div style="color: #f39200; font-size: 13px; margin-bottom: 4px;">★★★★★</div>
+              <div style="font-size: 13px; color: #333; line-height: 1.5;">"Mi urólogo me lo recomendó y no me arrepiento. Funcionó mejor de lo que esperaba. Lo recomiendo al 100%."</div>
+              <div style="margin-top: 6px; font-size: 12px; font-weight: 800; color: #555;">— Miguel A. <span style="color: #2f7a3a; font-weight: 700;">Verificado ✓</span></div>
+            </div>
+            <div style="padding: 14px; border-radius: 12px; border: 1px solid #e3e6ee; background: #fff;">
+              <div style="color: #f39200; font-size: 13px; margin-bottom: 4px;">★★★★★</div>
+              <div style="font-size: 13px; color: #333; line-height: 1.5;">"Llevaba años probando productos sin resultados. Con ProstaGenix noté cambios desde la segunda semana."</div>
+              <div style="margin-top: 6px; font-size: 12px; font-weight: 800; color: #555;">— Roberto L. <span style="color: #2f7a3a; font-weight: 700;">Verificado ✓</span></div>
+            </div>
+          </div>
+
+          <!-- Elección de Médicos -->
+          <div style="margin-top: 18px; padding: 20px; border-radius: 14px; background: #f7f8fb; border: 1px solid #e3e6ee;">
+            <div style="font-weight: 800; margin-bottom: 6px; color: #054497;">{"{ ⚕ Elección de Médicos }"}</div>
+            <div style="font-size: 14px; color: #333;"><strong>Cientos de urólogos</strong> lo recomiendan a sus pacientes sin recibir compensación.</div>
+          </div>
+
+          <!-- FAQ -->
+          <div style="margin-top: 18px; padding: 20px; border-radius: 14px; background: #f7f8fb; border: 1px solid #e3e6ee;">
+            <div style="font-weight: 900; font-size: 16px; color: #054497; margin-bottom: 12px;">Preguntas Frecuentes</div>
+            <div style="margin-bottom: 12px;">
+              <div style="font-weight: 800; font-size: 14px; color: #0b1a3a;">¿Cuánto tarda en hacer efecto?</div>
+              <div style="font-size: 13px; color: #555; margin-top: 2px;">La mayoría reporta mejoras entre la segunda y cuarta semana de uso continuo.</div>
+            </div>
+            <div style="margin-bottom: 12px;">
+              <div style="font-weight: 800; font-size: 14px; color: #0b1a3a;">¿Es seguro tomarlo a largo plazo?</div>
+              <div style="font-size: 13px; color: #555; margin-top: 2px;">Sí. Formulado con ingredientes 100% naturales, seguros para uso diario.</div>
+            </div>
+            <div style="margin-bottom: 12px;">
+              <div style="font-weight: 800; font-size: 14px; color: #0b1a3a;">¿Tiene efectos secundarios?</div>
+              <div style="font-size: 13px; color: #555; margin-top: 2px;">No se han reportado efectos adversos. Fórmula natural sin químicos.</div>
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 14px; color: #0b1a3a;">¿Cómo pido mi reembolso?</div>
+              <div style="font-size: 13px; color: #555; margin-top: 2px;">Tienes 90 días para un reembolso completo sin preguntas. Escríbenos por WhatsApp.</div>
+            </div>
+          </div>
         </div>
 
         <!-- RIGHT: Product Info -->
@@ -314,11 +378,11 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
           </div>
 
           <!-- Deal Options -->
-          <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div id="deal-options" style="display: flex; flex-direction: column; gap: 12px;">
             <!-- Option 1 -->
-            <div style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+            <div data-deal="sale5" onclick="selectDeal(this, 'sale5')" style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;">
               <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 20px; height: 20px; border: 2px solid #c9cee0; border-radius: 50%;"></div>
+                <div class="radio-circle" style="width: 20px; height: 20px; border: 2px solid #c9cee0; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"></div>
                 <div>
                   <div style="font-weight: 800; font-size: 15px;">Compra 1 llévate 1 GRATIS</div>
                   <div style="font-size: 12px; color: #666;">S/ 52.00/c/u · 1 mes de suministro</div>
@@ -331,12 +395,12 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
               </div>
             </div>
 
-            <!-- Option 2 -->
-            <div style="border: 2px solid #054497; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: #eef3fb; position: relative;">
+            <!-- Option 2 (selected by default) -->
+            <div data-deal="sale18" onclick="selectDeal(this, 'sale18')" style="border: 2px solid #054497; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: #eef3fb; position: relative; transition: all 0.2s;">
               <div style="position: absolute; top: -10px; left: 16px; background: #054497; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">MÁS POPULAR</div>
               <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 20px; height: 20px; border: 2px solid #054497; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <div style="width: 10px; height: 10px; background: #054497; border-radius: 50%;"></div>
+                <div class="radio-circle" style="width: 20px; height: 20px; border: 2px solid #054497; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                  <div class="radio-dot" style="width: 10px; height: 10px; background: #054497; border-radius: 50%;"></div>
                 </div>
                 <div>
                   <div style="font-weight: 800; font-size: 15px;">Compra 2 llévate 2 GRATIS</div>
@@ -351,10 +415,10 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
             </div>
 
             <!-- Option 3 -->
-            <div style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; position: relative;">
+            <div data-deal="sale71" onclick="selectDeal(this, 'sale71')" style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; position: relative; transition: all 0.2s;">
               <div style="position: absolute; top: -10px; left: 16px; background: #2f7a3a; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">MEJOR OFERTA</div>
               <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 20px; height: 20px; border: 2px solid #c9cee0; border-radius: 50%;"></div>
+                <div class="radio-circle" style="width: 20px; height: 20px; border: 2px solid #c9cee0; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"></div>
                 <div>
                   <div style="font-weight: 800; font-size: 15px;">Compra 4 llévate 3 GRATIS</div>
                   <div style="font-size: 12px; color: #666;">S/ 52.00/c/u · 7 meses de suministro</div>
@@ -369,7 +433,7 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
           </div>
 
           <!-- CTA Button -->
-          <a href="/product?deal=sale18" target="_top" style="display: block; margin-top: 24px; background: linear-gradient(180deg, #f39200, #d97900); color: #fff; text-align: center; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 16px; letter-spacing: 1px; text-decoration: none; box-shadow: 0 8px 20px rgba(243,146,0,0.35);">
+          <a id="cta-btn" href="/product?deal=sale18" target="_top" style="display: block; margin-top: 24px; background: linear-gradient(180deg, #f39200, #d97900); color: #fff; text-align: center; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 16px; letter-spacing: 1px; text-decoration: none; box-shadow: 0 8px 20px rgba(243,146,0,0.35);">
             AGREGAR AL CARRITO →
           </a>
         </div>
@@ -1263,5 +1327,24 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
     <!-- WISTIA -->
 
     <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+
+    <script>
+      function selectDeal(el, deal) {
+        var allDeals = document.querySelectorAll('#deal-options > div');
+        allDeals.forEach(function(d) {
+          d.style.border = '2px solid #e3e6ee';
+          d.style.background = '#fff';
+          var rc = d.querySelector('.radio-circle');
+          rc.style.border = '2px solid #c9cee0';
+          rc.innerHTML = '';
+        });
+        el.style.border = '2px solid #054497';
+        el.style.background = '#eef3fb';
+        var rc = el.querySelector('.radio-circle');
+        rc.style.border = '2px solid #054497';
+        rc.innerHTML = '<div style="width:10px;height:10px;background:#054497;border-radius:50%;"></div>';
+        document.getElementById('cta-btn').href = '/product?deal=' + deal;
+      }
+    </script>
   </body>
 </html>
