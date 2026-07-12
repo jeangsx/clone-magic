@@ -169,8 +169,8 @@ export default function ProductPage() {
       >
         {/* LEFT: gallery */}
         <section>
-          <div style={{ display: "flex", gap: 12 }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div className="product-gallery-wrap" style={{ display: "flex", gap: 12 }}>
+            <div className="product-thumbs" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {GALLERY.map((src, i) => (
                 <button
                   key={i}
@@ -195,6 +195,7 @@ export default function ProductPage() {
               ))}
             </div>
             <div
+              className="product-hero"
               style={{
                 flex: 1,
                 position: "relative",
