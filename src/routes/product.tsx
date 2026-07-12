@@ -604,6 +604,7 @@ export default function ProductPage() {
               REGALOS GRATIS CON TU COMPRA
             </div>
             <div
+            className="product-gifts"
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3,1fr)",
@@ -630,6 +631,7 @@ export default function ProductPage() {
           </div>
 
           <div
+            className="product-trust"
             style={{
               marginTop: 16,
               display: "flex",
