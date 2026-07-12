@@ -73,6 +73,17 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
     <!-- Google Tag Manager Script -->
     <!-- prettier-ignore -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://assets.prostagenix.com/esfucclbo.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','1j=aWQ9R1RNLVRERFZSNg%3D%3D&page=3');</script>
+
+    <style>
+      .product_section > div { display: grid !important; grid-template-columns: 1fr 1fr !important; }
+      @media (max-width: 768px) {
+        .product_section > div { grid-template-columns: 1fr !important; gap: 20px !important; padding: 0 16px !important; }
+        .product_section .product-left { order: 1; }
+        .product_section .product-right { order: 2; }
+        .testimonios-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+        .product-hero-img { max-height: 260px !important; min-height: auto !important; padding: 20px !important; }
+      }
+    </style>
     <!-- End Google Tag Manager -->
 
     <!-- STRUCTURED DATA MARKUP -->
@@ -247,9 +258,9 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
     <div class="product_section" style="background: #fff; padding: 40px 0;">
       <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
         <!-- LEFT: Product Image -->
-        <div>
-          <div style="background: linear-gradient(135deg, #054497 0%, #0a5cc7 100%); border-radius: 20px; padding: 40px; position: relative; min-height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="ProstaGenix" style="max-width: 80%; max-height: 350px; object-fit: contain; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));">
+        <div class="product-left">
+          <div class="product-hero-img" style="background: linear-gradient(135deg, #054497 0%, #0a5cc7 100%); border-radius: 20px; padding: 40px; position: relative; min-height: 420px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="ProstaGenix" style="max-width: 80%; max-height: 320px; object-fit: contain; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));">
             <button style="margin-top: 20px; background: #fff; border: 2px solid #054497; color: #054497; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
               <span style="font-size: 18px;">🌿</span> Ingredientes
             </button>
@@ -274,7 +285,7 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
         </div>
 
         <!-- RIGHT: Product Info -->
-        <div style="padding: 20px 0;">
+        <div class="product-right" style="padding: 20px 0;">
           <!-- Rating -->
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
             <span style="color: #f39200; font-size: 20px;">★★★★★</span>
@@ -396,8 +407,8 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
     </div>
 
     <!-- Testimonios - siempre después del botón -->
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px 24px;">
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+    <div class="testimonios-section" style="max-width: 1200px; margin: 0 auto; padding: 0 24px 24px;">
+      <div class="testimonios-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
         <div style="padding: 16px; border-radius: 12px; border: 1px solid #e3e6ee; background: #fff;">
           <div style="color: #f39200; font-size: 14px; margin-bottom: 6px;">★★★★★</div>
           <div style="font-size: 13px; color: #333; line-height: 1.5;">"Empecé hace 3 meses y la diferencia es notable. Ya no tengo que levantarme varias veces en la noche."</div>
