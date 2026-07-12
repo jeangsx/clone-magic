@@ -349,36 +349,6 @@ export default function ProductPage() {
             ))}
           </div>
 
-          {/* FAQ */}
-          <div style={{ marginTop: 18, padding: 20, borderRadius: 14, background: "#f7f8fb", border: "1px solid #e3e6ee" }}>
-            <div style={{ fontWeight: 900, fontSize: 16, color: BLUE, marginBottom: 12 }}>
-              Preguntas Frecuentes
-            </div>
-            {[
-              {
-                q: "¿Cuánto tarda en hacer efecto?",
-                a: "La mayoría de los usuarios reportan mejoras visibles entre la segunda y cuarta semana de uso continuo.",
-              },
-              {
-                q: "¿Es seguro tomarlo a largo plazo?",
-                a: "Sí. Está formulado con ingredientes 100% naturales, seguros para uso diario continuo.",
-              },
-              {
-                q: "¿Tiene efectos secundarios?",
-                a: "No se han reportado efectos secundarios adversos. Es una fórmula natural sin químicos.",
-              },
-              {
-                q: "¿Cómo pido mi reembolso?",
-                a: "Tienes 90 días para solicitar un reembolso completo sin preguntas. Contáctanos por WhatsApp.",
-              },
-            ].map((f) => (
-              <div key={f.q} style={{ marginBottom: 12 }}>
-                <div style={{ fontWeight: 800, fontSize: 14, color: "#0b1a3a" }}>{f.q}</div>
-                <div style={{ fontSize: 13, color: "#555", marginTop: 2 }}>{f.a}</div>
-              </div>
-            ))}
-          </div>
-
         </section>
 
         {/* RIGHT: purchase panel */}
