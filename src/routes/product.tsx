@@ -563,29 +563,6 @@ export default function ProductPage() {
               </span>
             </div>
           </div>
-          <div style={{ textAlign: "right", color: BLUE, fontWeight: 800, marginBottom: 14 }}>
-            Ahorras S/ {(cur.retail - cur.price).toFixed(2)}
-          </div>
-
-          <button
-            onClick={() => navigate(`/checkout?deal=${selected}`)}
-            style={{
-              width: "100%",
-              padding: "18px 20px",
-              borderRadius: 12,
-              border: 0,
-              cursor: "pointer",
-              background: `linear-gradient(180deg, ${ORANGE}, #d97900)`,
-              color: "#fff",
-              fontWeight: 900,
-              fontSize: 17,
-              letterSpacing: 1,
-              boxShadow: "0 8px 20px rgba(243,146,0,0.35)",
-            }}
-          >
-            AGREGAR AL CARRITO →
-          </button>
-
           <button
             onClick={() => navigate(`/checkout?deal=${selected}`)}
             style={{
