@@ -273,6 +273,7 @@ export default function ProductPage() {
           </div>
 
           <h1
+            className="product-title"
             style={{
               fontSize: 34,
               lineHeight: 1.15,
@@ -285,6 +286,7 @@ export default function ProductPage() {
           </h1>
 
           <div
+            className="product-benefits"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(3,1fr)",
@@ -383,6 +385,7 @@ export default function ProductPage() {
 
           {/* HOT SALE countdown */}
           <div
+            className="product-hotsale"
             style={{
               border: `2px solid ${RED}`,
               borderRadius: 14,
