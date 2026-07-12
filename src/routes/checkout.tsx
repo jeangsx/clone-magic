@@ -111,6 +111,7 @@ export default function CheckoutPage() {
       </div>
 
       <header
+        className="co-header"
         style={{
           borderBottom: "1px solid #eee",
           padding: "16px 24px",
@@ -129,6 +130,7 @@ export default function CheckoutPage() {
       </header>
 
       <main
+        className="co-main"
         style={{
           maxWidth: 1100,
           margin: "0 auto",
@@ -144,6 +146,7 @@ export default function CheckoutPage() {
             e.preventDefault();
             setPlaced(true);
           }}
+          className="co-form"
           style={{ background: "#fff", borderRadius: 14, padding: 24, border: "1px solid #e3e6ee" }}
         >
           <h2 style={{ margin: 0, color: BLUE, fontWeight: 900, fontSize: 20 }}>
