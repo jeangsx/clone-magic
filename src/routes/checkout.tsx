@@ -154,7 +154,7 @@ export default function CheckoutPage() {
           </h2>
           <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
             <input required type="email" placeholder="Correo electrónico" style={inp} />
-            <div style={row2}>
+            <div className="co-row2" style={row2}>
               <input required placeholder="Nombre" style={inp} />
               <input required placeholder="Apellido" style={inp} />
             </div>
@@ -166,7 +166,7 @@ export default function CheckoutPage() {
           </h2>
           <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
             <input required placeholder="Dirección" style={inp} />
-            <div style={row2}>
+            <div className="co-row2" style={row2}>
               <input required placeholder="Ciudad" style={inp} />
               <input required placeholder="Código Postal" style={inp} />
             </div>
@@ -200,7 +200,7 @@ export default function CheckoutPage() {
           {pay === "card" && (
             <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
               <input required placeholder="Número de tarjeta" style={inp} />
-              <div style={row2}>
+              <div className="co-row2" style={row2}>
                 <input required placeholder="MM / AA" style={inp} />
                 <input required placeholder="CVV" style={inp} />
               </div>
