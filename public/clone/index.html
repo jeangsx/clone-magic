@@ -76,12 +76,204 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
 
     <style>
       .product_section > div { display: grid !important; grid-template-columns: 1fr 1fr !important; }
+      
+      /* Excalvo Hero Styles */
+      .product-hero-excalvo {
+        position: relative;
+        background: #f7f8fb;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #e3e6ee;
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        font-family: 'Montserrat', system-ui, sans-serif;
+      }
+      .hero-bg-doctor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: right top;
+        z-index: 1;
+        pointer-events: none;
+      }
+      .hero-gradient-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(247,248,251,0.98) 0%, rgba(247,248,251,0.92) 45%, rgba(247,248,251,0.2) 100%);
+        z-index: 2;
+        pointer-events: none;
+      }
+      .hero-content-wrap {
+        position: relative;
+        z-index: 3;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        flex: 1;
+      }
+      .hero-badge-doc {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 12px;
+        padding: 8px 14px;
+        align-self: flex-start;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        border: 1px solid rgba(5,68,151,0.1);
+        max-width: 85%;
+      }
+      .hero-badge-doc .badge-icon {
+        font-size: 16px;
+        color: #054497;
+        font-weight: bold;
+      }
+      .hero-badge-doc .badge-text {
+        font-size: 10.5px;
+        color: #333;
+        line-height: 1.3;
+      }
+      .hero-badge-doc .badge-text strong {
+        color: #054497;
+      }
+      .hero-title-main {
+        font-size: 24px;
+        font-weight: 900;
+        color: #0b1a3a;
+        line-height: 1.25;
+        margin: 20px 0 10px;
+        max-width: 65%;
+      }
+      .hero-subtitle-sub {
+        font-size: 12.5px;
+        color: #555;
+        line-height: 1.45;
+        max-width: 58%;
+        margin-bottom: 20px;
+      }
+      .hero-bottle-img {
+        position: absolute;
+        right: 4%;
+        bottom: 80px;
+        max-height: 250px;
+        width: auto;
+        object-fit: contain;
+        z-index: 4;
+        filter: drop-shadow(0 12px 28px rgba(0,0,0,0.22));
+      }
+      .hero-ingredients-btn-wrap {
+        margin-top: auto;
+        align-self: center;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-bottom: 8px;
+        z-index: 5;
+      }
+      .hero-ingredients-btn {
+        background: #fff;
+        border: 2px solid #054497;
+        color: #054497 !important;
+        padding: 12px 36px;
+        border-radius: 30px;
+        font-weight: 800;
+        font-size: 14.5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 15px rgba(5,68,151,0.12);
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+      }
+      .hero-ingredients-btn:hover {
+        background: #054497;
+        color: #fff !important;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(5,68,151,0.2);
+      }
+      .hero-ingredients-btn svg {
+        transition: stroke 0.2s ease-in-out;
+      }
+      .hero-ingredients-btn:hover svg {
+        stroke: #fff;
+      }
+
+      /* Thumbnails styles */
+      .thumbs-list {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+      .thumb-item {
+        width: 68px;
+        height: 68px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e3e6ee;
+        flex-shrink: 0;
+        cursor: pointer;
+        background: #f7f8fb;
+        padding: 6px;
+        transition: all 0.2s;
+      }
+      .thumb-item.active {
+        border: 2.5px solid #054497;
+        box-shadow: 0 2px 8px rgba(5,68,151,0.15);
+      }
+      .thumb-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
       @media (max-width: 768px) {
-        .product_section > div { grid-template-columns: 1fr !important; gap: 20px !important; padding: 0 16px !important; }
+        .product_section > div { grid-template-columns: 1fr !important; gap: 24px !important; padding: 0 16px !important; }
         .product_section .product-left { order: 1; }
         .product_section .product-right { order: 2; }
         .testimonios-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
-        .product-hero-img { max-height: 260px !important; min-height: auto !important; padding: 20px !important; }
+        
+        /* Mobile Hero adjustments */
+        .product-hero-excalvo {
+          min-height: 400px !important;
+        }
+        .hero-title-main {
+          font-size: 18px !important;
+          max-width: 60% !important;
+          margin: 12px 0 6px !important;
+        }
+        .hero-subtitle-sub {
+          font-size: 11px !important;
+          max-width: 55% !important;
+          margin-bottom: 10px !important;
+        }
+        .hero-bottle-img {
+          max-height: 180px !important;
+          bottom: 70px !important;
+          right: 2% !important;
+        }
+        .hero-ingredients-btn {
+          padding: 10px 28px !important;
+          font-size: 13.5px !important;
+        }
+        .hero-gradient-overlay {
+          background: linear-gradient(90deg, rgba(247,248,251,0.98) 0%, rgba(247,248,251,0.94) 50%, rgba(247,248,251,0.3) 100%) !important;
+        }
+        .hero-badge-doc {
+          padding: 6px 10px !important;
+          max-width: 82% !important;
+        }
+        .hero-badge-doc .badge-text {
+          font-size: 9px !important;
+        }
       }
     </style>
     <!-- End Google Tag Manager -->
@@ -259,31 +451,50 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
       <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
         <!-- LEFT: Product Image -->
         <div class="product-left">
-          <div class="product-hero-img" style="background: #f7f8fb; border-radius: 20px; padding: 32px; min-height: 380px; display: flex; flex-direction: column; align-items: center; border: 1px solid #e3e6ee;">
-            <!-- Badge -->
-            <div style="display: flex; align-items: center; gap: 8px; background: #054497; border-radius: 10px; padding: 8px 16px; align-self: flex-start; margin-bottom: 20px;">
-              <span style="font-size: 18px;">⚕</span>
-              <div style="font-size: 11px; color: #fff; line-height: 1.3;"><strong>Elección De Los Médicos</strong><br>Cientos Lo Recomiendan</div>
-            </div>
-            <!-- Product bottle -->
-            <div style="flex: 1; display: flex; align-items: center; justify-content: center; width: 100%;">
-              <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="ProstaGenix" style="max-width: 65%; max-height: 280px; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.12));">
+          <div class="product-hero-excalvo">
+            <!-- Background Doctor Image -->
+            <img class="hero-bg-doctor" src="https://www.prostagenix.com/images/home/dudley-danoff.png" alt="Dr. Dudley Danoff">
+            <!-- Smooth Gradient Overlay -->
+            <div class="hero-gradient-overlay"></div>
+
+            <!-- Content -->
+            <div class="hero-content-wrap">
+              <!-- Badge -->
+              <div class="hero-badge-doc">
+                <span class="badge-icon">⚕</span>
+                <div class="badge-text"><strong>Elección De Los Médicos</strong> · Cientos de Médicos Compartieron Esto Con Sus Pacientes Sin Recibir Compensación.</div>
+              </div>
+
+              <!-- Titles -->
+              <h3 class="hero-title-main">Reemplaza Más de 10 Productos Prostáticos por Solo S/ 1.50 al Día</h3>
+              <p class="hero-subtitle-sub">Formulado por los mejores urólogos de Los Ángeles. Clínicamente comprobado para mejorar la salud urinaria y flujo de la próstata.</p>
+
+              <!-- Center-right Bottle Overlay -->
+              <img class="hero-bottle-img" src="https://www.prostagenix.com/images/product/bottle_box.png" alt="ProstaGenix">
+
+              <!-- Centered Ingredients Button inside image box -->
+              <div class="hero-ingredients-btn-wrap">
+                <button class="hero-ingredients-btn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#054497" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.5 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                  Ingredientes
+                </button>
+              </div>
             </div>
           </div>
 
           <!-- Thumbnails -->
-          <div style="display: flex; gap: 10px; margin-top: 14px; overflow-x: auto;">
-            <div style="width: 72px; height: 72px; border-radius: 10px; overflow: hidden; border: 2px solid #054497; flex-shrink: 0; cursor: pointer; background: #f7f8fb; padding: 6px;">
-              <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="" style="width: 100%; height: 100%; object-fit: contain;">
+          <div class="thumbs-list">
+            <div class="thumb-item active" onclick="changeHeroImage(0)">
+              <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="">
             </div>
-            <div style="width: 72px; height: 72px; border-radius: 10px; overflow: hidden; border: 2px solid #e3e6ee; flex-shrink: 0; cursor: pointer; background: #f7f8fb; padding: 6px;">
-              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="" style="width: 100%; height: 100%; object-fit: contain;">
+            <div class="thumb-item" onclick="changeHeroImage(1)">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="">
             </div>
-            <div style="width: 72px; height: 72px; border-radius: 10px; overflow: hidden; border: 2px solid #e3e6ee; flex-shrink: 0; cursor: pointer; background: #f7f8fb; padding: 6px;">
-              <img src="https://www.prostagenix.com/images/home/dudley-danoff.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="thumb-item" onclick="changeHeroImage(2)">
+              <img src="https://www.prostagenix.com/images/home/dudley-danoff.png" alt="">
             </div>
-            <div style="width: 72px; height: 72px; border-radius: 10px; overflow: hidden; border: 2px solid #e3e6ee; flex-shrink: 0; cursor: pointer; background: #f7f8fb; padding: 6px;">
-              <img src="https://www.prostagenix.com/special/special-offer/img/number-one-award.png" alt="" style="width: 100%; height: 100%; object-fit: contain;">
+            <div class="thumb-item" onclick="changeHeroImage(3)">
+              <img src="https://www.prostagenix.com/special/special-offer/img/number-one-award.png" alt="">
             </div>
           </div>
 
@@ -1257,6 +1468,108 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
         rc.style.border = '2px solid #054497';
         rc.innerHTML = '<div style="width:10px;height:10px;background:#054497;border-radius:50%;"></div>';
         document.getElementById('cta-btn').href = '/product?deal=' + deal;
+      }
+
+      function changeHeroImage(index) {
+        var thumbs = document.querySelectorAll('.thumb-item');
+        thumbs.forEach(function(t, i) {
+          if (i === index) {
+            t.classList.add('active');
+          } else {
+            t.classList.remove('active');
+          }
+        });
+
+        var doctorBg = document.querySelector('.hero-bg-doctor');
+        var overlay = document.querySelector('.hero-gradient-overlay');
+        var bottle = document.querySelector('.hero-bottle-img');
+        var title = document.querySelector('.hero-title-main');
+        var subtitle = document.querySelector('.hero-subtitle-sub');
+
+        if (index === 0) {
+          // Default: Bottle & Box with Doctor
+          doctorBg.src = "https://www.prostagenix.com/images/home/dudley-danoff.png";
+          doctorBg.style.display = "block";
+          doctorBg.style.opacity = "0.85";
+          doctorBg.style.right = "0";
+          doctorBg.style.width = "100%";
+          doctorBg.style.height = "100%";
+          doctorBg.style.objectPosition = "right top";
+          overlay.style.background = "linear-gradient(90deg, rgba(247,248,251,0.98) 0%, rgba(247,248,251,0.92) 45%, rgba(247,248,251,0.2) 100%)";
+          overlay.style.display = "block";
+          bottle.src = "https://www.prostagenix.com/images/product/bottle_box.png";
+          bottle.style.display = "block";
+          bottle.style.right = "4%";
+          bottle.style.bottom = "80px";
+          bottle.style.maxHeight = "250px";
+          title.innerHTML = "Reemplaza Más de 10 Productos Prostáticos por Solo S/ 1.50 al Día";
+          title.style.display = "block";
+          subtitle.innerHTML = "Formulado por los mejores urólogos de Los Ángeles. Clínicamente comprobado para mejorar la salud urinaria y flujo de la próstata.";
+          subtitle.style.display = "block";
+        } else if (index === 1) {
+          // Single bottle centered
+          doctorBg.style.display = "none";
+          overlay.style.display = "block";
+          overlay.style.background = "linear-gradient(135deg, #f0f4f8 0%, #fff 100%)";
+          bottle.src = "https://www.prostagenix.com/images/product/bottle.png";
+          bottle.style.display = "block";
+          bottle.style.right = "50%";
+          bottle.style.transform = "translateX(50%)";
+          bottle.style.bottom = "100px";
+          bottle.style.maxHeight = "280px";
+          title.style.display = "none";
+          subtitle.style.display = "none";
+        } else if (index === 2) {
+          // Dudley Danoff focused
+          doctorBg.src = "https://www.prostagenix.com/images/home/dudley-danoff.png";
+          doctorBg.style.display = "block";
+          doctorBg.style.opacity = "1";
+          doctorBg.style.right = "50%";
+          doctorBg.style.transform = "translateX(50%)";
+          doctorBg.style.width = "auto";
+          doctorBg.style.height = "100%";
+          doctorBg.style.objectPosition = "center top";
+          overlay.style.display = "block";
+          overlay.style.background = "linear-gradient(to bottom, rgba(247,248,251,0.2) 0%, rgba(247,248,251,0.9) 85%)";
+          bottle.style.display = "none";
+          title.innerHTML = "Respaldado por el Dr. Dudley Danoff";
+          title.style.display = "block";
+          title.style.textAlign = "center";
+          title.style.maxWidth = "100%";
+          title.style.position = "absolute";
+          title.style.bottom = "80px";
+          title.style.left = "0";
+          title.style.right = "0";
+          title.style.margin = "0 auto";
+          subtitle.style.display = "none";
+        } else if (index === 3) {
+          // #1 Award
+          doctorBg.style.display = "none";
+          overlay.style.display = "block";
+          overlay.style.background = "linear-gradient(135deg, #f0f4f8 0%, #fff 100%)";
+          bottle.src = "https://www.prostagenix.com/special/special-offer/img/number-one-award.png";
+          bottle.style.display = "block";
+          bottle.style.right = "50%";
+          bottle.style.transform = "translateX(50%)";
+          bottle.style.bottom = "110px";
+          bottle.style.maxHeight = "240px";
+          title.innerHTML = "Calificado como el Suplemento #1 del Mundo";
+          title.style.display = "block";
+          title.style.textAlign = "center";
+          title.style.maxWidth = "100%";
+          subtitle.style.display = "none";
+        }
+
+        // Keep centering reset helper
+        if (index !== 1 && index !== 3 && index !== 2) {
+          bottle.style.transform = "none";
+          title.style.textAlign = "left";
+          title.style.maxWidth = "65%";
+          title.style.position = "static";
+        }
+        if (index !== 2) {
+          doctorBg.style.transform = "none";
+        }
       }
     </script>
   </body>
