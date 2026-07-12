@@ -99,6 +99,21 @@ export default function ProductPage() {
         fontFamily: "'Montserrat', system-ui, sans-serif",
       }}
     >
+      <style>{`
+        @media (max-width: 860px) {
+          .product-grid { grid-template-columns: 1fr !important; gap: 24px !important; padding: 16px !important; }
+          .product-hero { min-height: 320px !important; padding: 16px !important; }
+          .product-hero img { max-height: 300px !important; }
+          .product-thumbs { flex-direction: row !important; overflow-x: auto; }
+          .product-thumbs button { width: 64px !important; height: 64px !important; flex: 0 0 auto; }
+          .product-gallery-wrap { flex-direction: column !important; }
+          .product-title { font-size: 24px !important; }
+          .product-benefits { grid-template-columns: repeat(3,1fr) !important; gap: 6px !important; }
+          .product-hotsale { flex-wrap: wrap !important; }
+          .product-gifts { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+          .product-trust { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
+        }
+      `}</style>
       {/* Top banner */}
       <div
         style={{
@@ -154,8 +169,8 @@ export default function ProductPage() {
       >
         {/* LEFT: gallery */}
         <section>
-          <div style={{ display: "flex", gap: 12 }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div className="product-gallery-wrap" style={{ display: "flex", gap: 12 }}>
+            <div className="product-thumbs" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {GALLERY.map((src, i) => (
                 <button
                   key={i}
@@ -180,6 +195,7 @@ export default function ProductPage() {
               ))}
             </div>
             <div
+              className="product-hero"
               style={{
                 flex: 1,
                 position: "relative",
@@ -257,6 +273,7 @@ export default function ProductPage() {
           </div>
 
           <h1
+            className="product-title"
             style={{
               fontSize: 34,
               lineHeight: 1.15,
@@ -269,6 +286,7 @@ export default function ProductPage() {
           </h1>
 
           <div
+            className="product-benefits"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(3,1fr)",
@@ -367,6 +385,7 @@ export default function ProductPage() {
 
           {/* HOT SALE countdown */}
           <div
+            className="product-hotsale"
             style={{
               border: `2px solid ${RED}`,
               borderRadius: 14,
@@ -585,6 +604,7 @@ export default function ProductPage() {
               REGALOS GRATIS CON TU COMPRA
             </div>
             <div
+            className="product-gifts"
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3,1fr)",
@@ -611,6 +631,7 @@ export default function ProductPage() {
           </div>
 
           <div
+            className="product-trust"
             style={{
               marginTop: 16,
               display: "flex",
