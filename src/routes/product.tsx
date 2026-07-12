@@ -369,6 +369,233 @@ export default function ProductPage() {
               </div>
             ))}
           </div>
+
+          {/* También te puede gustar */}
+          <div style={{ marginTop: 22 }}>
+            <div style={{ fontWeight: 900, fontSize: 18, color: BLUE, marginBottom: 14 }}>
+              También te puede gustar
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              {[
+                {
+                  name: "ProstaGenix™ Premium",
+                  desc: "Fórmula avanzada con Saw Palmetto + Zinc",
+                  price: "S/ 49.95",
+                  old: "S/ 89.00",
+                  img: "https://www.prostagenix.com/images/product/bottle.png",
+                  badge: "NUEVO",
+                },
+                {
+                  name: "ProstaGenix™ Plus",
+                  desc: "Doble acción: próstata + vejiga",
+                  price: "S/ 54.95",
+                  old: "S/ 99.00",
+                  img: "https://www.prostagenix.com/images/product/bottle_box.png",
+                  badge: "BEST SELLER",
+                },
+                {
+                  name: "TestoGenix™",
+                  desc: "Soporte natural para testosterona",
+                  price: "S/ 44.95",
+                  old: "S/ 79.00",
+                  img: "https://www.prostagenix.com/images/product/bottle.png",
+                  badge: "-43%",
+                },
+                {
+                  name: "CardioGenix™",
+                  desc: "Salud cardiovascular + circulación",
+                  price: "S/ 39.95",
+                  old: "S/ 70.00",
+                  img: "https://www.prostagenix.com/images/product/bottle_box.png",
+                  badge: "OFERTA",
+                },
+              ].map((p) => (
+                <div
+                  key={p.name}
+                  style={{
+                    border: "1px solid #e3e6ee",
+                    borderRadius: 12,
+                    overflow: "hidden",
+                    background: "#fff",
+                    cursor: "pointer",
+                    transition: "box-shadow .2s",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,.08)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
+                >
+                  <div style={{ position: "relative", background: "#f7f8fb", padding: 16, textAlign: "center" }}>
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: 8,
+                        left: 8,
+                        background: RED,
+                        color: "#fff",
+                        fontSize: 10,
+                        fontWeight: 800,
+                        padding: "3px 8px",
+                        borderRadius: 999,
+                      }}
+                    >
+                      {p.badge}
+                    </span>
+                    <img
+                      src={p.img}
+                      alt={p.name}
+                      style={{ height: 100, objectFit: "contain" }}
+                    />
+                  </div>
+                  <div style={{ padding: "10px 12px 14px" }}>
+                    <div style={{ fontWeight: 800, fontSize: 13, color: "#0b1a3a" }}>{p.name}</div>
+                    <div style={{ fontSize: 11, color: "#666", marginTop: 2 }}>{p.desc}</div>
+                    <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 6 }}>
+                      <span style={{ fontWeight: 900, fontSize: 16, color: BLUE }}>{p.price}</span>
+                      <span style={{ fontSize: 11, color: "#999", textDecoration: "line-through" }}>{p.old}</span>
+                    </div>
+                    <button
+                      style={{
+                        marginTop: 8,
+                        width: "100%",
+                        padding: "8px 0",
+                        borderRadius: 8,
+                        border: `1.5px solid ${BLUE}`,
+                        background: "#fff",
+                        color: BLUE,
+                        fontWeight: 800,
+                        fontSize: 12,
+                        cursor: "pointer",
+                      }}
+                    >
+                      Ver Producto →
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Ingredientes */}
+          <div
+            style={{
+              marginTop: 22,
+              padding: 20,
+              borderRadius: 14,
+              background: "#f7f8fb",
+              border: "1px solid #e3e6ee",
+            }}
+          >
+            <div style={{ fontWeight: 900, fontSize: 16, color: BLUE, marginBottom: 12 }}>
+              Ingredientes Clave
+            </div>
+            {[
+              {
+                name: "Saw Palmetto",
+                desc: "Bloquea la 5-alfa reductasa, la enzima que convierte la testosterona en DHT. Reduce los síntomas urinarios.",
+                icon: "🌿",
+              },
+              {
+                name: "Zinc (Zincato)",
+                desc: "Esencial para la salud de la próstata. Regula los niveles hormonales y apoya el sistema inmunológico.",
+                icon: "💊",
+              },
+              {
+                name: "Extracto de Ortiga",
+                desc: "Antiinflamatorio natural que alivia la inflamación de la próstata y mejora el flujo urinario.",
+                icon: "🍃",
+              },
+              {
+                name: "Licopeno",
+                desc: "Antioxidante poderoso que protege las células de la próstata del daño oxidativo.",
+                icon: "🍅",
+              },
+              {
+                name: "Beta-Sitosterol",
+                desc: "Fitosterol que reduce el colesterol en la próstata y mejora los síntomas urinarios.",
+                icon: "🌱",
+              },
+            ].map((ing) => (
+              <div
+                key={ing.name}
+                style={{
+                  display: "flex",
+                  gap: 12,
+                  padding: "12px 0",
+                  borderBottom: "1px solid #e3e6ee",
+                }}
+              >
+                <div
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
+                    background: "#eaf1fb",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 20,
+                    flexShrink: 0,
+                  }}
+                >
+                  {ing.icon}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: 14, color: "#0b1a3a" }}>{ing.name}</div>
+                  <div style={{ fontSize: 12, color: "#555", marginTop: 2, lineHeight: 1.5 }}>{ing.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* How it works */}
+          <div
+            style={{
+              marginTop: 22,
+              padding: 20,
+              borderRadius: 14,
+              background: `linear-gradient(135deg, ${BLUE}, #0a5cc7)`,
+              color: "#fff",
+            }}
+          >
+            <div style={{ fontWeight: 900, fontSize: 16, marginBottom: 14, textAlign: "center" }}>
+              ¿Cómo funciona?
+            </div>
+            {[
+              { step: "1", title: "Absorción Rápida", desc: "Las cápsulas se disuelven y los ingredientes activos entran al torrente sanguíneo en minutos." },
+              { step: "2", title: "Bloqueo de DHT", desc: "El Saw Palmetto bloquea la conversión de testosterona a DHT, reduciendo la inflamación." },
+              { step: "3", title: "Resultados Reales", desc: "En 2-4 semanas notarás menos nocturia, mejor flujo urinario y mayor comodidad." },
+            ].map((s) => (
+              <div
+                key={s.step}
+                style={{
+                  display: "flex",
+                  gap: 12,
+                  alignItems: "flex-start",
+                  marginBottom: 14,
+                }}
+              >
+                <div
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.2)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: 900,
+                    fontSize: 14,
+                    flexShrink: 0,
+                  }}
+                >
+                  {s.step}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: 14 }}>{s.title}</div>
+                  <div style={{ fontSize: 12, opacity: 0.9, marginTop: 2, lineHeight: 1.5 }}>{s.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* RIGHT: purchase panel */}
