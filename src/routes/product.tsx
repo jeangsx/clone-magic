@@ -267,6 +267,108 @@ export default function ProductPage() {
               compensación.
             </div>
           </div>
+
+          {/* Stats */}
+          <div
+            style={{
+              marginTop: 18,
+              display: "grid",
+              gridTemplateColumns: "repeat(3,1fr)",
+              gap: 12,
+            }}
+          >
+            {[
+              { n: "150K+", t: "Clientes satisfechos" },
+              { n: "4.8/5", t: "Calificación promedio" },
+              { n: "90 Días", t: "Garantía de devolución" },
+            ].map((s) => (
+              <div
+                key={s.t}
+                style={{
+                  textAlign: "center",
+                  padding: "16px 8px",
+                  borderRadius: 12,
+                  background: "#fff",
+                  border: "1px solid #e3e6ee",
+                }}
+              >
+                <div style={{ fontWeight: 900, fontSize: 22, color: BLUE }}>{s.n}</div>
+                <div style={{ fontSize: 12, color: "#555", marginTop: 4 }}>{s.t}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Testimonials */}
+          <div style={{ marginTop: 18, display: "grid", gap: 12 }}>
+            {[
+              {
+                name: "Carlos R.",
+                text: "Empecé a tomar ProstaGenix hace 3 meses y la diferencia es notable. Ya no tengo que levantarme varias veces en la noche.",
+                stars: 5,
+              },
+              {
+                name: "Miguel A.",
+                text: "Mi urólogo me lo recomendó y no me arrepiento. Funcionó mejor de lo que esperaba. Lo recomiendo al 100%.",
+                stars: 5,
+              },
+              {
+                name: "Roberto L.",
+                text: "Llevaba años probando productos sin resultados. Con ProstaGenix noté cambios desde la segunda semana.",
+                stars: 5,
+              },
+            ].map((r) => (
+              <div
+                key={r.name}
+                style={{
+                  padding: 16,
+                  borderRadius: 12,
+                  border: "1px solid #e3e6ee",
+                  background: "#fff",
+                }}
+              >
+                <div style={{ color: ORANGE, fontSize: 14, marginBottom: 4 }}>
+                  {"★".repeat(r.stars)}
+                </div>
+                <div style={{ fontSize: 13, color: "#333", lineHeight: 1.5 }}>
+                  "{r.text}"
+                </div>
+                <div style={{ marginTop: 8, fontSize: 12, fontWeight: 800, color: "#555" }}>
+                  — {r.name}{" "}
+                  <span style={{ color: "#2f7a3a", fontWeight: 700 }}>Verificado ✓</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* FAQ */}
+          <div style={{ marginTop: 18, padding: 20, borderRadius: 14, background: "#f7f8fb", border: "1px solid #e3e6ee" }}>
+            <div style={{ fontWeight: 900, fontSize: 16, color: BLUE, marginBottom: 12 }}>
+              Preguntas Frecuentes
+            </div>
+            {[
+              {
+                q: "¿Cuánto tarda en hacer efecto?",
+                a: "La mayoría de los usuarios reportan mejoras visibles entre la segunda y cuarta semana de uso continuo.",
+              },
+              {
+                q: "¿Es seguro tomarlo a largo plazo?",
+                a: "Sí. Está formulado con ingredientes 100% naturales, seguros para uso diario continuo.",
+              },
+              {
+                q: "¿Tiene efectos secundarios?",
+                a: "No se han reportado efectos secundarios adversos. Es una fórmula natural sin químicos.",
+              },
+              {
+                q: "¿Cómo pido mi reembolso?",
+                a: "Tienes 90 días para solicitar un reembolso completo sin preguntas. Contáctanos por WhatsApp.",
+              },
+            ].map((f) => (
+              <div key={f.q} style={{ marginBottom: 12 }}>
+                <div style={{ fontWeight: 800, fontSize: 14, color: "#0b1a3a" }}>{f.q}</div>
+                <div style={{ fontSize: 13, color: "#555", marginTop: 2 }}>{f.a}</div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* RIGHT: purchase panel */}
