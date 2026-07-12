@@ -82,6 +82,20 @@ export default function CheckoutPage() {
         fontFamily: "'Montserrat',system-ui,sans-serif",
       }}
     >
+      <style>{`
+        html, body { overflow-x: hidden; }
+        @media (max-width: 900px) {
+          .co-main { grid-template-columns: 1fr !important; padding: 16px !important; gap: 16px !important; }
+          .co-summary { position: static !important; }
+        }
+        @media (max-width: 480px) {
+          .co-row2 { grid-template-columns: 1fr !important; }
+          .co-header { padding: 12px 16px !important; flex-wrap: wrap; gap: 6px; }
+          .co-header a { font-size: 20px !important; }
+          .co-form { padding: 16px !important; }
+          .co-summary { padding: 16px !important; }
+        }
+      `}</style>
       <div
         style={{
           background: BLUE,
