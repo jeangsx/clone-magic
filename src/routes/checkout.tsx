@@ -82,6 +82,20 @@ export default function CheckoutPage() {
         fontFamily: "'Montserrat',system-ui,sans-serif",
       }}
     >
+      <style>{`
+        html, body { overflow-x: hidden; }
+        @media (max-width: 900px) {
+          .co-main { grid-template-columns: 1fr !important; padding: 16px !important; gap: 16px !important; }
+          .co-summary { position: static !important; }
+        }
+        @media (max-width: 480px) {
+          .co-row2 { grid-template-columns: 1fr !important; }
+          .co-header { padding: 12px 16px !important; flex-wrap: wrap; gap: 6px; }
+          .co-header a { font-size: 20px !important; }
+          .co-form { padding: 16px !important; }
+          .co-summary { padding: 16px !important; }
+        }
+      `}</style>
       <div
         style={{
           background: BLUE,
@@ -97,6 +111,7 @@ export default function CheckoutPage() {
       </div>
 
       <header
+        className="co-header"
         style={{
           borderBottom: "1px solid #eee",
           padding: "16px 24px",
@@ -115,6 +130,7 @@ export default function CheckoutPage() {
       </header>
 
       <main
+        className="co-main"
         style={{
           maxWidth: 1100,
           margin: "0 auto",
@@ -130,6 +146,7 @@ export default function CheckoutPage() {
             e.preventDefault();
             setPlaced(true);
           }}
+          className="co-form"
           style={{ background: "#fff", borderRadius: 14, padding: 24, border: "1px solid #e3e6ee" }}
         >
           <h2 style={{ margin: 0, color: BLUE, fontWeight: 900, fontSize: 20 }}>
@@ -137,7 +154,7 @@ export default function CheckoutPage() {
           </h2>
           <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
             <input required type="email" placeholder="Correo electrónico" style={inp} />
-            <div style={row2}>
+            <div className="co-row2" style={row2}>
               <input required placeholder="Nombre" style={inp} />
               <input required placeholder="Apellido" style={inp} />
             </div>
@@ -149,7 +166,7 @@ export default function CheckoutPage() {
           </h2>
           <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
             <input required placeholder="Dirección" style={inp} />
-            <div style={row2}>
+            <div className="co-row2" style={row2}>
               <input required placeholder="Ciudad" style={inp} />
               <input required placeholder="Código Postal" style={inp} />
             </div>
@@ -183,7 +200,7 @@ export default function CheckoutPage() {
           {pay === "card" && (
             <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
               <input required placeholder="Número de tarjeta" style={inp} />
-              <div style={row2}>
+              <div className="co-row2" style={row2}>
                 <input required placeholder="MM / AA" style={inp} />
                 <input required placeholder="CVV" style={inp} />
               </div>
@@ -228,6 +245,7 @@ export default function CheckoutPage() {
 
         {/* Summary */}
         <aside
+          className="co-summary"
           style={{
             background: "#fff",
             borderRadius: 14,

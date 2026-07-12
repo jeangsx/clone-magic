@@ -100,22 +100,38 @@ export default function ProductPage() {
       }}
     >
       <style>{`
-        @media (max-width: 860px) {
+        html, body { overflow-x: hidden; }
+        .product-root { overflow-x: hidden; }
+        @media (max-width: 1024px) {
           .product-grid { grid-template-columns: 1fr !important; gap: 24px !important; padding: 16px !important; }
-          .product-hero { min-height: 320px !important; padding: 16px !important; }
-          .product-hero img { max-height: 300px !important; }
-          .product-thumbs { flex-direction: row !important; overflow-x: auto; }
+        }
+        @media (max-width: 720px) {
+          .product-hero { min-height: 300px !important; padding: 12px !important; }
+          .product-hero img { max-height: 260px !important; }
+          .product-thumbs { flex-direction: row !important; overflow-x: auto; width: 100%; }
           .product-thumbs button { width: 64px !important; height: 64px !important; flex: 0 0 auto; }
           .product-gallery-wrap { flex-direction: column !important; }
-          .product-title { font-size: 24px !important; }
+          .product-title { font-size: 22px !important; }
           .product-benefits { grid-template-columns: repeat(3,1fr) !important; gap: 6px !important; }
-          .product-hotsale { flex-wrap: wrap !important; }
+          .product-benefits > div { padding: 8px !important; }
+          .product-hotsale { flex-wrap: wrap !important; gap: 8px !important; }
           .product-gifts { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
-          .product-trust { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
+          .product-trust { flex-wrap: wrap !important; gap: 8px !important; justify-content: flex-start !important; }
+          .product-topbanner { font-size: 12px !important; padding: 8px 12px !important; }
+          .product-header { padding: 12px 16px !important; flex-wrap: wrap; gap: 6px; }
+          .product-header a { font-size: 22px !important; }
+          .product-header span { font-size: 11px !important; }
+        }
+        @media (max-width: 420px) {
+          .product-title { font-size: 20px !important; }
+          .product-benefits { grid-template-columns: 1fr !important; }
+          .product-gifts { grid-template-columns: 1fr !important; }
+          .deal-price { font-size: 16px !important; }
         }
       `}</style>
       {/* Top banner */}
       <div
+        className="product-topbanner"
         style={{
           background: BLUE,
           color: "#fff",
@@ -131,6 +147,7 @@ export default function ProductPage() {
 
       {/* Header */}
       <header
+        className="product-header"
         style={{
           borderBottom: "1px solid #eee",
           padding: "16px 24px",
