@@ -99,6 +99,21 @@ export default function ProductPage() {
         fontFamily: "'Montserrat', system-ui, sans-serif",
       }}
     >
+      <style>{`
+        @media (max-width: 860px) {
+          .product-grid { grid-template-columns: 1fr !important; gap: 24px !important; padding: 16px !important; }
+          .product-hero { min-height: 320px !important; padding: 16px !important; }
+          .product-hero img { max-height: 300px !important; }
+          .product-thumbs { flex-direction: row !important; overflow-x: auto; }
+          .product-thumbs button { width: 64px !important; height: 64px !important; flex: 0 0 auto; }
+          .product-gallery-wrap { flex-direction: column !important; }
+          .product-title { font-size: 24px !important; }
+          .product-benefits { grid-template-columns: repeat(3,1fr) !important; gap: 6px !important; }
+          .product-hotsale { flex-wrap: wrap !important; }
+          .product-gifts { grid-template-columns: 1fr !important; }
+          .product-trust { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
+        }
+      `}</style>
       {/* Top banner */}
       <div
         style={{
