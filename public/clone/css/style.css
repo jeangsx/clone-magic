@@ -1719,3 +1719,66 @@
   transform: rotate(-45deg);
 }
 
+
+/* ========== MOBILE RESPONSIVE FIX FOR PRODUCT SHOWCASE ========== */
+@media (max-width: 900px) {
+  .product_section > div {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    padding: 0 16px !important;
+  }
+  .product_section > div > div:first-child {
+    min-height: 340px !important;
+    padding: 24px !important;
+  }
+  .product_section > div > div:first-child img {
+    max-height: 260px !important;
+  }
+}
+@media (max-width: 520px) {
+  .product_section h2 {
+    font-size: 22px !important;
+  }
+  /* rating row wraps */
+  .product_section > div > div:last-child > div:first-child {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  /* hot sale banner */
+  .product_section > div > div:last-child > div:nth-child(4) {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+  /* deal option rows */
+  .product_section > div > div:last-child > div:nth-child(5) > div {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+  .product_section > div > div:last-child > div:nth-child(5) > div > div:last-child {
+    text-align: left !important;
+  }
+}
+
+/* Consumer lab, larry & dudley, and other body_full sections stack on mobile */
+@media (max-width: 900px) {
+  .banner_consumerlab .wrapper,
+  .larry_dudley .wrapper,
+  .benefits .wrapper {
+    flex-direction: column !important;
+    display: flex !important;
+    gap: 24px;
+  }
+  .banner_consumerlab .split,
+  .larry_dudley .split,
+  .benefits .split {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .banner_consumerlab img,
+  .larry_dudley img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+html, body { overflow-x: hidden; max-width: 100%; }
