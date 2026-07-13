@@ -4,28 +4,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       @media (max-width: 768px) {
-        .product-grid { grid-template-columns: 1fr !important; padding: 16px !important; gap: 20px !important; }
-        .product-hero { min-height: 240px !important; padding: 16px !important; }
-        .product-hero img { max-height: 180px !important; max-width: 55% !important; }
-        .product-title { font-size: 20px !important; }
-        .product-benefits { grid-template-columns: repeat(3, 1fr) !important; gap: 6px !important; }
-        .product-benefits > div { padding: 6px !important; }
-        .product-hotsale { flex-wrap: wrap !important; gap: 6px !important; padding: 10px !important; }
+        .product-grid { grid-template-columns: 1fr !important; padding: 12px !important; gap: 14px !important; }
+        .product-hero { min-height: 200px !important; padding: 14px !important; }
+        .product-hero img { max-height: 150px !important; max-width: 50% !important; }
+        .product-title { font-size: 18px !important; margin-bottom: 12px !important; }
+        .product-benefits { grid-template-columns: repeat(3, 1fr) !important; gap: 4px !important; margin-bottom: 12px !important; }
+        .product-benefits > div { padding: 4px !important; }
+        .product-benefits > div > div:first-child { width: 32px !important; height: 32px !important; }
+        .product-benefits > div > div:last-child { font-size: 10px !important; }
+        .product-hotsale { flex-wrap: wrap !important; gap: 4px !important; padding: 8px !important; margin-bottom: 12px !important; }
         .product-hotsale > div:first-child { flex: 1 1 100% !important; }
-        .countdown-boxes { gap: 4px !important; }
-        .countdown-boxes > div { padding: 4px 6px !important; min-width: 32px !important; }
-        .countdown-boxes > div > div:first-child { font-size: 13px !important; }
-        .deal-option { padding: 10px !important; flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
-        .deal-option > div:last-child { align-self: flex-end !important; }
-        .deal-option-price { font-size: 18px !important; }
-        .deal-option-desc { font-size: 11px !important; }
-        .cta-button { font-size: 13px !important; padding: 12px !important; }
-        .product-gifts { grid-template-columns: repeat(3, 1fr) !important; gap: 4px !important; }
-        .product-trust { flex-wrap: wrap !important; gap: 4px !important; }
+        .product-hotsale > div:first-child > div:last-child { font-size: 11px !important; }
+        .countdown-boxes { gap: 3px !important; }
+        .countdown-boxes > div { padding: 3px 5px !important; min-width: 28px !important; border-radius: 5px !important; }
+        .countdown-boxes > div > div:first-child { font-size: 12px !important; }
+        .countdown-boxes > div > div:last-child { font-size: 8px !important; }
+        .deal-option { padding: 8px 10px !important; gap: 8px !important; border-radius: 8px !important; margin-bottom: 0 !important; }
+        .deal-option > div:first-child > div:last-child > div:first-child { font-size: 12px !important; }
+        .deal-option > div:first-child > div:last-child > div:last-child { font-size: 10px !important; }
+        .deal-option > div:last-child > div:nth-child(2) { font-size: 16px !important; }
+        .deal-option > div:last-child > div:first-child { font-size: 10px !important; }
+        .deal-option > div:last-child > div:last-child { font-size: 9px !important; padding: 2px 5px !important; }
+        .cta-button { font-size: 12px !important; padding: 10px !important; margin-top: 14px !important; }
+        .radio-circle { width: 16px !important; height: 16px !important; }
         .product-header { padding: 8px 12px !important; }
         .product-header a { font-size: 18px !important; }
         .product-header span { display: none !important; }
-        .stats-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 4px !important; }
       }
     </style>
     <meta property="og:type" content="website" />
