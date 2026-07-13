@@ -1595,24 +1595,23 @@
   color: #fff !important;
   text-decoration: none;
   border-radius: 50%;
+  border: 0;
+  outline: none;
+  padding: 0;
   box-shadow: 0 8px 24px rgba(37,211,102,0.55);
   animation: lv-wa-pulse 2s ease-in-out infinite;
 }
-.lv-wa-btn:hover { background: #1ebe5b; }
+.lv-wa-btn:hover, .lv-wa-btn:focus, .lv-wa-btn:active { background: #1ebe5b; outline: none; }
+.lv-wa-btn svg { width: 32px; height: 32px; display: block; }
 @keyframes lv-wa-pulse {
   0%,100% { box-shadow: 0 8px 24px rgba(37,211,102,0.45); }
   50%     { box-shadow: 0 8px 32px rgba(37,211,102,0.85); }
 }
 @media (max-width: 600px) {
-  .lv-wa-btn span { display: none; }
-  .lv-wa-btn { padding: 14px; border-radius: 50%; }
+  .lv-wa-btn { width: 54px; height: 54px; bottom: 16px; right: 16px; }
+  .lv-wa-btn svg { width: 28px; height: 28px; }
   .lv-header-wa { font-size: 12px; padding: 8px 12px; }
 }
-
-.lv-wa-btn span { display: none !important; }
-
-.lv-wa-btn { background: #25D366 !important; padding: 0 !important; box-shadow: 0 8px 24px rgba(37,211,102,0.55) !important; border: 0 !important; }
-.lv-wa-btn svg { width: 34px; height: 34px; display: block; }
 
 /* ===== Product preview card (below hero) ===== */
 .lv-preview-wrap {
