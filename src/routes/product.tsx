@@ -88,8 +88,16 @@ function ProductPage() {
           .lv-p-badge { font-size: 10px !important; padding: 4px 10px !important; }
         }
         @media (max-width: 480px) {
-          .lv-p-benefits { grid-template-columns: 1fr 1fr; }
-          .lv-p-benefits > div:nth-child(3) { grid-column: span 2; }
+          .lv-p-benefits { gap: 6px; }
+          .lv-p-benefits > div { padding: 8px 4px !important; }
+          .lv-p-benefits > div > div:first-child { width: 28px !important; height: 28px !important; font-size: 13px; }
+          .lv-p-benefits > div > div:last-child { font-size: 11px !important; line-height: 1.15; }
+          .lv-p-hot { flex-wrap: nowrap; gap: 6px; padding: 10px !important; }
+          .lv-p-hot > div:first-child { flex: 1 1 auto !important; min-width: 0; }
+          .lv-p-hot > div:first-child > div:last-child { font-size: 11px !important; }
+          .lv-p-timebox { padding: 4px 6px !important; min-width: 36px !important; }
+          .lv-p-timebox > div:first-child { font-size: 14px !important; }
+          .lv-p-timebox > div:last-child { font-size: 8px !important; }
         }
       `}</style>
       {/* Top banner */}
@@ -161,7 +169,7 @@ function ProductPage() {
               <div style={{ fontSize: 13, color: "#5a1010" }}>Ordena hoy para asegurar tu 70% de descuento y regalos GRATIS</div>
             </div>
             {[{ v: h, l: "HRS" }, { v: m, l: "MIN" }, { v: s, l: "SEG" }].map((x) => (
-              <div key={x.l} style={{ background: RED, color: "#fff", padding: "6px 10px", borderRadius: 8, textAlign: "center", minWidth: 46 }}>
+              <div key={x.l} className="lv-p-timebox" style={{ background: RED, color: "#fff", padding: "6px 10px", borderRadius: 8, textAlign: "center", minWidth: 46, flex: "0 0 auto" }}>
                 <div style={{ fontWeight: 900, fontSize: 18, lineHeight: 1 }}>{x.v}</div>
                 <div style={{ fontSize: 10, letterSpacing: 1 }}>{x.l}</div>
               </div>
