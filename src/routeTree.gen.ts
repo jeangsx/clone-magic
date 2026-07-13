@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProductEmbedRouteImport } from './routes/product-embed'
 import { Route as ProductRouteImport } from './routes/product'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ProductEmbedRoute = ProductEmbedRouteImport.update({
+  id: '/product-embed',
+  path: '/product-embed',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductRoute = ProductRouteImport.update({
   id: '/product',
   path: '/product',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/product': typeof ProductRoute
+  '/product-embed': typeof ProductEmbedRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/product': typeof ProductRoute
+  '/product-embed': typeof ProductEmbedRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/product': typeof ProductRoute
+  '/product-embed': typeof ProductEmbedRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/checkout' | '/product'
+  fullPaths: '/' | '/checkout' | '/product' | '/product-embed'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/checkout' | '/product'
-  id: '__root__' | '/' | '/checkout' | '/product'
+  to: '/' | '/checkout' | '/product' | '/product-embed'
+  id: '__root__' | '/' | '/checkout' | '/product' | '/product-embed'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CheckoutRoute: typeof CheckoutRoute
   ProductRoute: typeof ProductRoute
+  ProductEmbedRoute: typeof ProductEmbedRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/product-embed': {
+      id: '/product-embed'
+      path: '/product-embed'
+      fullPath: '/product-embed'
+      preLoaderRoute: typeof ProductEmbedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/product': {
       id: '/product'
       path: '/product'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CheckoutRoute: CheckoutRoute,
   ProductRoute: ProductRoute,
+  ProductEmbedRoute: ProductEmbedRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

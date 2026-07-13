@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
 
 type DealKey = "sale71" | "sale18" | "sale5" | "single";
 
@@ -51,7 +50,6 @@ function useCountdown() {
 
 function ProductEmbed() {
   const { deal } = Route.useSearch();
-  const navigate = useNavigate();
   const initial = (DEALS[deal as DealKey] ? (deal as DealKey) : "sale18") as DealKey;
   const [selected, setSelected] = useState<DealKey>(initial);
   const [heroIdx, setHeroIdx] = useState(0);
