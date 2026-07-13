@@ -1537,7 +1537,7 @@
 
 /* ===== Announcement bar (rotating marquee) ===== */
 .lv-announce {
-  background: linear-gradient(90deg, #4a0e2e, #7a1240 50%, #4a0e2e);
+  background: linear-gradient(90deg, #043579, #054497 50%, #043579);
   color: #fff;
   overflow: hidden;
   position: relative;
@@ -1586,18 +1586,16 @@
   bottom: 20px;
   right: 20px;
   z-index: 9999;
+  width: 60px;
+  height: 60px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   background: #25D366;
   color: #fff !important;
   text-decoration: none;
-  padding: 12px 18px 12px 14px;
-  border-radius: 999px;
-  font-family: 'Montserrat', system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 15px;
-  box-shadow: 0 8px 24px rgba(37,211,102,0.45);
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(37,211,102,0.55);
   animation: lv-wa-pulse 2s ease-in-out infinite;
 }
 .lv-wa-btn:hover { background: #1ebe5b; }
@@ -1610,3 +1608,5 @@
   .lv-wa-btn { padding: 14px; border-radius: 50%; }
   .lv-header-wa { font-size: 12px; padding: 8px 12px; }
 }
+
+.lv-wa-btn span { display: none !important; }
