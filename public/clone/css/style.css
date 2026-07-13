@@ -1697,3 +1697,39 @@
   .lv-preview-chips { gap: 6px; }
   .lv-preview-chip { font-size: 10px; padding: 6px 4px; }
 }
+
+/* Preview enriched */
+.lv-preview-doc { display: inline-block; background: #0b5d8d; color: #fff; font-weight: 800; font-size: 10px; padding: 3px 8px; border-radius: 999px; letter-spacing: 1px; margin-left: 8px; vertical-align: middle; }
+.lv-preview-hot { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 2px solid #d40000; background: #fff5f5; border-radius: 12px; padding: 10px 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.lv-preview-hot-title { color: #d40000; font-weight: 900; letter-spacing: 1px; font-size: 13px; }
+.lv-preview-hot-sub { color: #5a1010; font-size: 12px; }
+.lv-preview-timer { display: flex; gap: 6px; }
+.lv-preview-timebox { background: #d40000; color: #fff; padding: 4px 8px; border-radius: 8px; text-align: center; min-width: 40px; }
+.lv-preview-timebox b { display: block; font-size: 16px; font-weight: 900; line-height: 1; }
+.lv-preview-timebox span { font-size: 9px; letter-spacing: 1px; }
+.lv-preview-deals { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.lv-preview-deal { display: block; position: relative; border: 2px solid #e3e6ee; background: #fff; border-radius: 12px; padding: 12px 14px; text-decoration: none; color: #0b1a3a; transition: all .2s; }
+.lv-preview-deal:hover { border-color: #0b5d8d; }
+.lv-preview-deal--active { border-color: #0b5d8d; background: #eef3fb; }
+.lv-preview-deal-badge { position: absolute; top: -10px; left: 12px; background: #0b5d8d; color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 3px 10px; border-radius: 999px; }
+.lv-preview-deal-badge--pop { background: #d40000; }
+.lv-preview-deal-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.lv-preview-deal-label { font-weight: 800; font-size: 13px; }
+.lv-preview-deal-sub { font-size: 11px; color: #666; margin-top: 2px; }
+.lv-preview-deal-price { text-align: right; }
+.lv-preview-deal-price s { color: #888; font-size: 11px; display: block; }
+.lv-preview-deal-price b { color: #0b1a3a; font-size: 17px; font-weight: 900; }
+.lv-preview-cta--primary { display: block; width: 100%; box-sizing: border-box; padding: 14px 20px; text-decoration: none; }
+.lv-preview-cta--outline { display: block; width: 100%; box-sizing: border-box; margin-top: 10px; background: #fff; color: #0b5d8d; border: 2px solid #0b5d8d; padding: 12px 20px; border-radius: 12px; text-align: center; font-weight: 900; letter-spacing: 1px; text-decoration: none; box-shadow: none; }
+.lv-preview-trust { display: flex; justify-content: space-around; align-items: center; margin-top: 14px; padding: 10px; border: 1px solid #e3e6ee; border-radius: 10px; font-size: 12px; color: #333; gap: 8px; flex-wrap: wrap; }
+@media (max-width: 800px) {
+  .lv-preview-hot { flex-wrap: nowrap; gap: 6px; padding: 8px 10px; }
+  .lv-preview-timebox { min-width: 32px; padding: 3px 6px; }
+  .lv-preview-timebox b { font-size: 13px; }
+  .lv-preview-timebox span { font-size: 8px; }
+  .lv-preview-doc { display: none; }
+  .lv-preview-deal-label { font-size: 12px; }
+  .lv-preview-deal-price b { font-size: 15px; }
+}
+
+/* Countdown script hook */
