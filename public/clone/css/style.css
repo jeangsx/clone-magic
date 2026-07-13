@@ -1623,17 +1623,17 @@
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
-  height: 1750px;
+  height: 900px;
   border: 0;
   border-radius: 16px;
   background: #fff;
   box-shadow: 0 10px 40px rgba(0,0,0,.08);
 }
 @media (max-width: 900px) {
-  .lv-preview-embed { height: 2400px; }
+  .lv-preview-embed { height: 1650px; }
 }
 @media (max-width: 480px) {
-  .lv-preview-embed { height: 2200px; border-radius: 10px; }
+  .lv-preview-embed { height: 1500px; border-radius: 10px; }
   .lv-preview-embed-wrap { padding: 12px 6px; }
 }
 
