@@ -1599,7 +1599,7 @@
     margin-bottom: 30px;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 640px) {
   /* MARQUEE */
   .marquee-inner span {
     font-size: 0.75rem;
@@ -1721,7 +1721,7 @@
 
 
 /* ========== MOBILE RESPONSIVE FIX FOR PRODUCT SHOWCASE ========== */
-@media (max-width: 900px) {
+@media (max-width: 640px) {
   .product_section > div {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
@@ -1736,7 +1736,7 @@
 }
 
 /* Consumer lab, larry & dudley, and other body_full sections stack on mobile */
-@media (max-width: 900px) {
+@media (max-width: 640px) {
   .banner_consumerlab .wrapper,
   .larry_dudley .wrapper,
   .benefits .wrapper {
