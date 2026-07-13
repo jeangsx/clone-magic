@@ -2,36 +2,6 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      @media (max-width: 768px) {
-        .product-grid { grid-template-columns: 1fr !important; padding: 12px !important; gap: 14px !important; }
-        .product-hero { min-height: 200px !important; padding: 14px !important; }
-        .product-hero img { max-height: 150px !important; max-width: 50% !important; }
-        .product-title { font-size: 18px !important; margin-bottom: 12px !important; }
-        .product-benefits { grid-template-columns: repeat(3, 1fr) !important; gap: 4px !important; margin-bottom: 12px !important; }
-        .product-benefits > div { padding: 4px !important; }
-        .product-benefits > div > div:first-child { width: 32px !important; height: 32px !important; }
-        .product-benefits > div > div:last-child { font-size: 10px !important; }
-        .product-hotsale { flex-wrap: wrap !important; gap: 4px !important; padding: 8px !important; margin-bottom: 12px !important; }
-        .product-hotsale > div:first-child { flex: 1 1 100% !important; }
-        .product-hotsale > div:first-child > div:last-child { font-size: 11px !important; }
-        .countdown-boxes { gap: 3px !important; }
-        .countdown-boxes > div { padding: 3px 5px !important; min-width: 28px !important; border-radius: 5px !important; }
-        .countdown-boxes > div > div:first-child { font-size: 12px !important; }
-        .countdown-boxes > div > div:last-child { font-size: 8px !important; }
-        .deal-option { padding: 8px 10px !important; gap: 8px !important; border-radius: 8px !important; margin-bottom: 0 !important; }
-        .deal-option > div:first-child > div:last-child > div:first-child { font-size: 12px !important; }
-        .deal-option > div:first-child > div:last-child > div:last-child { font-size: 10px !important; }
-        .deal-option > div:last-child > div:nth-child(2) { font-size: 16px !important; }
-        .deal-option > div:last-child > div:first-child { font-size: 10px !important; }
-        .deal-option > div:last-child > div:last-child { font-size: 9px !important; padding: 2px 5px !important; }
-        .cta-button { font-size: 12px !important; padding: 10px !important; margin-top: 14px !important; }
-        .radio-circle { width: 16px !important; height: 16px !important; }
-        .product-header { padding: 8px 12px !important; }
-        .product-header a { font-size: 18px !important; }
-        .product-header span { display: none !important; }
-      }
-    </style>
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.prostagenix.com/special/special-offer" />
     <meta charset="utf-8" />
@@ -103,6 +73,995 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
     <!-- Google Tag Manager Script -->
     <!-- prettier-ignore -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://assets.prostagenix.com/esfucclbo.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','1j=aWQ9R1RNLVRERFZSNg%3D%3D&page=3');</script>
+
+    <style>
+      .product_section > div { display: grid !important; grid-template-columns: 1fr 1fr !important; }
+      
+      /* Excalvo Hero Styles */
+      .product-hero-excalvo {
+        position: relative;
+        background: #f7f8fb;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #e3e6ee;
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        font-family: 'Montserrat', system-ui, sans-serif;
+      }
+      .hero-bg-doctor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: right top;
+        z-index: 1;
+        pointer-events: none;
+      }
+      .hero-gradient-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(247,248,251,0.98) 0%, rgba(247,248,251,0.92) 45%, rgba(247,248,251,0.2) 100%);
+        z-index: 2;
+        pointer-events: none;
+      }
+      .hero-content-wrap {
+        position: relative;
+        z-index: 3;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        flex: 1;
+      }
+      .hero-badge-doc {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 12px;
+        padding: 8px 14px;
+        align-self: flex-start;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        border: 1px solid rgba(5,68,151,0.1);
+        max-width: 85%;
+      }
+      .hero-badge-doc .badge-icon {
+        font-size: 16px;
+        color: #054497;
+        font-weight: bold;
+      }
+      .hero-badge-doc .badge-text {
+        font-size: 10.5px;
+        color: #333;
+        line-height: 1.3;
+      }
+      .hero-badge-doc .badge-text strong {
+        color: #054497;
+      }
+      .hero-title-main {
+        font-size: 24px;
+        font-weight: 900;
+        color: #0b1a3a;
+        line-height: 1.25;
+        margin: 20px 0 10px;
+        max-width: 65%;
+      }
+      .hero-subtitle-sub {
+        font-size: 12.5px;
+        color: #555;
+        line-height: 1.45;
+        max-width: 58%;
+        margin-bottom: 20px;
+      }
+      .hero-bottle-img {
+        position: absolute;
+        right: 4%;
+        bottom: 80px;
+        max-height: 250px;
+        width: auto;
+        object-fit: contain;
+        z-index: 4;
+        filter: drop-shadow(0 12px 28px rgba(0,0,0,0.22));
+      }
+      .hero-ingredients-btn-wrap {
+        margin-top: auto;
+        align-self: center;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-bottom: 8px;
+        z-index: 5;
+      }
+      .hero-ingredients-btn {
+        background: #fff;
+        border: 2px solid #054497;
+        color: #054497 !important;
+        padding: 12px 36px;
+        border-radius: 30px;
+        font-weight: 800;
+        font-size: 14.5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 15px rgba(5,68,151,0.12);
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+      }
+      .hero-ingredients-btn:hover {
+        background: #054497;
+        color: #fff !important;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(5,68,151,0.2);
+      }
+      .hero-ingredients-btn svg {
+        transition: stroke 0.2s ease-in-out;
+      }
+      .hero-ingredients-btn:hover svg {
+        stroke: #fff;
+      }
+
+      /* Thumbnails styles */
+      .thumbs-list {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+      .thumb-item {
+        width: 68px;
+        height: 68px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e3e6ee;
+        flex-shrink: 0;
+        cursor: pointer;
+        background: #f7f8fb;
+        padding: 6px;
+        transition: all 0.2s;
+      }
+      .thumb-item.active {
+        border: 2.5px solid #054497;
+        box-shadow: 0 2px 8px rgba(5,68,151,0.15);
+      }
+      .thumb-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      /* Excalvo-style pod card overrides */
+      .pods_special .pod {
+        font-size: 0.85rem !important;
+        padding: 0.6em 0.4em !important;
+        margin-top: 1.2em !important;
+      }
+      .pods_special .pod .split:last-child > .heading {
+        font-size: 2em !important;
+        margin: 0 !important;
+      }
+      .pods_special .pod .split:last-child > .price span:nth-child(2) {
+        font-size: 3.5em !important;
+      }
+      .pods_special .pod .split:last-child > ul {
+        font-size: 1em !important;
+      }
+      .pods_special .pod .split:first-child > .plus {
+        font-size: 2.5em !important;
+      }
+      .pods_special .pod .split .bottles_three > img:nth-child(2) {
+        width: 35% !important;
+      }
+      .pods_special .pod .split .bottles_three > img:nth-child(1),
+      .pods_special .pod .split .bottles_three > img:nth-child(3) {
+        width: 30% !important;
+      }
+      .pods_special .pod .split .bottles_two > img:nth-child(1) {
+        width: 50% !important;
+      }
+      .pods_special .pod .split .bottles_two > img:nth-child(2) {
+        width: 55% !important;
+      }
+      .pods_special .pod .split .bottles_one > img:first-child {
+        width: 80% !important;
+      }
+      .pods_special .pod .split .bottles_one {
+        width: auto !important;
+      }
+      .pods_special .pod .split:last-child .price .btn,
+      .pods_special .pod .split:last-child .price .btn_orange {
+        background: #3b82f6 !important;
+        border-radius: 50px !important;
+        font-size: 0.95em !important;
+        padding: 0.5em 1.2em !important;
+        filter: none !important;
+        font-family: 'Montserrat', system-ui, sans-serif !important;
+        text-transform: none !important;
+        font-weight: 700 !important;
+        letter-spacing: 0 !important;
+      }
+      .pods_special .pod .split:last-child .price .btn_orange::before {
+        display: none !important;
+      }
+      .pods_special .pod .split:last-child .price .btn span {
+        color: #fff !important;
+        font-weight: 700 !important;
+      }
+      .pods_special .pod .split:last-child .savings {
+        font-size: 1.2em !important;
+      }
+      .pods_special .pod .split:last-child .badge {
+        width: 14% !important;
+      }
+      .pods_special .pod .split:first-child > .badge {
+        width: 12% !important;
+      }
+
+      /* Hot sale countdown - Excalvo style */
+      .hot-sale-box {
+        border: 2px solid #ef4444;
+        border-radius: 18px;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 18px;
+        background: #fff5f5;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .hot-sale-text { flex: 1; min-width: 0; }
+      .hot-sale-title { color: #ef4444; font-weight: 900; font-size: 14px; letter-spacing: 0.6px; }
+      .hot-sale-sub { font-size: 12px; color: #5a1010; margin-top: 4px; line-height: 1.25; }
+      .hot-sale-timer { display: flex; gap: 8px; flex-shrink: 0; align-items: center; }
+      .hot-sale-timer .timer-block {
+        background: #ef4444;
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 10px;
+        text-align: center;
+        min-width: 48px;
+        box-shadow: 0 2px 6px rgba(239,68,68,0.12);
+      }
+      .hot-sale-timer .timer-block .val { font-weight: 900; font-size: 16px; line-height: 1; }
+      .hot-sale-timer .timer-block .lbl { font-size: 10px; letter-spacing: 0.5px; margin-top: 4px; opacity: 0.95; }
+
+      /* Deal pills - Excalvo style */
+      #deal-options { display: flex; flex-direction: column; gap: 12px; padding-top: 4px; }
+      .deal-pill {
+        position: relative;
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 2px solid #e2e8f0;
+        background: #fff;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.2s;
+        font-family: 'Montserrat', system-ui, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .deal-pill.has-badge { margin-top: 10px; padding-top: 20px; }
+      .deal-pill-badge {
+        position: absolute;
+        top: -12px;
+        left: 16px;
+        font-size: 9px;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 10px;
+        white-space: nowrap;
+        color: #fff;
+        letter-spacing: 0.05em;
+        z-index: 2;
+      }
+      .deal-pill-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+      .deal-pill-info { min-width: 0; flex: 1; }
+      .deal-pill-label { font-size: 14px; font-weight: 800; color: #1e293b; margin: 0; line-height: 1.25; }
+      .deal-pill-sub { font-size: 11px; color: #64748b; margin: 3px 0 0; }
+      .deal-pill-price-col { text-align: right; flex-shrink: 0; }
+      .deal-pill-price { font-size: 18px; font-weight: 800; color: #1e293b; margin: 2px 0 0; line-height: 1.15; }
+      .deal-pill-save {
+        display: inline-block;
+        margin-top: 4px;
+        background: #dbeafe;
+        color: #1e40af;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 999px;
+        border: 1px solid #93c5fd;
+      }
+      .product-rating-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+      .product-title-main { font-size: 26px; font-weight: 900; color: #0b1a3a; margin: 0 0 20px; line-height: 1.2; }
+      .product-benefits-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+      .order-total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin: 14px 0 10px;
+        padding: 0 2px;
+      }
+      .order-total-savings { text-align: right; color: #3b82f6; font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+      .order-urgency-bar {
+        background: linear-gradient(90deg, #054497, #0a5cc7);
+        color: #fff;
+        text-align: center;
+        padding: 10px 12px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 12px;
+        margin-bottom: 14px;
+      }
+
+      @media (max-width: 640px) {
+        .product_section { padding: 24px 0 !important; }
+        .product_section > div {
+          grid-template-columns: 1fr !important;
+          gap: 20px !important;
+          padding: 0 16px !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .product_section .product-left { order: 1; width: 100%; min-width: 0; }
+        .product_section .product-right { order: 2; padding: 0 !important; width: 100%; min-width: 0; }
+        .testimonios-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+        .testimonios-section { padding: 0 16px 24px !important; }
+
+        /* Mobile Hero - stacked layout like Excalvo */
+        .product-hero-excalvo {
+          min-height: unset !important;
+          display: flex !important;
+          flex-direction: column !important;
+          overflow: visible !important;
+          background: #f7f8fb !important;
+        }
+        .hero-bg-doctor { display: none !important; }
+        .hero-gradient-overlay { display: none !important; }
+        .hero-content-wrap {
+          display: flex !important;
+          flex-direction: column !important;
+          padding: 16px !important;
+          position: static !important;
+          height: auto !important;
+        }
+        .hero-badge-doc {
+          padding: 8px 12px !important;
+          max-width: 100% !important;
+          align-self: stretch !important;
+        }
+        .hero-badge-doc .badge-text { font-size: 10px !important; }
+        .hero-title-main {
+          font-size: 17px !important;
+          max-width: 100% !important;
+          margin: 14px 0 8px !important;
+          position: static !important;
+          text-align: left !important;
+        }
+        .hero-subtitle-sub {
+          font-size: 12px !important;
+          max-width: 100% !important;
+          margin-bottom: 14px !important;
+          position: static !important;
+        }
+        .hero-bottle-img {
+          position: static !important;
+          max-height: 260px !important;
+          width: auto !important;
+          max-width: 90% !important;
+          margin: 0 auto !important;
+          transform: none !important;
+          right: auto !important;
+          bottom: auto !important;
+          filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12));
+        }
+        .hero-ingredients-btn-wrap {
+          margin-top: 14px !important;
+          padding-bottom: 4px !important;
+        }
+        .hero-ingredients-btn {
+          padding: 10px 28px !important;
+          font-size: 13.5px !important;
+        }
+        .thumbs-list {
+          margin-top: 12px;
+          gap: 8px;
+          -webkit-overflow-scrolling: touch;
+        }
+        .thumb-item { width: 60px; height: 60px; }
+
+        /* Product info mobile */
+        .product-rating-row { gap: 8px !important; }
+        .product-rating-row span:last-child { font-size: 10px !important; padding: 4px 8px !important; }
+        .product-title-main { font-size: 22px !important; }
+        .product-benefits-row { gap: 8px !important; }
+        .product-benefits-row > div > div:first-child { width: 42px !important; height: 42px !important; }
+        .product-benefits-row > div > div:last-child { font-size: 11px !important; }
+
+        /* Hot sale mobile */
+        .hot-sale-box {
+          flex-wrap: wrap;
+          padding: 12px !important;
+        }
+        .hot-sale-timer { width: 100%; justify-content: center; margin-top: 4px; }
+
+        /* Deal pills mobile */
+        .deal-pill { padding: 12px 12px !important; gap: 8px !important; }
+        .deal-pill.has-badge { padding-top: 18px !important; }
+        .deal-pill-label { font-size: 13px !important; }
+        .deal-pill-price { font-size: 16px !important; }
+        .deal-pill-save { font-size: 9px !important; padding: 2px 6px !important; }
+        .deal-pill-badge { top: -11px !important; left: 12px !important; font-size: 8px !important; }
+
+        /* Pod cards mobile */
+        .pods_special .wrapper { padding: 20px 2.5% !important; }
+        .pods_special .wrapper > h2 { font-size: 1.3em !important; }
+        .pods_special .pod .split:last-child > .heading { font-size: 1.2em !important; }
+        .pods_special .pod .split:last-child > .price span:nth-child(2) { font-size: 2.5em !important; }
+        .pods_special .pod .split:last-child > ul { font-size: 0.85em !important; width: 100% !important; }
+        .pods_special .pod { font-size: 0.78rem !important; padding: 0.5em 0.3em !important; }
+        .pods_special .pod .split:first-child .bottles { width: 30% !important; }
+        .pods_special .pod .split .bottles_three > img:nth-child(2) { width: 30% !important; }
+        .pods_special .pod .split .bottles_three > img:nth-child(1),
+        .pods_special .pod .split .bottles_three > img:nth-child(3) { width: 25% !important; }
+        .pods_special .pod .split .bottles_two { width: 15% !important; text-align: center !important; }
+        .pods_special .pod .split .bottles_two > img:nth-child(1) { width: 45% !important; }
+        .pods_special .pod .split .bottles_two > img:nth-child(2) { width: 50% !important; }
+        .pods_special .pod .split .bottles_one > img:first-child { width: 60% !important; }
+        .pods_special .pod .split .bottles_one { width: auto !important; }
+        .pods_special .pod .split:last-child .price .btn,
+        .pods_special .pod .split:last-child .price .btn_orange { font-size: 0.85em !important; padding: 0.4em 0.8em !important; }
+        .pods_special .pod .split:last-child .savings { font-size: 1em !important; }
+        .pods_special .pod .split:last-child .badge { width: 18% !important; bottom: 65% !important; }
+      }
+
+      @media (max-width: 400px) {
+        .deal-pill { flex-wrap: wrap; }
+        .deal-pill-price-col { width: 100%; text-align: left !important; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px; padding-left: 28px; }
+        .product-title-main { font-size: 20px !important; }
+      }
+
+      .mobile-excalvo-header {
+        display: none;
+      }
+
+      @media (max-width: 640px) {
+        html,
+        body {
+          background: #334155 !important;
+        }
+
+        .mobile-excalvo-header {
+          display: none !important;
+        }
+
+        .mobile-excalvo-logo {
+          display: grid;
+          gap: 0;
+          line-height: 1;
+          color: #0a1f4d;
+          letter-spacing: 0;
+        }
+
+        .mobile-excalvo-logo strong {
+          font-family: Montserrat-Black, Arial, sans-serif;
+          font-size: 22px;
+          line-height: 18px;
+        }
+
+        .mobile-excalvo-logo span {
+          font-size: 7px;
+          letter-spacing: 4px;
+          color: #667085;
+          margin-left: 2px;
+        }
+
+        .mobile-excalvo-actions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          color: #111827;
+          font-family: Montserrat-Bold, Arial, sans-serif;
+          font-size: 13px;
+        }
+
+        .mobile-bag {
+          position: relative;
+          width: 22px;
+          height: 22px;
+        }
+
+        .mobile-bag::before {
+          content: "";
+          position: absolute;
+          inset: 5px 2px 1px;
+          border: 2px solid #111827;
+          border-radius: 2px;
+        }
+
+        .mobile-bag::after {
+          content: "2";
+          position: absolute;
+          top: -11px;
+          right: -10px;
+          width: 19px;
+          height: 19px;
+          border-radius: 50%;
+          background: #ec5aa8;
+          color: #fff;
+          font-size: 11px;
+          line-height: 19px;
+          text-align: center;
+        }
+
+        .mobile-menu-lines,
+        .mobile-menu-lines::before,
+        .mobile-menu-lines::after {
+          display: block;
+          width: 22px;
+          height: 2px;
+          background: #111827;
+          border-radius: 999px;
+          content: "";
+        }
+
+        .mobile-menu-lines::before {
+          transform: translateY(-7px);
+        }
+
+        .mobile-menu-lines::after {
+          transform: translateY(5px);
+        }
+
+        .product-rating-row,
+        .product-title-main,
+        .product-benefits-row,
+        .testimonios-section {
+          display: none !important;
+        }
+
+        .marquee {
+          display: none !important;
+        }
+
+        .banner_special {
+          display: block !important;
+          width: 100% !important;
+          max-width: 405px !important;
+          margin: 0 auto !important;
+          padding: 24px 12px 28px !important;
+          background: #0757b2 !important;
+          box-sizing: border-box !important;
+          overflow: hidden !important;
+        }
+
+        .banner_special .body_full {
+          width: 100% !important;
+          max-width: none !important;
+          margin: 0 !important;
+        }
+
+        .banner_special .headings {
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          color: #fff !important;
+        }
+
+        .banner_special .headings > .heading:first-child {
+          display: block !important;
+          margin: 0 0 8px !important;
+          padding: 0 !important;
+          font-family: Montserrat-Bold, Arial, sans-serif !important;
+          font-size: 18px !important;
+          line-height: 1.1 !important;
+          letter-spacing: 0 !important;
+        }
+
+        .banner_special .headings > h1 {
+          margin: 0 !important;
+          font-family: Montserrat-Black, Arial, sans-serif !important;
+          font-size: 37px !important;
+          line-height: 0.96 !important;
+          color: #fff !important;
+          text-transform: uppercase !important;
+        }
+
+        .banner_special .headings > h1 strong {
+          font-size: 0.86em !important;
+          color: #e60012 !important;
+          -webkit-text-stroke: 1.5px #fff !important;
+          paint-order: stroke fill !important;
+        }
+
+        .banner_special .headings > h1 span {
+          display: block !important;
+          font-size: 0.74em !important;
+          line-height: 1.03 !important;
+        }
+
+        .banner_special .headings > img {
+          display: block !important;
+          width: 72px !important;
+          right: 18px !important;
+          bottom: 2px !important;
+        }
+
+        .banner_special .bottles {
+          display: block !important;
+          width: 92% !important;
+          margin: 20px auto 8px !important;
+          position: relative !important;
+          top: auto !important;
+          right: auto !important;
+          text-align: center !important;
+        }
+
+        .banner_special .bottles > img:nth-child(1),
+        .banner_special .bottles > img:nth-child(3) {
+          width: 39% !important;
+          top: 10% !important;
+        }
+
+        .banner_special .bottles > img:nth-child(2) {
+          width: 48% !important;
+        }
+
+        .banner_special .bottom {
+          width: 100% !important;
+          margin: 14px 0 0 !important;
+          padding: 0 !important;
+        }
+
+        .banner_special .bottom .counter {
+          width: 100% !important;
+          margin: 0 auto 26px !important;
+          display: block !important;
+        }
+
+        .banner_special .bottom .copy {
+          width: 100% !important;
+          margin: 0 !important;
+          text-align: center !important;
+          display: block !important;
+        }
+
+        .banner_special .bottom .copy > .heading {
+          display: block !important;
+          margin: 0 !important;
+          font-family: Montserrat-Black, Arial, sans-serif !important;
+          font-size: 23px !important;
+          line-height: 1.1 !important;
+          color: #fff !important;
+        }
+
+        .banner_special .bottom .copy > .heading:last-child {
+          margin-top: 8px !important;
+          font-size: 34px !important;
+          line-height: 0.96 !important;
+          color: #e60012 !important;
+          -webkit-text-stroke: 1.2px #fff !important;
+          paint-order: stroke fill !important;
+        }
+
+        .product_section {
+          width: 100% !important;
+          max-width: 405px !important;
+          margin: 0 auto !important;
+          padding: 16px 18px 34px !important;
+          background: #fff !important;
+          box-sizing: border-box !important;
+        }
+
+        .product_section > div {
+          display: block !important;
+          width: 100% !important;
+          max-width: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        .product-right {
+          width: 100% !important;
+          padding: 0 !important;
+          margin: 18px 0 0 !important;
+          display: flex !important;
+          flex-direction: column !important;
+        }
+
+        .product-left {
+          display: block !important;
+          width: 100% !important;
+          margin: 0 0 18px !important;
+        }
+
+        .product-hero-excalvo {
+          min-height: 0 !important;
+          height: auto !important;
+          border-radius: 16px !important;
+          overflow: hidden !important;
+          background: #f8fbff !important;
+          border: 1px solid #e3e6ee !important;
+          box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06) !important;
+          position: relative !important;
+        }
+
+        .hero-bg-doctor,
+        .hero-gradient-overlay,
+        .hero-badge-doc,
+        .hero-title-main,
+        .hero-subtitle-sub {
+          display: none !important;
+        }
+
+        .hero-content-wrap {
+          height: auto !important;
+          padding: 14px 14px 18px !important;
+          display: grid !important;
+          place-items: center !important;
+          position: relative !important;
+        }
+
+        .hero-bottle-img {
+          display: block !important;
+          position: static !important;
+          width: 88% !important;
+          max-width: 310px !important;
+          height: auto !important;
+          max-height: 260px !important;
+          margin: 0 auto !important;
+          transform: none !important;
+          filter: drop-shadow(0 14px 24px rgba(15, 23, 42, 0.14)) !important;
+        }
+
+        .hero-ingredients-btn-wrap {
+          display: none !important;
+        }
+
+        .thumbs-list {
+          display: none !important;
+        }
+
+        .product-left > div[style*="grid-template-columns"] {
+          display: none !important;
+        }
+
+        .hot-sale-box {
+          order: 1 !important;
+          display: grid !important;
+          grid-template-columns: 34px minmax(0, 1fr) minmax(120px, 160px) !important;
+          align-items: center !important;
+          gap: 7px !important;
+          width: 100% !important;
+          margin: 0 0 18px !important;
+          padding: 16px 10px !important;
+          border: 1.8px solid #ff4248 !important;
+          border-radius: 13px !important;
+          background: #fff !important;
+        }
+
+        .hot-sale-box::before {
+          content: "";
+          width: 24px;
+          height: 30px;
+          display: block;
+          margin: 0 auto;
+          background: no-repeat center / contain
+            url("data:image/svg+xml,%3Csvg width='31' height='36' viewBox='0 0 31 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15.5 34C22.4 34 28 28.8 28 22.2C28 14 21.2 7.9 15.5 2C9.8 7.9 3 14 3 22.2C3 28.8 8.6 34 15.5 34Z' stroke='%23ff4248' stroke-width='2.3'/%3E%3Cpath d='M15.5 29C19.2 29 22.2 26.2 22.2 22.6C22.2 18.4 18.8 15.6 15.5 11.8C12.2 15.6 8.8 18.4 8.8 22.6C8.8 26.2 11.8 29 15.5 29Z' stroke='%23ff4248' stroke-width='2.3'/%3E%3C/svg%3E");
+        }
+
+        .hot-sale-text {
+          width: auto !important;
+        }
+
+        .hot-sale-title {
+          font-size: 14px !important;
+          line-height: 1.05 !important;
+          letter-spacing: 0.04em !important;
+          color: #ff4248 !important;
+        }
+
+        .hot-sale-title::first-letter {
+          font-size: 0;
+        }
+
+        .hot-sale-sub {
+          margin-top: 3px !important;
+          font-size: 11px !important;
+          line-height: 1.18 !important;
+          font-family: Montserrat-Bold, Arial, sans-serif !important;
+          color: #ff4248 !important;
+        }
+
+
+        .hot-sale-timer {
+          width: auto !important;
+          display: grid !important;
+          grid-template-columns: repeat(3, 1fr) !important;
+          gap: 6px !important;
+          margin: 0 !important;
+          align-items: center !important;
+        }
+
+        .hot-sale-timer .timer-block {
+          min-width: 0 !important;
+          padding: 6px 6px !important;
+          border-radius: 6px !important;
+          background: #ff4248 !important;
+          box-sizing: border-box !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+
+        .hot-sale-timer .timer-block .val {
+          font-size: 14px !important;
+          line-height: 1 !important;
+        }
+
+        .hot-sale-timer .timer-block .lbl {
+          margin-top: 2px !important;
+          font-size: 8px !important;
+          line-height: 1 !important;
+        }
+
+        #deal-options {
+          order: 2 !important;
+          gap: 12px !important;
+          padding: 0 !important;
+        }
+
+        .deal-pill {
+          min-height: 122px !important;
+          flex-direction: row !important;
+          align-items: center !important;
+          padding: 18px 18px !important;
+          border-radius: 14px !important;
+          border-width: 2px !important;
+          background: #fff !important;
+          box-shadow: none !important;
+        }
+
+        .deal-pill-left {
+          width: auto !important;
+          flex-wrap: nowrap !important;
+          align-items: center !important;
+          gap: 12px !important;
+        }
+
+        .radio-circle {
+          width: 18px !important;
+          height: 18px !important;
+        }
+
+        .deal-pill-info {
+          padding-right: 4px !important;
+        }
+
+        .deal-pill-label {
+          font-family: Montserrat-Black, Arial, sans-serif !important;
+          font-size: 17px !important;
+          line-height: 1.08 !important;
+          color: #0f1d36 !important;
+        }
+
+        .deal-pill-sub {
+          margin-top: 7px !important;
+          font-size: 13px !important;
+          line-height: 1.35 !important;
+          color: #53617d !important;
+        }
+
+        .deal-pill-price-col {
+          width: auto !important;
+          min-width: 112px !important;
+          display: grid !important;
+          justify-items: end !important;
+          gap: 5px !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          text-align: right !important;
+        }
+
+        .deal-pill-price {
+          font-family: Montserrat-Black, Arial, sans-serif !important;
+          font-size: 23px !important;
+          line-height: 1 !important;
+          margin: 0 !important;
+          color: #0f1d36 !important;
+        }
+
+        .deal-pill-save {
+          margin: 0 !important;
+          padding: 6px 10px !important;
+          font-size: 11px !important;
+          line-height: 1 !important;
+          border-radius: 999px !important;
+          color: #0a46b4 !important;
+          background: #dbeafe !important;
+          border: 1px solid #93c5fd !important;
+          white-space: nowrap !important;
+        }
+
+        .deal-pill-price-col > div:first-child {
+          font-size: 12px !important;
+          line-height: 1 !important;
+          margin: 0 !important;
+        }
+
+        .deal-pill-badge {
+          top: -12px !important;
+          left: 20px !important;
+          padding: 5px 14px !important;
+          border-radius: 999px !important;
+          font-size: 10px !important;
+          line-height: 1 !important;
+          font-family: Montserrat-Black, Arial, sans-serif !important;
+        }
+
+        .order-urgency-bar {
+          order: 3 !important;
+          margin: 20px 0 20px !important;
+          padding: 15px 18px !important;
+          border-radius: 8px !important;
+          text-align: left !important;
+          font-size: 13px !important;
+          line-height: 1.45 !important;
+          background: linear-gradient(90deg, #377ff2, #173db8) !important;
+        }
+
+        .order-total-row {
+          order: 4 !important;
+          flex-direction: row !important;
+          align-items: baseline !important;
+          gap: 8px !important;
+          margin: 0 0 6px !important;
+        }
+
+        .order-total-row > div {
+          margin-left: auto !important;
+        }
+
+        #total-label {
+          font-size: 16px !important;
+          color: #67728a !important;
+        }
+
+        #total-price {
+          font-family: Montserrat-Black, Arial, sans-serif !important;
+          font-size: 29px !important;
+          line-height: 1 !important;
+        }
+
+        .order-total-savings {
+          order: 5 !important;
+          margin: 0 0 16px !important;
+          font-size: 14px !important;
+          color: #173db8 !important;
+        }
+
+        #cta-btn {
+          order: 6 !important;
+          padding: 18px 20px !important;
+          border-radius: 999px !important;
+          background: #1f2b3d !important;
+          font-family: Montserrat-Black, Arial, sans-serif !important;
+          font-size: 17px !important;
+          letter-spacing: 0.02em !important;
+        }
+      }
+    </style>
     <!-- End Google Tag Manager -->
 
     <!-- STRUCTURED DATA MARKUP -->
@@ -173,6 +1132,127 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
     <link href="/clone/css/style.css" rel="stylesheet" />
     <link href="/clone/css/counter.css" rel="stylesheet" />
 
+    <style>
+      @media (max-width: 640px) {
+        .product_section { padding: 24px 0 !important; }
+        .product_section > div {
+          display: grid !important;
+          grid-template-columns: 1fr !important;
+          gap: 24px !important;
+          padding: 0 16px !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .product_section .product-left,
+        .product_section .product-right { width: 100% !important; min-width: 0 !important; }
+        .product-hero-excalvo {
+          min-height: unset !important;
+          overflow: visible !important;
+          padding: 0 !important;
+        }
+        .hero-bg-doctor,
+        .hero-gradient-overlay { display: none !important; }
+        .hero-content-wrap {
+          display: flex !important;
+          flex-direction: column !important;
+          padding: 18px !important;
+          position: static !important;
+          height: auto !important;
+        }
+        .hero-bottle-img {
+          position: static !important;
+          max-height: 260px !important;
+          width: auto !important;
+          max-width: 90% !important;
+          margin: 0 auto 16px !important;
+          transform: none !important;
+          right: auto !important;
+          bottom: auto !important;
+          filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12)) !important;
+        }
+        .hero-ingredients-btn-wrap { margin-top: 14px !important; padding-bottom: 4px !important; }
+        .hero-ingredients-btn {
+          padding: 10px 28px !important;
+          font-size: 13.5px !important;
+        }
+        .thumbs-list { margin-top: 12px; gap: 8px; -webkit-overflow-scrolling: touch; }
+        .thumb-item { width: 60px; height: 60px; }
+        .product-rating-row { gap: 8px !important; }
+        .product-rating-row span:last-child { font-size: 10px !important; padding: 4px 8px !important; }
+        .product-title-main { font-size: 22px !important; }
+        .product-benefits-row { gap: 8px !important; grid-template-columns: 1fr !important; }
+        .product-benefits-row > div > div:first-child { width: 42px !important; height: 42px !important; }
+        .product-benefits-row > div > div:last-child { font-size: 11px !important; }
+        .hot-sale-box {
+          flex-wrap: wrap !important;
+          align-items: flex-start !important;
+          justify-content: center !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .hot-sale-text {
+          width: 100% !important;
+          min-width: 0 !important;
+        }
+        .hot-sale-timer {
+          width: 100% !important;
+          justify-content: center !important;
+          margin-top: 12px !important;
+          min-width: 0 !important;
+        }
+        .hot-sale-timer .timer-block {
+          min-width: 60px !important;
+          flex: 1 1 30% !important;
+        }
+        .deal-pill {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          padding: 14px 16px !important;
+        }
+        .deal-pill-left {
+          width: 100% !important;
+          flex-wrap: wrap !important;
+          align-items: flex-start !important;
+        }
+        .deal-pill-price-col {
+          width: 100% !important;
+          text-align: left !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          gap: 10px !important;
+          flex-wrap: wrap !important;
+          margin-top: 10px !important;
+          padding-left: 0 !important;
+        }
+        .deal-pill-price-col > div,
+        .deal-pill-price-col > span { width: auto !important; }
+        .deal-pill-label { font-size: 14px !important; }
+        .deal-pill-price { font-size: 18px !important; margin: 0 !important; }
+        .deal-pill-save { font-size: 11px !important; padding: 4px 8px !important; margin-top: 0 !important; }
+        .deal-pill-badge { top: -12px !important; left: 16px !important; }
+        .order-total-row { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+        .order-urgency-bar { width: 100% !important; }
+        .product_section { overflow-x: hidden !important; }
+        .testimonios-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+      }
+
+      @media (max-width: 400px) {
+        .deal-pill { flex-wrap: wrap !important; }
+        .deal-pill-price-col {
+          width: 100% !important;
+          text-align: left !important;
+          display: flex !important;
+          align-items: center !important;
+          gap: 10px !important;
+          flex-wrap: wrap !important;
+          margin-top: 4px !important;
+          padding-left: 0 !important;
+        }
+        .product-title-main { font-size: 20px !important; }
+      }
+    </style>
+
     <!-- SCRIPTS -->
 
     <script defer src="https://www.prostagenix.com/special/special-offer/js/zepto.min.js"></script>
@@ -189,6 +1269,21 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
         style="display: none; visibility: hidden"
       ></iframe>
     </noscript>
+
+    <div class="mobile-excalvo-header" aria-label="Excalvo mobile header">
+      <div class="mobile-excalvo-logo">
+        <strong>EXCALVO</strong>
+        <span>CRECE TU CABELLO</span>
+      </div>
+      <div class="mobile-excalvo-actions">
+        <span>◎</span>
+        <span>⌄</span>
+        <span>PE</span>
+        <span>⌄</span>
+        <span class="mobile-bag" aria-hidden="true"></span>
+        <span class="mobile-menu-lines" aria-hidden="true"></span>
+      </div>
+    </div>
 
     <!-- MARQUEE -->
     <div class="marquee">
@@ -275,48 +1370,87 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
     <!-- PRODUCT SHOWCASE -->
 
     <div class="product_section" style="background: #fff; padding: 40px 0;">
-      <div class="product-grid" style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
         <!-- LEFT: Product Image -->
-        <div>
-          <div style="background: linear-gradient(135deg, #054497 0%, #0a5cc7 100%); border-radius: 20px; padding: 40px; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix" style="max-width: 70%; height: auto; object-fit: contain; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));">
-            <button style="margin-top: 20px; background: #fff; border: 2px solid #054497; color: #054497; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 18px;">🌿</span> Ingredientes
-            </button>
+        <div class="product-left">
+          <div class="product-hero-excalvo">
+            <!-- Background Doctor Image -->
+            <img class="hero-bg-doctor" src="https://www.prostagenix.com/images/home/dudley-danoff.png" alt="Dr. Dudley Danoff">
+            <!-- Smooth Gradient Overlay -->
+            <div class="hero-gradient-overlay"></div>
+
+            <!-- Content -->
+            <div class="hero-content-wrap">
+              <!-- Badge -->
+              <div class="hero-badge-doc">
+                <span class="badge-icon">⚕</span>
+                <div class="badge-text"><strong>Elección De Los Médicos</strong> · Cientos de Médicos Compartieron Esto Con Sus Pacientes Sin Recibir Compensación.</div>
+              </div>
+
+              <!-- Titles -->
+              <h3 class="hero-title-main">Reemplaza Más de 10 Productos Prostáticos por Solo S/ 1.50 al Día</h3>
+              <p class="hero-subtitle-sub">Formulado por los mejores urólogos de Los Ángeles. Clínicamente comprobado para mejorar la salud urinaria y flujo de la próstata.</p>
+
+              <!-- Center-right Bottle Overlay -->
+              <img class="hero-bottle-img" src="https://www.prostagenix.com/images/product/bottle_box.png" alt="ProstaGenix">
+
+              <!-- Centered Ingredients Button inside image box -->
+              <div class="hero-ingredients-btn-wrap">
+                <button class="hero-ingredients-btn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#054497" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.5 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                  Ingredientes
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thumbnails -->
+          <div class="thumbs-list">
+            <div class="thumb-item active" onclick="changeHeroImage(0)">
+              <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="">
+            </div>
+            <div class="thumb-item" onclick="changeHeroImage(1)">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="">
+            </div>
+            <div class="thumb-item" onclick="changeHeroImage(2)">
+              <img src="https://www.prostagenix.com/images/home/dudley-danoff.png" alt="">
+            </div>
+            <div class="thumb-item" onclick="changeHeroImage(3)">
+              <img src="https://www.prostagenix.com/special/special-offer/img/number-one-award.png" alt="">
+            </div>
           </div>
 
           <!-- Stats debajo de la imagen -->
           <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px;">
-            <div style="text-align: center; padding: 16px 6px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee;">
-              <div style="font-weight: 900; font-size: 20px; color: #054497;">150K+</div>
-              <div style="font-size: 11px; color: #555; margin-top: 2px;">Clientes satisfechos</div>
+            <div style="text-align: center; padding: 14px 6px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee;">
+              <div style="font-weight: 900; font-size: 18px; color: #054497;">150K+</div>
+              <div style="font-size: 11px; color: #555; margin-top: 2px;">Clientes</div>
             </div>
-            <div style="text-align: center; padding: 16px 6px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee;">
-              <div style="font-weight: 900; font-size: 20px; color: #054497;">4.8/5</div>
-              <div style="font-size: 11px; color: #555; margin-top: 2px;">Calificación promedio</div>
+            <div style="text-align: center; padding: 14px 6px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee;">
+              <div style="font-weight: 900; font-size: 18px; color: #054497;">4.8/5</div>
+              <div style="font-size: 11px; color: #555; margin-top: 2px;">Calificación</div>
             </div>
-            <div style="text-align: center; padding: 16px 6px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee;">
-              <div style="font-weight: 900; font-size: 20px; color: #054497;">90 Días</div>
-              <div style="font-size: 11px; color: #555; margin-top: 2px;">Garantía de devolución</div>
+            <div style="text-align: center; padding: 14px 6px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee;">
+              <div style="font-weight: 900; font-size: 18px; color: #054497;">90 Días</div>
+              <div style="font-size: 11px; color: #555; margin-top: 2px;">Garantía</div>
             </div>
           </div>
-
         </div>
 
         <!-- RIGHT: Product Info -->
-        <div style="padding: 20px 0;">
+        <div class="product-right">
           <!-- Rating -->
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <div class="product-rating-row">
             <span style="color: #f39200; font-size: 20px;">★★★★★</span>
             <span style="color: #555; font-weight: 600;">4.8 (13,167)</span>
-            <span style="background: #054497; color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">RECOMENDADO POR TRICÓLOGOS</span>
+            <span style="background: #054497; color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">RECOMENDADO POR MÉDICOS</span>
           </div>
 
           <!-- Title -->
-          <h2 style="font-size: 28px; font-weight: 900; color: #0b1a3a; margin: 0 0 24px; line-height: 1.2;">ProstaGenix™ – Fórmula Clínica para la Próstata</h2>
+          <h2 class="product-title-main">ProstaGenix™ – Fórmula Clínica para la Próstata</h2>
 
           <!-- Benefits Icons -->
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+          <div class="product-benefits-row">
             <div style="text-align: center;">
               <div style="width: 50px; height: 50px; background: #eaf1fb; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#054497" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
@@ -337,90 +1471,112 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
             </div>
           </div>
 
-          <!-- Hot Sale Banner -->
-          <div class="product-hotsale" style="border: 2px solid #d40000; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; background: #fff5f5;">
-            <div style="width: 40px; height: 40px; background: #d40000; border-radius: 50%; display: flex; align-items: justify-content: center;">
-              <span style="font-size: 20px;">🔥</span>
+          <!-- Hot Sale countdown - Excalvo style -->
+          <div class="hot-sale-box">
+            <div class="hot-sale-text">
+              <div class="hot-sale-title">🔥 OFERTA CALIENTE</div>
+              <div class="hot-sale-sub">Ordena hoy para recibir regalos GRATIS</div>
             </div>
-            <div style="flex: 1;">
-              <div style="color: #d40000; font-weight: 900; font-size: 14px;">OFERTA CALIENTE</div>
-              <div style="color: #5a1010; font-size: 13px;">Ordena antes del 11 de julio de 2026 para recibir regalos GRATIS</div>
-            </div>
-            <div class="countdown-boxes" style="display: flex; gap: 8px;">
-              <div style="background: #d40000; color: #fff; padding: 8px 12px; border-radius: 8px; text-align: center; min-width: 50px;">
-                <div style="font-weight: 900; font-size: 18px;">03</div>
-                <div style="font-size: 10px;">HRS</div>
-              </div>
-              <div style="background: #d40000; color: #fff; padding: 8px 12px; border-radius: 8px; text-align: center; min-width: 50px;">
-                <div style="font-weight: 900; font-size: 18px;">49</div>
-                <div style="font-size: 10px;">MIN</div>
-              </div>
-              <div style="background: #d40000; color: #fff; padding: 8px 12px; border-radius: 8px; text-align: center; min-width: 50px;">
-                <div style="font-weight: 900; font-size: 18px;">39</div>
-                <div style="font-size: 10px;">SEG</div>
-              </div>
+            <div class="hot-sale-timer">
+              <div class="timer-block"><div class="val" id="cd-hrs">00</div><div class="lbl">HRS</div></div>
+              <div class="timer-block"><div class="val" id="cd-min">00</div><div class="lbl">MIN</div></div>
+              <div class="timer-block"><div class="val" id="cd-sec">00</div><div class="lbl">SEG</div></div>
             </div>
           </div>
 
-          <!-- Deal Options -->
-          <div id="deal-options" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Deal Options - Excalvo style -->
+          <div id="deal-options">
             <!-- Option 1 -->
-            <div data-deal="sale5" onclick="selectDeal(this, 'sale5')" class="deal-option" style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;">
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="radio-circle" style="width: 20px; height: 20px; border: 2px solid #c9cee0; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"></div>
-                <div>
-                  <div style="font-weight: 800; font-size: 15px;">Compra 1 llévate 1 GRATIS</div>
-                  <div style="font-size: 12px; color: #666;">S/ 52.00/c/u · 1 mes de suministro</div>
+            <button type="button" class="deal-pill" data-deal="sale5" onclick="selectDeal(this, 'sale5')" style="border-color: #3b82f6; background-color: #eff6ff;">
+              <div class="deal-pill-left">
+                <div class="radio-circle" style="width: 18px; height: 18px; border-radius: 50%; border: 2px solid #3b82f6; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s;">
+                  <div class="radio-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #3b82f6;"></div>
+                </div>
+                <div class="deal-pill-info">
+                  <div class="deal-pill-label">Compra 1 llévate 1 GRATIS</div>
+                  <div class="deal-pill-sub">S/ 52.00/c/u · 1 mes</div>
                 </div>
               </div>
-              <div style="text-align: right;">
-                <div style="color: #888; text-decoration: line-through; font-size: 13px;">S/ 208.00</div>
-                <div style="font-weight: 900; font-size: 22px; color: #0b1a3a;">S/ 104.00</div>
-                <div style="color: #054497; font-size: 11px; font-weight: 700; background: #eaf1fb; padding: 4px 8px; border-radius: 4px; display: inline-block;">Ahorra S/ 104.00</div>
+              <div class="deal-pill-price-col">
+                <div style="font-size: 11px; color: #94a3b8; text-decoration: line-through; margin: 0; line-height: 1.1;">S/ 208.00</div>
+                <div class="deal-pill-price">S/ 104.00</div>
+                <span class="deal-pill-save">Ahorra S/ 104</span>
               </div>
-            </div>
+            </button>
 
             <!-- Option 2 (selected by default) -->
-            <div data-deal="sale18" onclick="selectDeal(this, 'sale18')" class="deal-option" style="border: 2px solid #054497; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: #eef3fb; position: relative; transition: all 0.2s;">
-              <div style="position: absolute; top: -10px; left: 16px; background: #054497; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">MÁS POPULAR</div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="radio-circle" style="width: 20px; height: 20px; border: 2px solid #054497; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
-                  <div class="radio-dot" style="width: 10px; height: 10px; background: #054497; border-radius: 50%;"></div>
-                </div>
-                <div>
-                  <div style="font-weight: 800; font-size: 15px;">Compra 2 llévate 2 GRATIS</div>
-                  <div style="font-size: 12px; color: #666;">S/ 52.00/c/u · 2 meses de suministro</div>
+            <button type="button" class="deal-pill has-badge" data-deal="sale18" onclick="selectDeal(this, 'sale18')">
+              <span class="deal-pill-badge" style="background-color: #3b82f6;">MÁS POPULAR</span>
+              <div class="deal-pill-left">
+                <div class="radio-circle" style="width: 18px; height: 18px; border-radius: 50%; border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s;"></div>
+                <div class="deal-pill-info">
+                  <div class="deal-pill-label">Compra 2 llévate 2 GRATIS</div>
+                  <div class="deal-pill-sub">S/ 52.00/c/u · 2 meses</div>
                 </div>
               </div>
-              <div style="text-align: right;">
-                <div style="color: #888; text-decoration: line-through; font-size: 13px;">S/ 416.00</div>
-                <div style="font-weight: 900; font-size: 22px; color: #0b1a3a;">S/ 208.00</div>
-                <div style="color: #054497; font-size: 11px; font-weight: 700; background: #eaf1fb; padding: 4px 8px; border-radius: 4px; display: inline-block;">Ahorra S/ 208.00</div>
+              <div class="deal-pill-price-col">
+                <div style="font-size: 11px; color: #94a3b8; text-decoration: line-through; margin: 0; line-height: 1.1;">S/ 416.00</div>
+                <div class="deal-pill-price">S/ 208.00</div>
+                <span class="deal-pill-save">Ahorra S/ 208</span>
               </div>
-            </div>
+            </button>
 
             <!-- Option 3 -->
-            <div data-deal="sale71" onclick="selectDeal(this, 'sale71')" class="deal-option" style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; position: relative; transition: all 0.2s;">
-              <div style="position: absolute; top: -10px; left: 16px; background: #2f7a3a; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">MEJOR OFERTA</div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="radio-circle" style="width: 20px; height: 20px; border: 2px solid #c9cee0; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"></div>
-                <div>
-                  <div style="font-weight: 800; font-size: 15px;">Compra 4 llévate 3 GRATIS</div>
-                  <div style="font-size: 12px; color: #666;">S/ 52.00/c/u · 7 meses de suministro</div>
+            <button type="button" class="deal-pill has-badge" data-deal="sale71" onclick="selectDeal(this, 'sale71')">
+              <span class="deal-pill-badge" style="background-color: #1e40af;">MEJOR OFERTA</span>
+              <div class="deal-pill-left">
+                <div class="radio-circle" style="width: 18px; height: 18px; border-radius: 50%; border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s;"></div>
+                <div class="deal-pill-info">
+                  <div class="deal-pill-label">Compra 3 llévate 3 GRATIS</div>
+                  <div class="deal-pill-sub">S/ 52.00/c/u · 3 meses</div>
                 </div>
               </div>
-              <div style="text-align: right;">
-                <div style="color: #888; text-decoration: line-through; font-size: 13px;">S/ 728.00</div>
-                <div style="font-weight: 900; font-size: 22px; color: #0b1a3a;">S/ 364.00</div>
-                <div style="color: #054497; font-size: 11px; font-weight: 700; background: #eaf1fb; padding: 4px 8px; border-radius: 4px; display: inline-block;">Ahorra S/ 364.00</div>
+              <div class="deal-pill-price-col">
+                <div style="font-size: 11px; color: #94a3b8; text-decoration: line-through; margin: 0; line-height: 1.1;">S/ 624.00</div>
+                <div class="deal-pill-price">S/ 312.00</div>
+                <span class="deal-pill-save">Ahorra S/ 312</span>
               </div>
-            </div>
+            </button>
           </div>
 
-          <!-- CTA Button -->
-          <a id="cta-btn" href="/product?deal=sale18" target="_top" class="cta-button" style="display: block; margin-top: 24px; background: linear-gradient(180deg, #f39200, #d97900); color: #fff; text-align: center; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 16px; letter-spacing: 1px; text-decoration: none; box-shadow: 0 8px 20px rgba(243,146,0,0.35);">
-            AGREGAR AL CARRITO →
+          <div class="order-urgency-bar">
+            ⏰ Ordena antes del 13 de julio de 2026 para recibir regalos GRATIS
+          </div>
+
+          <div class="order-total-row">
+            <span style="color: #666; font-size: 13px;" id="total-label">Total (2 botellas)</span>
+            <div>
+              <span style="color: #999; text-decoration: line-through; margin-right: 8px; font-size: 14px;" id="total-retail">S/ 208.00</span>
+              <span style="font-weight: 800; font-size: 24px; color: #0b1a3a;" id="total-price">S/ 104.00</span>
+            </div>
+          </div>
+          <div class="order-total-savings" id="total-savings">Ahorras S/ 104.00</div>
+
+          <!-- CTA Button - Excalvo style dark navy -->
+          <a id="cta-btn" href="/product?deal=sale5" target="_top" style="display: block; background: #1e293b; color: #fff; text-align: center; padding: 14px 20px; border-radius: 50px; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; font-family: 'Montserrat', system-ui, sans-serif;">
+            Agregar al Carrito →
           </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonios - siempre después del botón -->
+    <div class="testimonios-section" style="max-width: 1200px; margin: 0 auto; padding: 0 24px 24px;">
+      <div class="testimonios-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+        <div style="padding: 16px; border-radius: 12px; border: 1px solid #e3e6ee; background: #fff;">
+          <div style="color: #f39200; font-size: 14px; margin-bottom: 6px;">★★★★★</div>
+          <div style="font-size: 13px; color: #333; line-height: 1.5;">"Empecé hace 3 meses y la diferencia es notable. Ya no tengo que levantarme varias veces en la noche."</div>
+          <div style="margin-top: 8px; font-size: 12px; font-weight: 800; color: #555;">— Carlos R. <span style="color: #2f7a3a; font-weight: 700;">Verificado ✓</span></div>
+        </div>
+        <div style="padding: 16px; border-radius: 12px; border: 1px solid #e3e6ee; background: #fff;">
+          <div style="color: #f39200; font-size: 14px; margin-bottom: 6px;">★★★★★</div>
+          <div style="font-size: 13px; color: #333; line-height: 1.5;">"Mi urólogo me lo recomendó y no me arrepiento. Funcionó mejor de lo que esperaba. Lo recomiendo al 100%."</div>
+          <div style="margin-top: 8px; font-size: 12px; font-weight: 800; color: #555;">— Miguel A. <span style="color: #2f7a3a; font-weight: 700;">Verificado ✓</span></div>
+        </div>
+        <div style="padding: 16px; border-radius: 12px; border: 1px solid #e3e6ee; background: #fff;">
+          <div style="color: #f39200; font-size: 14px; margin-bottom: 6px;">★★★★★</div>
+          <div style="font-size: 13px; color: #333; line-height: 1.5;">"Llevaba años probando productos sin resultados. Con ProstaGenix noté cambios desde la segunda semana."</div>
+          <div style="margin-top: 8px; font-size: 12px; font-weight: 800; color: #555;">— Roberto L. <span style="color: #2f7a3a; font-weight: 700;">Verificado ✓</span></div>
         </div>
       </div>
     </div>
@@ -582,360 +1738,6 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
           <li>Impulso en la Alcoba - ¡Disfruta el Retorno a Mejores Erecciones que Nuestros Clientes Adoran!</li>
           <li>¡Vuelve a Disfrutar del Sexo!</li>
         </ul>
-      </div>
-    </div>
-
-    <!-- PODS - SPECIAL -->
-
-    <div class="pods_special body_full_nomar">
-      <!-- WRAPPER -->
-
-      <div class="body_full wrapper borders">
-        <!-- HEADING -->
-
-        <h2 class="heading">Oferta Especial Solo por Internet en ProstaGenix</h2>
-
-        <!-- POD -->
-
-        <div class="pod">
-          <!-- IMAGES -->
-
-          <div class="split">
-            <!-- BADGE -->
-
-            <img
-              class="badge"
-              src="https://www.prostagenix.com/special/special-offer/img/bonus.png"
-              alt="bonus badge"
-            />
-
-            <!-- 4 BOTTLES -->
-
-            <div class="bottles bottles_three bottles_four">
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-            </div>
-
-            <!-- PLUS -->
-
-            <span class="plus">+</span>
-
-            <!-- 3 BOTTLES -->
-
-            <div class="bottles bottles_three">
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-            </div>
-          </div>
-
-          <!-- COPY -->
-
-          <div class="split">
-            <!-- HEADING -->
-
-            <span class="heading">Compra 4 <strong>y Lleva 3 GRATIS</strong></span>
-
-            <!-- LIST -->
-
-            <ul>
-              <li>Precio de Venta: <s>S/ 490.00</s></li>
-              <li>Ahorra: <strong>S/ 330.05</strong></li>
-            </ul>
-
-            <!-- PRICE -->
-
-            <div class="price">
-              <span>Ahorro Instantáneo</span>
-
-              <span><sup>$</sup>159<sup>.95</sup></span>
-
-              <!-- BUTTON -->
-
-              <a href="/product?deal=sale71" target="_top" class="knd-ic-btn qcd-link"
-                ><div class="btn btn_orange knd-ic-btn">
-                  <span class="knd-ic-btn">Ordena Ahora</span>
-                </div></a
-              >
-            </div>
-
-            <!-- BADGE -->
-
-            <img
-              class="badge"
-              src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png"
-              alt="90 day money-back guarantee badge"
-            />
-
-            <!-- SAVINGS -->
-
-            <span class="savings">70% de Ahorro</span>
-          </div>
-        </div>
-
-        <!-- POD -->
-
-        <div class="pod">
-          <!-- IMAGES -->
-
-          <div class="split">
-            <!-- BADGE -->
-
-            <img
-              class="badge"
-              src="https://www.prostagenix.com/special/special-offer/img/bonus.png"
-              alt="bonus badge"
-            />
-
-            <!-- 3 BOTTLES -->
-
-            <div class="bottles bottles_three">
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-            </div>
-
-            <!-- PLUS -->
-
-            <span class="plus">+</span>
-
-            <!-- 2 BOTTLES -->
-
-            <div class="bottles bottles_three bottles_two">
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-            </div>
-          </div>
-
-          <!-- COPY -->
-
-          <div class="split">
-            <!-- HEADING -->
-
-            <span class="heading">Compra 3 <strong>y Lleva 2 GRATIS</strong></span>
-
-            <!-- LIST -->
-
-            <ul>
-              <li>Precio de Venta: <s>S/ 350.00</s></li>
-              <li>Ahorra: <strong>S/ 230.05</strong></li>
-            </ul>
-
-            <!-- PRICE -->
-
-            <div class="price">
-              <span>Ahorro Instantáneo</span>
-
-              <span><sup>$</sup>119<sup>.95</sup></span>
-
-              <!-- BUTTON -->
-
-              <a href="/product?deal=sale18" target="_top" class="knd-ic-btn qcd-link"
-                ><div class="btn btn_orange knd-ic-btn">
-                  <span class="knd-ic-btn">Ordena Ahora</span>
-                </div></a
-              >
-            </div>
-
-            <!-- BADGE -->
-
-            <img
-              class="badge"
-              src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png"
-              alt="90 day money-back guarantee badge"
-            />
-
-            <!-- SAVINGS -->
-
-            <span class="savings">66% de Ahorro</span>
-          </div>
-        </div>
-
-        <!-- POD -->
-
-        <div class="pod">
-          <!-- IMAGES -->
-
-          <div class="split">
-            <!-- BADGE -->
-
-            <img
-              class="badge"
-              src="https://www.prostagenix.com/special/special-offer/img/bonus.png"
-              alt="bonus badge"
-            />
-
-            <!-- 2 BOTTLES -->
-
-            <div class="bottles bottles_three bottles_two">
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-            </div>
-
-            <!-- PLUS -->
-
-            <span class="plus">+</span>
-
-            <!-- 1 BOTTLE -->
-
-            <div class="bottles bottles_three bottles_one">
-              <img
-                src="https://www.prostagenix.com/images/product/bottle.png"
-                alt="ProstaGenix - bottle"
-              />
-            </div>
-          </div>
-
-          <!-- COPY -->
-
-          <div class="split">
-            <!-- HEADING -->
-
-            <span class="heading">Compra 2 <strong>y Lleva 1 GRATIS</strong></span>
-
-            <!-- LIST -->
-
-            <ul>
-              <li>Precio de Venta: <s>S/ 210.00</s></li>
-              <li>Ahorra: <strong>S/ 130.05</strong></li>
-            </ul>
-
-            <!-- PRICE -->
-
-            <div class="price">
-              <span>Ahorro Instantáneo</span>
-
-              <span><sup>$</sup>79<sup>.95</sup></span>
-
-              <!-- BUTTON -->
-
-              <a href="/product?deal=sale5" target="_top" class="knd-ic-btn qcd-link"
-                ><div class="btn btn_orange knd-ic-btn">
-                  <span class="knd-ic-btn">Ordena Ahora</span>
-                </div></a
-              >
-            </div>
-
-            <!-- BADGE -->
-
-            <img
-              class="badge"
-              src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png"
-              alt="90 day money-back guarantee badge"
-            />
-
-            <!-- SAVINGS -->
-
-            <span class="savings">62% de Ahorro</span>
-          </div>
-        </div>
-
-        <!-- POD -->
-
-        <div class="pod">
-          <!-- IMAGES -->
-
-          <div class="split">
-            <img
-              class="badge"
-              src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png"
-              alt="90 day money-back guarantee badge"
-            />
-
-            <img
-              class="hero"
-              src="https://www.prostagenix.com/images/product/bottle_box.png"
-              alt="ProstaGenix bottle & box"
-            />
-          </div>
-
-          <!-- COPY -->
-
-          <div class="split">
-            <!-- HEADING -->
-
-            <span class="heading">1 Mes de Suministro</span>
-
-            <!-- LIST -->
-
-            <ul>
-              <li>Precio de Venta: <s>S/ 70.00</s></li>
-              <li>Ahorra: <strong>S/ 30.05</strong></li>
-            </ul>
-
-            <!-- PRICE -->
-
-            <div class="price">
-              <span>Ahorro Instantáneo</span>
-
-              <span><sup>$</sup>39<sup>.95</sup></span>
-
-              <!-- BUTTON -->
-
-              <a href="/product?deal=sale1" target="_top" class="knd-ic-btn qcd-link"
-                ><div class="btn btn_orange knd-ic-btn">
-                  <span class="knd-ic-btn">Ordena Ahora</span>
-                </div></a
-              >
-            </div>
-
-            <!-- BADGE -->
-
-            <img
-              class="badge"
-              src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png"
-              alt="90 day money-back guarantee badge"
-            />
-
-            <!-- SAVINGS -->
-
-            <span class="savings">43% de Ahorro</span>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1221,20 +2023,170 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
 
     <script>
       function selectDeal(el, deal) {
-        var allDeals = document.querySelectorAll('#deal-options > div');
+        var allDeals = document.querySelectorAll('#deal-options > button');
         allDeals.forEach(function(d) {
-          d.style.border = '2px solid #e3e6ee';
-          d.style.background = '#fff';
+          d.style.border = '2px solid #e2e8f0';
+          d.style.backgroundColor = '#fff';
           var rc = d.querySelector('.radio-circle');
-          rc.style.border = '2px solid #c9cee0';
+          rc.style.border = '2px solid #cbd5e1';
           rc.innerHTML = '';
         });
-        el.style.border = '2px solid #054497';
-        el.style.background = '#eef3fb';
+        el.style.border = '2px solid #3b82f6';
+        el.style.backgroundColor = '#eff6ff';
         var rc = el.querySelector('.radio-circle');
-        rc.style.border = '2px solid #054497';
-        rc.innerHTML = '<div style="width:10px;height:10px;background:#054497;border-radius:50%;"></div>';
+        rc.style.border = '2px solid #3b82f6';
+        rc.innerHTML = '<div style="width:8px;height:8px;background:#3b82f6;border-radius:50%;"></div>';
         document.getElementById('cta-btn').href = '/product?deal=' + deal;
+        var deals = {
+          sale5: { price: 104.00, retail: 208.00, bottles: 2 },
+          sale18: { price: 208.00, retail: 416.00, bottles: 4 },
+          sale71: { price: 312.00, retail: 624.00, bottles: 6 }
+        };
+        var d = deals[deal];
+        var bottleLabel = d.bottles === 1 ? 'botella' : 'botellas';
+        document.getElementById('total-label').textContent = 'Total (' + d.bottles + ' ' + bottleLabel + ')';
+        document.getElementById('total-retail').textContent = 'S/ ' + d.retail.toFixed(2);
+        document.getElementById('total-price').textContent = 'S/ ' + d.price.toFixed(2);
+        document.getElementById('total-savings').textContent = 'Ahorras S/ ' + (d.retail - d.price).toFixed(2);
+        document.getElementById('cta-btn').innerHTML = 'Agregar al Carrito →';
+      }
+
+      function startCountdown() {
+        function tick() {
+          var now = new Date();
+          var end = new Date();
+          end.setHours(23, 59, 59, 999);
+          var diff = Math.max(0, end - now);
+          var h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+          var m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+          var s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+          var hrs = document.getElementById('cd-hrs');
+          var min = document.getElementById('cd-min');
+          var sec = document.getElementById('cd-sec');
+          if (hrs) hrs.textContent = h;
+          if (min) min.textContent = m;
+          if (sec) sec.textContent = s;
+        }
+        tick();
+        setInterval(tick, 1000);
+      }
+      startCountdown();
+
+      function changeHeroImage(index) {
+        var thumbs = document.querySelectorAll('.thumb-item');
+        thumbs.forEach(function(t, i) {
+          if (i === index) {
+            t.classList.add('active');
+          } else {
+            t.classList.remove('active');
+          }
+        });
+
+        var doctorBg = document.querySelector('.hero-bg-doctor');
+        var overlay = document.querySelector('.hero-gradient-overlay');
+        var bottle = document.querySelector('.hero-bottle-img');
+        var title = document.querySelector('.hero-title-main');
+        var subtitle = document.querySelector('.hero-subtitle-sub');
+
+        if (index === 0) {
+          // Default: Bottle & Box stacked layout
+          doctorBg.style.display = window.innerWidth <= 768 ? "none" : "block";
+          doctorBg.src = "https://www.prostagenix.com/images/home/dudley-danoff.png";
+          doctorBg.style.opacity = "0.85";
+          doctorBg.style.right = "0";
+          doctorBg.style.width = "100%";
+          doctorBg.style.height = "100%";
+          doctorBg.style.objectPosition = "right top";
+          overlay.style.background = "linear-gradient(90deg, rgba(247,248,251,0.98) 0%, rgba(247,248,251,0.92) 45%, rgba(247,248,251,0.2) 100%)";
+          overlay.style.display = window.innerWidth <= 768 ? "none" : "block";
+          bottle.src = "https://www.prostagenix.com/images/product/bottle_box.png";
+          bottle.style.display = "block";
+          if (window.innerWidth <= 768) {
+            bottle.style.position = "static";
+            bottle.style.transform = "none";
+            bottle.style.margin = "0 auto";
+            bottle.style.maxHeight = "260px";
+            bottle.style.maxWidth = "90%";
+          } else {
+            bottle.style.right = "4%";
+            bottle.style.bottom = "80px";
+            bottle.style.maxHeight = "250px";
+            bottle.style.position = "absolute";
+            bottle.style.transform = "none";
+          }
+          title.innerHTML = "Reemplaza Más de 10 Productos Prostáticos por Solo S/ 1.50 al Día";
+          title.style.display = "block";
+          title.style.position = "static";
+          title.style.textAlign = "left";
+          title.style.maxWidth = window.innerWidth <= 768 ? "100%" : "65%";
+          subtitle.innerHTML = "Formulado por los mejores urólogos de Los Ángeles. Clínicamente comprobado para mejorar la salud urinaria y flujo de la próstata.";
+          subtitle.style.display = "block";
+          subtitle.style.position = "static";
+          subtitle.style.maxWidth = window.innerWidth <= 768 ? "100%" : "58%";
+        } else if (index === 1) {
+          // Single bottle centered
+          doctorBg.style.display = "none";
+          overlay.style.display = "block";
+          overlay.style.background = "linear-gradient(135deg, #f0f4f8 0%, #fff 100%)";
+          bottle.src = "https://www.prostagenix.com/images/product/bottle.png";
+          bottle.style.display = "block";
+          bottle.style.right = "50%";
+          bottle.style.transform = "translateX(50%)";
+          bottle.style.bottom = "100px";
+          bottle.style.maxHeight = "280px";
+          title.style.display = "none";
+          subtitle.style.display = "none";
+        } else if (index === 2) {
+          // Dudley Danoff focused
+          doctorBg.src = "https://www.prostagenix.com/images/home/dudley-danoff.png";
+          doctorBg.style.display = "block";
+          doctorBg.style.opacity = "1";
+          doctorBg.style.right = "50%";
+          doctorBg.style.transform = "translateX(50%)";
+          doctorBg.style.width = "auto";
+          doctorBg.style.height = "100%";
+          doctorBg.style.objectPosition = "center top";
+          overlay.style.display = "block";
+          overlay.style.background = "linear-gradient(to bottom, rgba(247,248,251,0.2) 0%, rgba(247,248,251,0.9) 85%)";
+          bottle.style.display = "none";
+          title.innerHTML = "Respaldado por el Dr. Dudley Danoff";
+          title.style.display = "block";
+          title.style.textAlign = "center";
+          title.style.maxWidth = "100%";
+          title.style.position = "absolute";
+          title.style.bottom = "80px";
+          title.style.left = "0";
+          title.style.right = "0";
+          title.style.margin = "0 auto";
+          subtitle.style.display = "none";
+        } else if (index === 3) {
+          // #1 Award
+          doctorBg.style.display = "none";
+          overlay.style.display = "block";
+          overlay.style.background = "linear-gradient(135deg, #f0f4f8 0%, #fff 100%)";
+          bottle.src = "https://www.prostagenix.com/special/special-offer/img/number-one-award.png";
+          bottle.style.display = "block";
+          bottle.style.right = "50%";
+          bottle.style.transform = "translateX(50%)";
+          bottle.style.bottom = "110px";
+          bottle.style.maxHeight = "240px";
+          title.innerHTML = "Calificado como el Suplemento #1 del Mundo";
+          title.style.display = "block";
+          title.style.textAlign = "center";
+          title.style.maxWidth = "100%";
+          subtitle.style.display = "none";
+        }
+
+        // Keep centering reset helper
+        if (index !== 1 && index !== 3 && index !== 2) {
+          bottle.style.transform = "none";
+          title.style.textAlign = "left";
+          title.style.maxWidth = "65%";
+          title.style.position = "static";
+        }
+        if (index !== 2) {
+          doctorBg.style.transform = "none";
+        }
       }
     </script>
   </body>
