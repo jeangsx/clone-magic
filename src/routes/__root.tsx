@@ -1,6 +1,16 @@
-import { Outlet, Link, useRouteError, isRouteErrorResponse } from "react-router-dom";
-import WhatsAppButton from "../components/WhatsAppButton";
-import { useCartSync } from "../hooks/useCartSync";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  Outlet,
+  Link,
+  createRootRouteWithContext,
+  useRouter,
+  HeadContent,
+  Scripts,
+} from "@tanstack/react-router";
+import { useEffect, type ReactNode } from "react";
+
+import appCss from "../styles.css?url";
+import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
@@ -24,16 +34,12 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent() {
-  const error = useRouteError();
-
-  let message = "Something went wrong on our end. You can try refreshing or head back home.";
-
-  if (isRouteErrorResponse(error)) {
-    message = error.statusText;
-  } else if (error instanceof Error) {
-    message = error.message;
-  }
+function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+  console.error(error);
+  const router = useRouter();
+  useEffect(() => {
+    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -41,10 +47,15 @@ function ErrorComponent() {
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
           This page didn't load
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">{message}</p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Something went wrong on our end. You can try refreshing or head back home.
+        </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Try again
@@ -61,15 +72,55 @@ function ErrorComponent() {
   );
 }
 
-export default function RootLayout() {
-  useCartSync();
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "ProstaGenix - One Day Super Sale - Stock Up Now!" },
+      { name: "description", content: "ProstaGenix Special Offer - Up to 70% off. #1 Rated Prostate Pill in the World. 90-day money-back guarantee." },
+      { name: "author", content: "ProstaGenix" },
+      { property: "og:title", content: "ProstaGenix - One Day Super Sale" },
+      { property: "og:description", content: "Up to 70% off the #1 rated prostate supplement." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@Lovable" },
+    ],
+    links: [
+      {
+        rel: "stylesheet",
+        href: appCss,
+      },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+    ],
+  }),
+  shellComponent: RootShell,
+  component: RootComponent,
+  notFoundComponent: NotFoundComponent,
+  errorComponent: ErrorComponent,
+});
 
+function RootShell({ children }: { children: ReactNode }) {
   return (
-    <>
-      <Outlet />
-      <WhatsAppButton />
-    </>
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
   );
 }
 
-export { NotFoundComponent, ErrorComponent };
+function RootComponent() {
+  const { queryClient } = Route.useRouteContext();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      <Outlet />
+    </QueryClientProvider>
+  );
+}
