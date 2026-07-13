@@ -64,17 +64,15 @@ function ProductEmbed() {
     <div style={{ background: "#fff", color: "#0b1a3a", fontFamily: "'Montserrat', system-ui, sans-serif" }}>
       <style>{`
         .lv-pe-main { max-width: 1280px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 40px; }
-        .lv-pe-gallery { display: flex; gap: 12px; }
-        .lv-pe-thumbs { display: flex; flex-direction: column; gap: 10px; }
+        .lv-pe-gallery { display: flex; flex-direction: column; gap: 12px; }
+        .lv-pe-thumbs { display: flex; flex-direction: row; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .lv-pe-hero { flex: 1; min-width: 0; }
         .lv-pe-h1 { font-size: 34px; line-height: 1.15; }
         .lv-pe-benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
         @media (max-width: 900px) {
           .lv-pe-main { grid-template-columns: 1fr; gap: 24px; padding: 16px; }
           .lv-pe-h1 { font-size: 24px; }
-          .lv-pe-thumbs { flex-direction: row; overflow-x: auto; }
           .lv-pe-thumbs button { width: 64px !important; height: 64px !important; flex: 0 0 auto; }
-          .lv-pe-gallery { flex-direction: column-reverse; }
           .lv-pe-hero { min-height: 320px !important; padding: 12px !important; }
           .lv-pe-hero img { max-height: 300px !important; }
         }
@@ -84,6 +82,10 @@ function ProductEmbed() {
         {/* LEFT: gallery */}
         <section style={{ minWidth: 0 }}>
           <div className="lv-pe-gallery">
+            <div className="lv-pe-hero" style={{ position: "relative", background: "linear-gradient(180deg,#eef3fb,#fff)", borderRadius: 16, padding: 24, minHeight: 480, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #e3e6ee" }}>
+              <span style={{ position: "absolute", top: 12, left: 12, background: RED, color: "#fff", fontWeight: 900, padding: "6px 12px", borderRadius: 999, fontSize: 12, letterSpacing: 1, whiteSpace: "nowrap" }}>UP TO 70% OFF</span>
+              <img src={GALLERY[heroIdx]} alt="ProstaGenix" style={{ maxWidth: "100%", maxHeight: 460, objectFit: "contain" }} />
+            </div>
             <div className="lv-pe-thumbs">
               {GALLERY.map((src, i) => (
                 <button key={i} onClick={() => setHeroIdx(i)} style={{
@@ -93,10 +95,6 @@ function ProductEmbed() {
                   <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                 </button>
               ))}
-            </div>
-            <div className="lv-pe-hero" style={{ position: "relative", background: "linear-gradient(180deg,#eef3fb,#fff)", borderRadius: 16, padding: 24, minHeight: 480, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #e3e6ee" }}>
-              <span style={{ position: "absolute", top: 12, left: 12, background: RED, color: "#fff", fontWeight: 900, padding: "6px 12px", borderRadius: 999, fontSize: 12, letterSpacing: 1, whiteSpace: "nowrap" }}>UP TO 70% OFF</span>
-              <img src={GALLERY[heroIdx]} alt="ProstaGenix" style={{ maxWidth: "100%", maxHeight: 460, objectFit: "contain" }} />
             </div>
           </div>
         </section>
