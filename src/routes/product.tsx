@@ -13,10 +13,10 @@ const DEALS: Record<DealKey, {
   perUnit: number;
   badge?: string;
 }> = {
-  sale71: { label: "Compra 4 llévate 3 GRATIS", bottles: 7, months: "7 meses de suministro", price: 159.95, retail: 490, perUnit: 22.85, badge: "MEJOR OFERTA" },
-  sale18: { label: "Compra 3 llévate 2 GRATIS", bottles: 5, months: "5 meses de suministro", price: 119.95, retail: 350, perUnit: 23.99, badge: "MÁS POPULAR" },
-  sale5:  { label: "Compra 2 llévate 1 GRATIS", bottles: 3, months: "3 meses de suministro", price: 79.95, retail: 210, perUnit: 26.65 },
-  single: { label: "1 Mes de Suministro", bottles: 1, months: "1 mes de suministro", price: 39.95, retail: 70, perUnit: 39.95 },
+  sale71: { label: "Compra 4 llévate 3 GRATIS", bottles: 7, months: "7 meses de suministro", price: 599.95, retail: 1839.95, perUnit: 85.7, badge: "MEJOR OFERTA" },
+  sale18: { label: "Compra 3 llévate 2 GRATIS", bottles: 5, months: "5 meses de suministro", price: 449.95, retail: 1299.95, perUnit: 89.99, badge: "MÁS POPULAR" },
+  sale5:  { label: "Compra 2 llévate 1 GRATIS", bottles: 3, months: "3 meses de suministro", price: 299.95, retail: 789.95, perUnit: 99.98 },
+  single: { label: "1 Mes de Suministro", bottles: 1, months: "1 mes de suministro", price: 149.95, retail: 259.95, perUnit: 149.95 },
 };
 
 const GALLERY = [
