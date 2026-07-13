@@ -1613,3 +1613,83 @@
 
 .lv-wa-btn { background: #25D366 !important; padding: 0 !important; box-shadow: 0 8px 24px rgba(37,211,102,0.55) !important; border: 0 !important; }
 .lv-wa-btn svg { width: 34px; height: 34px; display: block; }
+
+/* ===== Product preview card (below hero) ===== */
+.lv-preview-wrap {
+  background: #f7f8fb;
+  padding: 40px 20px;
+  font-family: 'Montserrat', system-ui, sans-serif;
+}
+.lv-preview-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(11, 93, 141, 0.12);
+  border: 1px solid #e3e6ee;
+  text-decoration: none;
+  color: #0b1a3a;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.lv-preview-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 50px rgba(11, 93, 141, 0.2);
+}
+.lv-preview-img {
+  position: relative;
+  background: linear-gradient(180deg, #eef3fb, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  min-height: 320px;
+}
+.lv-preview-img img { max-width: 100%; max-height: 300px; object-fit: contain; }
+.lv-preview-badge {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: #d40000;
+  color: #fff;
+  font-weight: 900;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.lv-preview-info { padding: 28px 28px 28px 4px; display: flex; flex-direction: column; justify-content: center; }
+.lv-preview-stars { color: #f39200; font-size: 18px; margin-bottom: 8px; }
+.lv-preview-stars span { color: #555; font-size: 13px; font-weight: 600; margin-left: 6px; }
+.lv-preview-info h3 {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0b5d8d;
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+.lv-preview-info p { font-size: 14px; color: #555; margin: 0 0 14px; line-height: 1.5; }
+.lv-preview-price { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.lv-preview-old { text-decoration: line-through; color: #999; font-size: 16px; }
+.lv-preview-new { font-size: 28px; font-weight: 900; color: #0b1a3a; }
+.lv-preview-save { color: #0b5d8d; font-weight: 700; font-size: 13px; }
+.lv-preview-cta {
+  display: inline-block;
+  background: linear-gradient(180deg, #ff9601, #d97900);
+  color: #fff;
+  font-weight: 900;
+  padding: 14px 24px;
+  border-radius: 12px;
+  text-align: center;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 20px rgba(243, 146, 0, 0.35);
+  align-self: flex-start;
+}
+@media (max-width: 800px) {
+  .lv-preview-card { grid-template-columns: 1fr; }
+  .lv-preview-info { padding: 20px 20px 24px; }
+  .lv-preview-info h3 { font-size: 20px; }
+  .lv-preview-cta { align-self: stretch; }
+}
