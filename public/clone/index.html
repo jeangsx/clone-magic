@@ -1260,5 +1260,24 @@ list[index].href = link; // set new link href
 <!-- WISTIA -->
 
 <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+<script>
+(function(){
+  var el = document.getElementById('lvHomeTimer');
+  if(!el) return;
+  var boxes = el.querySelectorAll('.lv-preview-timebox b');
+  var end = new Date(); end.setHours(23,59,59,999);
+  function pad(n){ return (n<10?'0':'')+n; }
+  function tick(){
+    var diff = Math.max(0, end.getTime() - Date.now());
+    var h = Math.floor(diff/3600000);
+    var m = Math.floor((diff%3600000)/60000);
+    var s = Math.floor((diff%60000)/1000);
+    if(boxes[0]) boxes[0].textContent = pad(h);
+    if(boxes[1]) boxes[1].textContent = pad(m);
+    if(boxes[2]) boxes[2].textContent = pad(s);
+  }
+  tick(); setInterval(tick, 1000);
+})();
+</script>
 </body>
 </html>
