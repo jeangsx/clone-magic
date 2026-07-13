@@ -131,13 +131,8 @@ function ProductPage() {
             </div>
           </div>
 
-          <div style={{ marginTop: 24, padding: 20, borderRadius: 14, background: "#f7f8fb", border: "1px solid #e3e6ee" }}>
-            <div style={{ fontWeight: 800, marginBottom: 6, color: BLUE }}>{"{ ⚕ Elección de Médicos }"}</div>
-            <div style={{ fontSize: 14, color: "#333" }}><strong>Cientos de urólogos</strong> lo recomiendan a sus pacientes sin recibir compensación.</div>
-          </div>
-
           {/* Beneficios detallados */}
-          <div style={{ marginTop: 18, padding: 20, borderRadius: 14, background: "#fff", border: "1px solid #e3e6ee" }}>
+          <div style={{ marginTop: 24, padding: 20, borderRadius: 14, background: "#fff", border: "1px solid #e3e6ee" }}>
             <div style={{ fontWeight: 900, color: BLUE, marginBottom: 12, fontSize: 16 }}>¿Por qué ProstaGenix™?</div>
             {[
               { t: "Alivia la urgencia urinaria", d: "Reduce las visitas nocturnas al baño." },
@@ -264,15 +259,7 @@ function ProductPage() {
           <div style={{ textAlign: "right", color: BLUE, fontWeight: 800, marginBottom: 14 }}>Ahorras S/ {(cur.retail - cur.price).toFixed(2)}</div>
 
           <button onClick={() => navigate({ to: "/checkout", search: { deal: selected } })} style={{
-            width: "100%", padding: "18px 20px", borderRadius: 12, border: 0, cursor: "pointer",
-            background: `linear-gradient(180deg, ${ORANGE}, #d97900)`, color: "#fff",
-            fontWeight: 900, fontSize: 17, letterSpacing: 1, boxShadow: "0 8px 20px rgba(243,146,0,0.35)",
-          }}>
-            AGREGAR AL CARRITO →
-          </button>
-
-          <button onClick={() => navigate({ to: "/checkout", search: { deal: selected } })} style={{
-            marginTop: 10, width: "100%", padding: "14px 20px", borderRadius: 12, border: `2px solid ${BLUE}`, cursor: "pointer",
+            width: "100%", padding: "14px 20px", borderRadius: 12, border: `2px solid ${BLUE}`, cursor: "pointer",
             background: "#fff", color: BLUE, fontWeight: 900, fontSize: 15, letterSpacing: 1,
           }}>
             IR A PAGAR AHORA →
