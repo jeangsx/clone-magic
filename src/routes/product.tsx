@@ -135,6 +135,43 @@ function ProductPage() {
             <div style={{ fontWeight: 800, marginBottom: 6, color: BLUE }}>{"{ ⚕ Elección de Médicos }"}</div>
             <div style={{ fontSize: 14, color: "#333" }}><strong>Cientos de urólogos</strong> lo recomiendan a sus pacientes sin recibir compensación.</div>
           </div>
+
+          {/* Beneficios detallados */}
+          <div style={{ marginTop: 18, padding: 20, borderRadius: 14, background: "#fff", border: "1px solid #e3e6ee" }}>
+            <div style={{ fontWeight: 900, color: BLUE, marginBottom: 12, fontSize: 16 }}>¿Por qué ProstaGenix™?</div>
+            {[
+              { t: "Alivia la urgencia urinaria", d: "Reduce las visitas nocturnas al baño." },
+              { t: "Mejora el flujo urinario", d: "Con Beta-Sitosterol y esteroles vegetales." },
+              { t: "Salud prostática integral", d: "Fórmula multifase con +1,000 mg de esteroles totales." },
+              { t: "Testado por ConsumerLab", d: "Verificado por laboratorios independientes." },
+            ].map((b) => (
+              <div key={b.t} style={{ display: "flex", gap: 10, padding: "10px 0", borderTop: "1px dashed #e3e6ee" }}>
+                <div style={{ color: "#2f7a3a", fontWeight: 900 }}>✓</div>
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: 14 }}>{b.t}</div>
+                  <div style={{ fontSize: 13, color: "#555" }}>{b.d}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Garantía */}
+          <div style={{ marginTop: 18, padding: 20, borderRadius: 14, background: `linear-gradient(135deg, ${BLUE}, #0a5cc7)`, color: "#fff", display: "flex", gap: 14, alignItems: "center" }}>
+            <div style={{ fontSize: 42, lineHeight: 1 }}>🛡️</div>
+            <div>
+              <div style={{ fontWeight: 900, letterSpacing: 1, marginBottom: 4 }}>GARANTÍA 90 DÍAS</div>
+              <div style={{ fontSize: 13, opacity: 0.95 }}>Si no notas mejora, te devolvemos tu dinero. Sin preguntas.</div>
+            </div>
+          </div>
+
+          {/* Testimonio breve */}
+          <div style={{ marginTop: 18, padding: 20, borderRadius: 14, background: "#f7f8fb", border: "1px solid #e3e6ee" }}>
+            <div style={{ color: ORANGE, fontSize: 18 }}>★★★★★</div>
+            <div style={{ fontStyle: "italic", color: "#333", margin: "8px 0", fontSize: 14 }}>
+              "Después de 2 semanas ya dormía toda la noche sin levantarme. Lo recomiendo 100%."
+            </div>
+            <div style={{ fontSize: 13, color: "#666" }}>— <strong>Luis A.</strong> · <span style={{ color: "#2f7a3a", fontWeight: 700 }}>Compra verificada</span></div>
+          </div>
         </section>
 
         {/* RIGHT: purchase panel */}
