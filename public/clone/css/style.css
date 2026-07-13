@@ -1546,7 +1546,7 @@
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.3px;
-  border-bottom: 2px solid #2a0619;
+  border-bottom: 0;
 }
 .lv-announce-track {
   display: inline-flex;
