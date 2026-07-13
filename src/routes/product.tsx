@@ -15,46 +15,46 @@ const DEALS: Record<
     badge?: string;
   }
 > = {
+  single: {
+    label: "Compra 1 llévate 1 GRATIS",
+    bottles: 2,
+    months: "1 mes de suministro",
+    price: 104,
+    retail: 208,
+    perUnit: 52,
+  },
+  sale5: {
+    label: "Compra 2 llévate 2 GRATIS",
+    bottles: 4,
+    months: "2 meses de suministro",
+    price: 208,
+    retail: 416,
+    perUnit: 52,
+    badge: "MÁS POPULAR",
+  },
+  sale18: {
+    label: "Compra 3 llévate 3 GRATIS",
+    bottles: 6,
+    months: "3 meses de suministro",
+    price: 312,
+    retail: 624,
+    perUnit: 52,
+    badge: "MEJOR OFERTA",
+  },
   sale71: {
     label: "Compra 4 llévate 3 GRATIS",
     bottles: 7,
-    months: "7 meses de suministro",
-    price: 159.95,
-    retail: 490,
-    perUnit: 22.85,
-    badge: "MEJOR OFERTA",
-  },
-  sale18: {
-    label: "Compra 3 llévate 2 GRATIS",
-    bottles: 5,
-    months: "5 meses de suministro",
-    price: 119.95,
-    retail: 350,
-    perUnit: 23.99,
-    badge: "MÁS POPULAR",
-  },
-  sale5: {
-    label: "Compra 2 llévate 1 GRATIS",
-    bottles: 3,
-    months: "3 meses de suministro",
-    price: 79.95,
-    retail: 210,
-    perUnit: 26.65,
-  },
-  single: {
-    label: "1 Mes de Suministro",
-    bottles: 1,
-    months: "1 mes de suministro",
-    price: 39.95,
-    retail: 70,
-    perUnit: 39.95,
+    months: "4 meses de suministro",
+    price: 364,
+    retail: 728,
+    perUnit: 52,
   },
 };
 
 const GALLERY = [
+  "https://www.prostagenix.com/images/home/dudley-danoff.png",
   "https://www.prostagenix.com/images/product/bottle_box.png",
   "https://www.prostagenix.com/images/product/bottle.png",
-  "https://www.prostagenix.com/images/home/dudley-danoff.png",
   "https://www.prostagenix.com/special/special-offer/img/number-one-award.png",
 ];
 
@@ -79,8 +79,8 @@ function useCountdown() {
 export default function ProductPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const dealParam = searchParams.get("deal") ?? "sale18";
-  const initial = (DEALS[dealParam as DealKey] ? (dealParam as DealKey) : "sale18") as DealKey;
+  const dealParam = searchParams.get("deal") ?? "single";
+  const initial = (DEALS[dealParam as DealKey] ? (dealParam as DealKey) : "single") as DealKey;
   const [selected, setSelected] = useState<DealKey>(initial);
   const [heroIdx, setHeroIdx] = useState(0);
   const { h, m, s } = useCountdown();
@@ -92,6 +92,7 @@ export default function ProductPage() {
 
   return (
     <div
+      className="product-root"
       style={{
         background: "#fff",
         minHeight: "100vh",
@@ -102,90 +103,377 @@ export default function ProductPage() {
       <style>{`
         html, body { overflow-x: hidden; }
         .product-root { overflow-x: hidden; }
+        .product-panel { min-width: 0; }
+        .mobile-only { display: none; }
+        .product-hero-scene,
+        .product-doctor-note,
+        .product-hero-headline,
+        .product-hero-subcopy,
+        .product-hero-bottle,
+        .product-ingredients-btn,
+        .product-sale-icon {
+          display: none;
+        }
         @media (max-width: 1024px) {
           .product-grid { grid-template-columns: 1fr !important; gap: 24px !important; padding: 16px !important; }
+          .product-gallery-wrap { flex-direction: column-reverse !important; }
+          .product-thumbs { flex-direction: row !important; overflow-x: auto; width: 100%; justify-content: center; }
         }
         @media (max-width: 720px) {
-          .product-hero { min-height: 300px !important; padding: 12px !important; }
-          .product-hero img { max-height: 260px !important; }
-          .product-thumbs { flex-direction: row !important; overflow-x: auto; width: 100%; }
-          .product-thumbs button { width: 64px !important; height: 64px !important; flex: 0 0 auto; }
-          .product-gallery-wrap { flex-direction: column !important; }
-          .product-title { font-size: 22px !important; }
-          .product-benefits { grid-template-columns: repeat(3,1fr) !important; gap: 6px !important; }
-          .product-benefits > div { padding: 8px !important; }
-          .product-hotsale { flex-wrap: wrap !important; gap: 8px !important; }
-          .product-gifts { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
-          .product-trust { flex-wrap: wrap !important; gap: 8px !important; justify-content: flex-start !important; }
-          .product-topbanner { font-size: 12px !important; padding: 8px 12px !important; }
-          .product-header { padding: 12px 16px !important; flex-wrap: wrap; gap: 6px; }
-          .product-header a { font-size: 22px !important; }
-          .product-header span { font-size: 11px !important; }
+          .product-root {
+            background: #334155 !important;
+            padding: 0 12px !important;
+          }
+          .product-shell {
+            width: 100% !important;
+            max-width: 390px !important;
+            margin: 0 auto !important;
+            background: #fff !important;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.26) !important;
+          }
+          .product-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 14px !important;
+            max-width: 390px !important;
+            padding: 16px !important;
+            background: #fff !important;
+          }
+          .gallery-panel { order: 1 !important; }
+          .purchase-panel { order: 2 !important; }
+          .desktop-only-mobile-hidden { display: none !important; }
+          .mobile-only { display: block !important; }
+          .product-header {
+            max-width: 390px !important;
+            padding: 12px 16px !important;
+            justify-content: center !important;
+            border-bottom: 0 !important;
+            display: none !important;
+          }
+          .product-header a { font-size: 24px !important; }
+          .product-header span { display: none !important; }
+          .product-topbanner {
+            max-width: 390px !important;
+            margin: 0 auto !important;
+            font-size: 11px !important;
+            line-height: 1.35 !important;
+            padding: 8px 14px !important;
+            display: none !important;
+          }
+          .product-gallery-wrap {
+            flex-direction: column !important;
+            gap: 12px !important;
+          }
+          .gallery-panel {
+            padding-top: 16px !important;
+          }
+          .product-hero {
+            min-height: 383px !important;
+            height: 383px !important;
+            padding: 0 !important;
+            border-radius: 16px !important;
+            background: #f3e8df !important;
+            overflow: hidden !important;
+            align-items: stretch !important;
+            justify-content: stretch !important;
+            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08) !important;
+          }
+          .product-hero-discount { display: none !important; }
+          .product-hero-scene {
+            display: block !important;
+            position: absolute !important;
+            inset: 0 !important;
+          }
+          .product-hero-scene::before {
+            content: "" !important;
+            position: absolute !important;
+            inset: 0 !important;
+            background:
+              linear-gradient(90deg, rgba(246, 230, 218, 0.96) 0%, rgba(246, 230, 218, 0.86) 45%, rgba(246, 230, 218, 0.12) 78%),
+              radial-gradient(circle at 76% 20%, rgba(5, 68, 151, 0.16), transparent 40%) !important;
+            z-index: 1 !important;
+          }
+          .product-hero-person {
+            position: absolute !important;
+            inset: 0 0 0 auto !important;
+            width: 72% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: 68% center !important;
+            filter: saturate(1.05) contrast(1.02) !important;
+          }
+          .product-hero-copy {
+            display: grid !important;
+            align-content: start !important;
+            gap: 8px !important;
+            position: absolute !important;
+            z-index: 2 !important;
+            top: 18px !important;
+            left: 16px !important;
+            width: 60% !important;
+            color: #151827 !important;
+          }
+          .product-doctor-note {
+            display: block !important;
+            width: fit-content !important;
+            max-width: 210px !important;
+            padding: 8px 10px !important;
+            border-radius: 8px !important;
+            background: rgba(255,255,255,0.94) !important;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.16) !important;
+            font-family: Georgia, serif !important;
+            font-size: 8px !important;
+            line-height: 1.15 !important;
+          }
+          .product-hero-headline {
+            display: block !important;
+            margin-top: 4px !important;
+            font-family: Georgia, serif !important;
+            font-size: 20px !important;
+            line-height: 1.32 !important;
+            font-weight: 700 !important;
+            text-transform: capitalize !important;
+          }
+          .product-hero-subcopy {
+            display: block !important;
+            max-width: 178px !important;
+            font-size: 9px !important;
+            line-height: 1.35 !important;
+            font-weight: 700 !important;
+          }
+          .product-hero-bottle {
+            display: block !important;
+            position: absolute !important;
+            z-index: 3 !important;
+            left: 54px !important;
+            bottom: 58px !important;
+            width: 88px !important;
+            height: 118px !important;
+            object-fit: contain !important;
+            filter: drop-shadow(0 14px 16px rgba(15, 23, 42, 0.2)) !important;
+          }
+          .product-ingredients-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            position: absolute !important;
+            z-index: 4 !important;
+            left: 50% !important;
+            bottom: 18px !important;
+            transform: translateX(-50%) !important;
+            min-width: 176px !important;
+            padding: 11px 20px !important;
+            border: 2px solid #0757c8 !important;
+            border-radius: 999px !important;
+            background: #fff !important;
+            color: #0b4db3 !important;
+            font-size: 16px !important;
+            font-weight: 900 !important;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.14) !important;
+          }
+          .product-standard-img { display: none !important; }
+          .product-thumbs {
+            justify-content: flex-start !important;
+            padding: 0 0 6px !important;
+            gap: 10px !important;
+          }
+          .product-thumbs button {
+            width: 62px !important;
+            height: 62px !important;
+            flex: 0 0 auto;
+            border-radius: 8px !important;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08) !important;
+          }
+          .product-rating {
+            justify-content: flex-start !important;
+            gap: 8px !important;
+            margin: 8px 0 8px !important;
+          }
+          .product-rating > span:nth-child(2) { font-size: 12px !important; }
+          .product-rating-badge {
+            width: fit-content !important;
+            margin: 0 0 12px !important;
+            display: block !important;
+            font-size: 11px !important;
+            padding: 9px 14px !important;
+            border-radius: 999px !important;
+          }
+          .product-title {
+            font-size: 24px !important;
+            line-height: 1.22 !important;
+            text-align: left !important;
+            letter-spacing: 0 !important;
+            margin: 8px 0 16px !important;
+          }
+          .product-benefits {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 8px !important;
+            margin-bottom: 16px !important;
+          }
+          .product-benefits > div {
+            border: 0 !important;
+            background: transparent !important;
+            padding: 4px 2px !important;
+          }
+          .product-benefits > div > div:first-child {
+            width: 46px !important;
+            height: 46px !important;
+            margin-bottom: 8px !important;
+          }
+          .product-benefits > div > div:last-child {
+            font-size: 11px !important;
+            line-height: 1.25 !important;
+            font-weight: 700 !important;
+          }
+          .product-hotsale {
+            display: grid !important;
+            grid-template-columns: 44px minmax(0, 1fr) 126px !important;
+            align-items: center !important;
+            gap: 10px !important;
+            padding: 16px 12px !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            border-radius: 16px !important;
+            margin-bottom: 24px !important;
+          }
+          .product-sale-icon {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            color: #fb3b42 !important;
+          }
+          .product-hotsale-title { font-size: 16px !important; }
+          .product-hotsale-subtitle { font-size: 12px !important; margin-top: 2px !important; line-height: 1.25 !important; font-weight: 700 !important; }
+          .product-hotsale-timer { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 8px !important; justify-content: center; }
+          .product-hotsale-timer > div { min-width: 0 !important; padding: 8px 5px !important; border-radius: 7px !important; }
+          .product-hotsale-timer > div > div:first-child { font-size: 15px !important; }
+          .deal-option { margin-top: 10px !important; padding-top: 20px !important; }
+          .deal-badge { top: -12px !important; }
+          .deal-option {
+            border-radius: 14px !important;
+            padding: 18px 14px 14px !important;
+            min-height: 120px !important;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04) !important;
+          }
+          .deal-option-inner { align-items: center !important; }
+          .deal-title { font-size: 16px !important; line-height: 1.2 !important; }
+          .deal-meta { font-size: 13px !important; line-height: 1.35 !important; margin-top: 4px !important; }
+          .deal-price-col {
+            display: grid !important;
+            justify-items: end !important;
+            gap: 3px !important;
+          }
+          .deal-price { font-size: 25px !important; line-height: 1 !important; font-weight: 900 !important; }
+          .deal-save {
+            border: 1px solid #93c5fd !important;
+            background: #dbeafe !important;
+            border-radius: 999px !important;
+            padding: 5px 8px !important;
+            color: #1e40af !important;
+            white-space: nowrap !important;
+          }
+          .product-cta-note {
+            padding: 14px 18px !important;
+            border-radius: 999px !important;
+            line-height: 1.45 !important;
+            font-size: 12px !important;
+          }
+          .product-total-row {
+            flex-direction: column !important;
+            gap: 4px !important;
+            align-items: flex-start !important;
+          }
+          .product-total-row > div { width: 100% !important; display: flex !important; justify-content: space-between !important; align-items: baseline !important; }
+          .product-add-button { font-size: 14px !important; padding: 15px 18px !important; background: #0f172a !important; }
+          .product-info-card {
+            padding: 18px !important;
+            border-radius: 14px !important;
+          }
+          .product-stats { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 8px !important; }
+          .product-stats > div { padding: 12px 4px !important; }
+          .product-stats > div > div:first-child { font-size: 16px !important; }
+          .product-gifts { grid-template-columns: 1fr !important; }
+          .product-trust {
+            display: grid !important;
+            grid-template-columns: 1fr !important;
+            gap: 8px !important;
+            text-align: center !important;
+          }
+          .product-bottom-testimonial {
+            max-width: 390px !important;
+            background: #fff !important;
+            padding: 16px !important;
+          }
         }
         @media (max-width: 420px) {
           .product-title { font-size: 20px !important; }
-          .product-benefits { grid-template-columns: 1fr !important; }
-          .product-gifts { grid-template-columns: 1fr !important; }
-          .deal-price { font-size: 16px !important; }
+          .product-grid { padding: 14px !important; }
+          .deal-option-inner { gap: 8px !important; }
+          .deal-price-col { min-width: 92px !important; }
+          .deal-price { font-size: 17px !important; }
+          .deal-save { font-size: 10px !important; padding: 4px 7px !important; }
+          .product-benefits > div > div:last-child { font-size: 10px !important; }
         }
       `}</style>
-      {/* Top banner */}
-      <div
-        className="product-topbanner"
-        style={{
-          background: BLUE,
-          color: "#fff",
-          textAlign: "center",
-          padding: "10px 16px",
-          fontWeight: 700,
-          fontSize: 14,
-          letterSpacing: 1,
-        }}
-      >
-        GREAT DEAL · Envío GRATIS en pedidos hoy · Garantía 90 Días
-      </div>
-
-      {/* Header */}
-      <header
-        className="product-header"
-        style={{
-          borderBottom: "1px solid #eee",
-          padding: "16px 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          maxWidth: 1280,
-          margin: "0 auto",
-        }}
-      >
-        <a
-          href="/"
+      <div className="product-shell">
+        {/* Top banner */}
+        <div
+          className="product-topbanner"
           style={{
-            color: BLUE,
-            fontWeight: 900,
-            fontSize: 26,
-            textDecoration: "none",
-            letterSpacing: -0.5,
+            background: BLUE,
+            color: "#fff",
+            textAlign: "center",
+            padding: "10px 16px",
+            fontWeight: 700,
+            fontSize: 14,
+            letterSpacing: 1,
           }}
         >
-          Prosta<span style={{ color: RED }}>Genix</span>
-        </a>
-        <span style={{ color: "#555", fontSize: 13 }}>#1 Rated Prostate Pill in the World</span>
-      </header>
+          🔥 OFERTÓN · Envío GRATIS en pedidos hoy · Garantía 90 Días
+        </div>
 
-      <main
-        className="product-grid"
-        style={{
-          maxWidth: 1280,
-          margin: "0 auto",
-          padding: "32px 24px",
-          display: "grid",
-          gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)",
-          gap: 40,
-        }}
-      >
+        {/* Header */}
+        <header
+          className="product-header"
+          style={{
+            borderBottom: "1px solid #eee",
+            padding: "16px 24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            maxWidth: 1280,
+            margin: "0 auto",
+          }}
+        >
+          <a
+            href="/"
+            style={{
+              color: BLUE,
+              fontWeight: 900,
+              fontSize: 26,
+              textDecoration: "none",
+              letterSpacing: -0.5,
+            }}
+          >
+            Prosta<span style={{ color: RED }}>Genix</span>
+          </a>
+          <span style={{ color: "#555", fontSize: 13 }}>#1 en Cuidado Prostático en el Mundo</span>
+        </header>
+
+        <main
+          className="product-grid"
+          style={{
+            maxWidth: 1280,
+            margin: "0 auto",
+            padding: "32px 24px",
+            display: "grid",
+            gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)",
+            gap: 40,
+          }}
+        >
         {/* LEFT: gallery */}
-        <section>
+        <section className="product-panel gallery-panel">
           <div className="product-gallery-wrap" style={{ display: "flex", gap: 12 }}>
             <div className="product-thumbs" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {GALLERY.map((src, i) => (
@@ -227,6 +515,7 @@ export default function ProductPage() {
               }}
             >
               <span
+                className="product-hero-discount"
                 style={{
                   position: "absolute",
                   top: 16,
@@ -240,9 +529,32 @@ export default function ProductPage() {
                   letterSpacing: 1,
                 }}
               >
-                UP TO 70% OFF
+                HASTA 70% DCTO
               </span>
+              <div className="product-hero-scene">
+                <img className="product-hero-person" src="https://www.prostagenix.com/images/home/dudley-danoff.png" alt="" />
+                <div className="product-hero-copy">
+                  <div className="product-doctor-note">
+                    Elección De Los Médicos · Cientos de Médicos Comparten Esto Con Sus Pacientes Sin Recibir Compensación.
+                  </div>
+                  <div className="product-hero-headline">
+                    Reemplaza Más De 12 Productos Prostáticos Por Solo S/ 1.50 Al Día
+                  </div>
+                  <div className="product-hero-subcopy">
+                    Formulado Por Los Mejores Doctores De Los Ángeles. Clínicamente Comprobado Para Mejorar La Salud Prostática.
+                  </div>
+                </div>
+                <img className="product-hero-bottle" src="https://www.prostagenix.com/images/product/bottle.png" alt="" />
+                <button className="product-ingredients-btn" type="button">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.5 10-10 10Z" />
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                  </svg>
+                  Ingredientes
+                </button>
+              </div>
               <img
+                className="product-standard-img"
                 src={GALLERY[heroIdx]}
                 alt="ProstaGenix"
                 style={{ maxWidth: "100%", maxHeight: 460, objectFit: "contain" }}
@@ -252,6 +564,7 @@ export default function ProductPage() {
 
           {/* Descripción del producto */}
           <div
+            className="product-info-card"
             style={{
               marginTop: 24,
               padding: 20,
@@ -279,6 +592,7 @@ export default function ProductPage() {
 
           {/* Stats */}
           <div
+            className="product-stats"
             style={{
               marginTop: 18,
               display: "grid",
@@ -352,11 +666,12 @@ export default function ProductPage() {
         </section>
 
         {/* RIGHT: purchase panel */}
-        <section>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+        <section className="product-panel purchase-panel">
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }} className="product-rating">
             <span style={{ color: ORANGE, fontSize: 20 }}>★★★★★</span>
             <span style={{ color: "#555", fontWeight: 600 }}>4.8 (13,167)</span>
             <span
+              className="product-rating-badge"
               style={{
                 background: BLUE,
                 color: "#fff",
@@ -482,7 +797,6 @@ export default function ProductPage() {
             ))}
           </div>
 
-          {/* HOT SALE countdown */}
           <div
             className="product-hotsale"
             style={{
@@ -494,38 +808,48 @@ export default function ProductPage() {
               gap: 14,
               marginBottom: 22,
               background: "#fff5f5",
+              maxWidth: "100%",
+              boxSizing: "border-box",
             }}
           >
-            <div style={{ flex: 1 }}>
-              <div style={{ color: RED, fontWeight: 900, letterSpacing: 1 }}>🔥 HOT SALE</div>
-              <div style={{ fontSize: 13, color: "#5a1010" }}>
-                Ordena hoy para asegurar tu 70% de descuento y regalos GRATIS
+            <div className="product-sale-icon">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8.5 14.5a3.5 3.5 0 1 0 7 0c0-3.5-3.5-5-3.5-8.5-2.5 2-5.5 4.7-5.5 8.5Z" />
+                <path d="M12 22c4.4 0 8-3.4 8-8 0-5.5-4.5-9.5-8-12-3.5 2.5-8 6.5-8 12 0 4.6 3.6 8 8 8Z" />
+              </svg>
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="product-hotsale-title" style={{ color: RED, fontWeight: 900, letterSpacing: 1 }}>🔥 OFERTA CALIENTE</div>
+              <div className="product-hotsale-subtitle" style={{ fontSize: 13, color: "#5a1010" }}>
+                Ordena hoy para recibir regalos GRATIS
               </div>
             </div>
-            {[
-              { v: h, l: "HRS" },
-              { v: m, l: "MIN" },
-              { v: s, l: "SEG" },
-            ].map((x) => (
-              <div
-                key={x.l}
-                style={{
-                  background: RED,
-                  color: "#fff",
-                  padding: "6px 10px",
-                  borderRadius: 8,
-                  textAlign: "center",
-                  minWidth: 46,
-                }}
-              >
-                <div style={{ fontWeight: 900, fontSize: 18, lineHeight: 1 }}>{x.v}</div>
-                <div style={{ fontSize: 10, letterSpacing: 1 }}>{x.l}</div>
-              </div>
-            ))}
+            <div className="product-hotsale-timer" style={{ display: "flex", gap: 6, flexShrink: 0 }}>
+              {[
+                { v: h, l: "HRS" },
+                { v: m, l: "MIN" },
+                { v: s, l: "SEG" },
+              ].map((x) => (
+                <div
+                  key={x.l}
+                  style={{
+                    background: RED,
+                    color: "#fff",
+                    padding: "6px 10px",
+                    borderRadius: 8,
+                    textAlign: "center",
+                    minWidth: 46,
+                  }}
+                >
+                  <div style={{ fontWeight: 900, fontSize: 18, lineHeight: 1 }}>{x.v}</div>
+                  <div style={{ fontSize: 10, letterSpacing: 1 }}>{x.l}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Deal options */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 18, paddingTop: 4 }}>
             {(Object.keys(DEALS) as DealKey[]).map((k) => {
               const d = DEALS[k];
               const active = k === selected;
@@ -533,76 +857,85 @@ export default function ProductPage() {
                 <button
                   key={k}
                   onClick={() => setSelected(k)}
+                  className="deal-option"
                   style={{
                     textAlign: "left",
                     cursor: "pointer",
-                    border: `2px solid ${active ? BLUE : "#e3e6ee"}`,
-                    background: active ? "#eef3fb" : "#fff",
+                    border: `2px solid ${active ? "#3b82f6" : "#e2e8f0"}`,
+                    background: active ? "#eff6ff" : "#fff",
                     borderRadius: 14,
-                    padding: "16px 18px",
+                    padding: d.badge ? "20px 16px 14px" : "14px 16px",
+                    marginTop: d.badge ? 10 : 0,
                     position: "relative",
+                    transition: "all 0.15s",
+                    width: "100%",
+                    boxSizing: "border-box",
                   }}
                 >
                   {d.badge && (
                     <span
+                      className="deal-badge"
                       style={{
                         position: "absolute",
                         top: -12,
-                        left: 16,
-                        background: BLUE,
+                        left: 20,
+                        background: k === "sale71" ? "#1e40af" : "#3b82f6",
                         color: "#fff",
-                        padding: "4px 12px",
+                        padding: "3px 10px",
                         borderRadius: 999,
-                        fontSize: 11,
-                        fontWeight: 800,
+                        fontSize: 10,
+                        fontWeight: 700,
                         letterSpacing: 1,
+                        zIndex: 2,
                       }}
                     >
                       {d.badge}
                     </span>
                   )}
                   <div
+                    className="deal-option-inner"
                     style={{
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      gap: 12,
+                      gap: 8,
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }}>
                       <span
                         style={{
-                          width: 20,
-                          height: 20,
+                          width: 18,
+                          height: 18,
                           borderRadius: "50%",
-                          border: `2px solid ${active ? BLUE : "#c9cee0"}`,
+                          border: `2px solid ${active ? "#3b82f6" : "#c9cee0"}`,
                           display: "inline-flex",
                           alignItems: "center",
                           justifyContent: "center",
+                          flexShrink: 0,
                         }}
                       >
                         {active && (
                           <span
-                            style={{ width: 10, height: 10, borderRadius: "50%", background: BLUE }}
+                            style={{ width: 9, height: 9, borderRadius: "50%", background: "#3b82f6" }}
                           />
                         )}
                       </span>
-                      <div>
-                        <div style={{ fontWeight: 800, fontSize: 15 }}>{d.label}</div>
-                        <div style={{ fontSize: 12, color: "#666" }}>
+                      <div style={{ minWidth: 0 }}>
+                        <div className="deal-title" style={{ fontWeight: 700, fontSize: 14, lineHeight: 1.25 }}>{d.label}</div>
+                        <div className="deal-meta" style={{ fontSize: 11, color: "#666" }}>
                           S/ {d.perUnit.toFixed(2)}/botella · {d.months}
                         </div>
                       </div>
                     </div>
-                    <div style={{ textAlign: "right" }}>
-                      <div style={{ color: "#888", textDecoration: "line-through", fontSize: 13 }}>
+                    <div className="deal-price-col" style={{ textAlign: "right", flexShrink: 0 }}>
+                      <div style={{ color: "#999", textDecoration: "line-through", fontSize: 12 }}>
                         S/ {d.retail.toFixed(2)}
                       </div>
-                      <div style={{ fontWeight: 900, fontSize: 20, color: "#0b1a3a" }}>
+                      <div className="deal-price" style={{ fontWeight: 800, fontSize: 17, color: "#0b1a3a" }}>
                         S/ {d.price.toFixed(2)}
                       </div>
-                      <div style={{ color: BLUE, fontSize: 11, fontWeight: 700 }}>
-                        Ahorras S/ {(d.retail - d.price).toFixed(2)}
+                      <div className="deal-save" style={{ color: "#3b82f6", fontSize: 10, fontWeight: 700 }}>
+                        Ahorra S/ {(d.retail - d.price).toFixed(2)}
                       </div>
                     </div>
                   </div>
@@ -612,56 +945,65 @@ export default function ProductPage() {
           </div>
 
           <div
+            className="product-cta-note"
             style={{
               background: `linear-gradient(90deg, ${BLUE}, #0a5cc7)`,
               color: "#fff",
               textAlign: "center",
-              padding: "12px",
-              borderRadius: 10,
-              fontWeight: 800,
+              padding: "10px",
+              borderRadius: 50,
+              fontWeight: 700,
+              fontSize: 13,
               marginBottom: 14,
             }}
           >
-            Ordena antes de hoy a medianoche para recibir regalos GRATIS
+            ⏰ Ordena antes de medianoche — Recibe regalos GRATIS
           </div>
 
           <div
+            className="product-total-row"
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "baseline",
-              marginBottom: 10,
+              marginBottom: 4,
+              padding: "0 4px",
             }}
           >
-            <span style={{ color: "#666" }}>
+            <span style={{ color: "#666", fontSize: 13 }}>
               Total ({cur.bottles} {cur.bottles === 1 ? "botella" : "botellas"})
             </span>
             <div>
-              <span style={{ color: "#888", textDecoration: "line-through", marginRight: 10 }}>
+              <span style={{ color: "#999", textDecoration: "line-through", marginRight: 10, fontSize: 14 }}>
                 S/ {cur.retail.toFixed(2)}
               </span>
-              <span style={{ fontWeight: 900, fontSize: 28, color: "#0b1a3a" }}>
+              <span style={{ fontWeight: 800, fontSize: 26, color: "#0b1a3a" }}>
                 S/ {cur.price.toFixed(2)}
               </span>
             </div>
           </div>
+          <div style={{ textAlign: "right", color: "#3b82f6", fontSize: 13, fontWeight: 800, marginBottom: 10, padding: "0 4px" }}>
+            Ahorras S/ {(cur.retail - cur.price).toFixed(2)}
+          </div>
           <button
+            className="product-add-button"
             onClick={() => navigate(`/checkout?deal=${selected}`)}
             style={{
-              marginTop: 10,
+              marginTop: 4,
               width: "100%",
               padding: "14px 20px",
-              borderRadius: 12,
-              border: `2px solid ${BLUE}`,
+              borderRadius: 50,
+              border: "none",
               cursor: "pointer",
-              background: "#fff",
-              color: BLUE,
-              fontWeight: 900,
+              background: "#1e293b",
+              color: "#fff",
+              fontWeight: 700,
               fontSize: 15,
-              letterSpacing: 1,
+              textTransform: "uppercase" as const,
+              letterSpacing: "0.05em",
             }}
           >
-            IR A PAGAR AHORA →
+            Agregar al Carrito →
           </button>
 
           {/* Free gifts */}
@@ -735,10 +1077,12 @@ export default function ProductPage() {
             </a>
           </div>
         </section>
-      </main>
+        </main>
+      </div>
 
       {/* Testimonial */}
       <section
+        className="product-bottom-testimonial"
         style={{ maxWidth: 1280, margin: "0 auto", padding: "24px", borderTop: "1px solid #eee" }}
       >
         <div style={{ padding: 18, border: "1px solid #e3e6ee", borderRadius: 14 }}>
