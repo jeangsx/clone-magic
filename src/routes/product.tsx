@@ -52,10 +52,10 @@ const DEALS: Record<
 };
 
 const GALLERY = [
-  "https://www.prostagenix.com/images/home/dudley-danoff.png",
   "https://www.prostagenix.com/images/product/bottle_box.png",
   "https://www.prostagenix.com/images/product/bottle.png",
   "https://www.prostagenix.com/special/special-offer/img/number-one-award.png",
+  "https://www.prostagenix.com/images/home/dudley-danoff.png",
 ];
 
 function useCountdown() {
@@ -119,7 +119,7 @@ export default function ProductPage() {
           .product-gallery-wrap { flex-direction: column-reverse !important; }
           .product-thumbs { flex-direction: row !important; overflow-x: auto; width: 100%; justify-content: center; }
         }
-        @media (max-width: 720px) {
+        @media (max-width: 640px) {
           .product-root {
             background: #fff !important;
             padding: 0 !important;
