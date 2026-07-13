@@ -1,5 +1,6 @@
 import { Outlet, Link, useRouteError, isRouteErrorResponse } from "react-router-dom";
 import WhatsAppButton from "../components/WhatsAppButton";
+import { useCartSync } from "../hooks/useCartSync";
 
 function NotFoundComponent() {
   return (
@@ -61,6 +62,8 @@ function ErrorComponent() {
 }
 
 export default function RootLayout() {
+  useCartSync();
+
   return (
     <>
       <Outlet />
