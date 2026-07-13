@@ -1421,6 +1421,222 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
 
     <script defer src="https://www.prostagenix.com/special/special-offer/js/zepto.min.js"></script>
     <script defer src="https://www.prostagenix.com/special/special-offer/js/counter.js"></script>
+    <style>
+      /* Final mobile/tablet override: this must stay after the imported CSS and older inline rules. */
+      html,
+      body {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        background: #fff !important;
+      }
+
+      @media (max-width: 820px) {
+        .product_section,
+        .banner_special,
+        .banner_consumerlab,
+        .larry_dudley,
+        .benefits,
+        .buy,
+        .footer {
+          width: 100% !important;
+          max-width: none !important;
+          overflow-x: hidden !important;
+        }
+
+        .product_section {
+          padding: 28px 0 36px !important;
+        }
+
+        .product_section > div {
+          display: grid !important;
+          grid-template-columns: 1fr !important;
+          gap: 18px !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          padding: 0 16px !important;
+          box-sizing: border-box !important;
+        }
+
+        .product-left,
+        .product-right {
+          width: 100% !important;
+          min-width: 0 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        .product-hero-excalvo {
+          min-height: 0 !important;
+          height: auto !important;
+          border-radius: 14px !important;
+          overflow: hidden !important;
+        }
+
+        .hero-content-wrap {
+          display: grid !important;
+          place-items: center !important;
+          height: auto !important;
+          padding: 14px !important;
+          position: relative !important;
+        }
+
+        .hero-bg-doctor,
+        .hero-gradient-overlay,
+        .hero-badge-doc,
+        .hero-title-main,
+        .hero-subtitle-sub,
+        .hero-ingredients-btn-wrap,
+        .thumbs-list,
+        .product-rating-row,
+        .product-title-main,
+        .product-benefits-row,
+        .testimonios-section {
+          display: none !important;
+        }
+
+        .hero-bottle-img {
+          display: block !important;
+          position: static !important;
+          width: min(86%, 330px) !important;
+          max-width: 330px !important;
+          max-height: 270px !important;
+          height: auto !important;
+          margin: 0 auto !important;
+          transform: none !important;
+        }
+
+        .hot-sale-box {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: stretch !important;
+          justify-content: center !important;
+          gap: 10px !important;
+          width: 100% !important;
+          padding: 14px !important;
+          margin: 10px 0 14px !important;
+          border-radius: 14px !important;
+          box-sizing: border-box !important;
+        }
+
+        .hot-sale-box::before {
+          display: none !important;
+        }
+
+        .hot-sale-text {
+          width: 100% !important;
+          min-width: 0 !important;
+          text-align: center !important;
+        }
+
+        .hot-sale-title {
+          font-size: 14px !important;
+          line-height: 1.1 !important;
+        }
+
+        .hot-sale-sub {
+          font-size: 11px !important;
+          line-height: 1.25 !important;
+        }
+
+        .hot-sale-timer {
+          display: grid !important;
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          gap: 6px !important;
+          width: 100% !important;
+          margin: 0 !important;
+        }
+
+        .hot-sale-timer .timer-block {
+          min-width: 0 !important;
+          padding: 8px 6px !important;
+          border-radius: 8px !important;
+        }
+
+        .hot-sale-timer .timer-block .val {
+          font-size: 15px !important;
+        }
+
+        .hot-sale-timer .timer-block .lbl {
+          font-size: 8px !important;
+        }
+
+        .deal-pill {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1fr) auto !important;
+          align-items: center !important;
+          gap: 10px !important;
+          min-height: 0 !important;
+          padding: 14px 16px !important;
+          border-radius: 14px !important;
+        }
+
+        .deal-pill-left {
+          width: auto !important;
+          min-width: 0 !important;
+          flex-wrap: nowrap !important;
+          align-items: center !important;
+        }
+
+        .deal-pill-label {
+          font-size: 15px !important;
+          line-height: 1.15 !important;
+        }
+
+        .deal-pill-sub {
+          font-size: 12px !important;
+          line-height: 1.25 !important;
+        }
+
+        .deal-pill-price-col {
+          width: auto !important;
+          min-width: 104px !important;
+          display: grid !important;
+          justify-items: end !important;
+          text-align: right !important;
+          gap: 3px !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        .deal-pill-price {
+          font-size: 18px !important;
+          margin: 0 !important;
+          white-space: nowrap !important;
+        }
+
+        .deal-pill-save {
+          font-size: 10px !important;
+          padding: 4px 8px !important;
+          white-space: nowrap !important;
+        }
+
+        .order-urgency-bar,
+        #cta-btn {
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .product_section > div {
+          padding: 0 16px !important;
+        }
+
+        .deal-pill {
+          grid-template-columns: 1fr !important;
+        }
+
+        .deal-pill-price-col {
+          width: 100% !important;
+          min-width: 0 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          text-align: left !important;
+        }
+      }
+    </style>
   </head>
 
   <body>
