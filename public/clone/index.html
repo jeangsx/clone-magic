@@ -268,10 +268,15 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
         width: 55% !important;
       }
       .pods_special .pod .split .bottles_one > img:first-child {
-        width: 80% !important;
+        width: 30% !important;
       }
       .pods_special .pod .split .bottles_one {
         width: auto !important;
+      }
+      .pods_special .pod .split > img.hero {
+        max-width: 260px !important;
+        width: 60% !important;
+        height: auto !important;
       }
       .pods_special .pod .split:last-child .price .btn,
       .pods_special .pod .split:last-child .price .btn_orange {
@@ -1935,7 +1940,7 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
           <div class="order-total-savings" id="total-savings">Ahorras S/ 104.00</div>
 
           <!-- CTA Button - Excalvo style dark navy -->
-          <a id="cta-btn" href="/product?deal=single" target="_parent" style="display: block; background: #1e293b; color: #fff; text-align: center; padding: 14px 20px; border-radius: 50px; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; font-family: 'Montserrat', system-ui, sans-serif;">
+          <a id="cta-btn" href="#pods" style="display: block; background: #1e293b; color: #fff; text-align: center; padding: 14px 20px; border-radius: 50px; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; font-family: 'Montserrat', system-ui, sans-serif;">
             Agregar al Carrito →
           </a>
         </div>
@@ -2232,7 +2237,138 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
 
     <!-- BUY -->
 
-    <div class="buy body_full">
+    <!-- PODS - SPECIAL (4 paquetes) -->
+
+    <div id="pods" class="pods_special body_full_nomar">
+      <div class="body_full wrapper borders">
+        <h2 class="heading">Oferta Especial Solo por Internet en ProstaGenix</h2>
+
+        <!-- POD: 4 + 3 GRATIS -->
+        <div class="pod">
+          <div class="split">
+            <img class="badge" src="https://www.prostagenix.com/special/special-offer/img/bonus.png" alt="bonus badge">
+            <div class="bottles bottles_three bottles_four">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+            </div>
+            <span class="plus">+</span>
+            <div class="bottles bottles_three">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+            </div>
+          </div>
+          <div class="split">
+            <span class="heading">Compra 4 <strong>Lleva 3 GRATIS</strong></span>
+            <ul>
+              <li>Precio Regular: <s>S/ 599.00</s></li>
+              <li>Ahorras: <strong>S/ 419.05</strong></li>
+            </ul>
+            <div class="price">
+              <span>Ahorro Inmediato</span>
+              <span><sup>S/</sup>179<sup>.95</sup></span>
+              <a href="#buy" class="knd-ic-btn qcd-link"><div class="btn btn_orange knd-ic-btn">
+                <span class="knd-ic-btn">Ordenar Ahora</span>
+              </div></a>
+            </div>
+            <img class="badge" src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png" alt="90 day money-back guarantee badge">
+            <span class="savings">70% de Descuento</span>
+          </div>
+        </div>
+
+        <!-- POD: 3 + 2 GRATIS -->
+        <div class="pod">
+          <div class="split">
+            <img class="badge" src="https://www.prostagenix.com/special/special-offer/img/bonus.png" alt="bonus badge">
+            <div class="bottles bottles_three">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+            </div>
+            <span class="plus">+</span>
+            <div class="bottles bottles_three bottles_two">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+            </div>
+          </div>
+          <div class="split">
+            <span class="heading">Compra 3 <strong>Lleva 2 GRATIS</strong></span>
+            <ul>
+              <li>Precio Regular: <s>S/ 429.00</s></li>
+              <li>Ahorras: <strong>S/ 289.05</strong></li>
+            </ul>
+            <div class="price">
+              <span>Ahorro Inmediato</span>
+              <span><sup>S/</sup>139<sup>.95</sup></span>
+              <a href="#buy" class="knd-ic-btn qcd-link"><div class="btn btn_orange knd-ic-btn">
+                <span class="knd-ic-btn">Ordenar Ahora</span>
+              </div></a>
+            </div>
+            <img class="badge" src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png" alt="90 day money-back guarantee badge">
+            <span class="savings">66% de Descuento</span>
+          </div>
+        </div>
+
+        <!-- POD: 2 + 1 GRATIS -->
+        <div class="pod">
+          <div class="split">
+            <img class="badge" src="https://www.prostagenix.com/special/special-offer/img/bonus.png" alt="bonus badge">
+            <div class="bottles bottles_three bottles_two">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+            </div>
+            <span class="plus">+</span>
+            <div class="bottles bottles_three bottles_one">
+              <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle">
+            </div>
+          </div>
+          <div class="split">
+            <span class="heading">Compra 2 <strong>Lleva 1 GRATIS</strong></span>
+            <ul>
+              <li>Precio Regular: <s>S/ 259.00</s></li>
+              <li>Ahorras: <strong>S/ 159.05</strong></li>
+            </ul>
+            <div class="price">
+              <span>Ahorro Inmediato</span>
+              <span><sup>S/</sup>99<sup>.95</sup></span>
+              <a href="#buy" class="knd-ic-btn qcd-link"><div class="btn btn_orange knd-ic-btn">
+                <span class="knd-ic-btn">Ordenar Ahora</span>
+              </div></a>
+            </div>
+            <img class="badge" src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png" alt="90 day money-back guarantee badge">
+            <span class="savings">62% de Descuento</span>
+          </div>
+        </div>
+
+        <!-- POD: 1 frasco -->
+        <div class="pod">
+          <div class="split">
+            <img class="badge" src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png" alt="90 day money-back guarantee badge">
+            <img class="hero" src="https://www.prostagenix.com/images/product/bottle_box.png" alt="ProstaGenix frasco y caja">
+          </div>
+          <div class="split">
+            <span class="heading">Suministro para 1 Mes</span>
+            <ul>
+              <li>Precio Regular: <s>S/ 89.00</s></li>
+              <li>Ahorras: <strong>S/ 39.05</strong></li>
+            </ul>
+            <div class="price">
+              <span>Ahorro Inmediato</span>
+              <span><sup>S/</sup>49<sup>.95</sup></span>
+              <a href="#buy" class="knd-ic-btn qcd-link"><div class="btn btn_orange knd-ic-btn">
+                <span class="knd-ic-btn">Ordenar Ahora</span>
+              </div></a>
+            </div>
+            <img class="badge" src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png" alt="90 day money-back guarantee badge">
+            <span class="savings">43% de Descuento</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="buy" class="buy body_full">
       <!-- WRAPPER -->
 
       <div class="body_full wrapper borders">
@@ -2257,7 +2393,7 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
 
           <!-- BUTTON -->
 
-          <a href="/product?deal=single" target="_parent" class="knd-ic-btn qcd-link"
+          <a href="#pods" class="knd-ic-btn qcd-link"
             ><div class="btn btn_orange knd-ic-btn">
               <span class="knd-ic-btn">Compra Ahora</span>
             </div></a
