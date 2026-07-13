@@ -2,6 +2,31 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      @media (max-width: 768px) {
+        .product-grid { grid-template-columns: 1fr !important; padding: 16px !important; gap: 20px !important; }
+        .product-hero { min-height: 280px !important; padding: 20px !important; }
+        .product-hero img { max-height: 220px !important; max-width: 60% !important; }
+        .product-title { font-size: 22px !important; }
+        .product-benefits { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+        .product-benefits > div { padding: 8px !important; }
+        .product-hotsale { flex-wrap: wrap !important; gap: 8px !important; }
+        .product-hotsale > div:first-child { flex: 1 1 100% !important; }
+        .countdown-boxes { gap: 4px !important; }
+        .countdown-boxes > div { padding: 4px 6px !important; min-width: 36px !important; }
+        .countdown-boxes > div > div:first-child { font-size: 14px !important; }
+        .deal-option { padding: 12px !important; }
+        .deal-option-price { font-size: 18px !important; }
+        .deal-option-desc { font-size: 11px !important; }
+        .cta-button { font-size: 14px !important; padding: 14px !important; }
+        .product-gifts { grid-template-columns: repeat(3, 1fr) !important; gap: 6px !important; }
+        .product-trust { flex-wrap: wrap !important; gap: 6px !important; }
+        .product-header { padding: 10px 16px !important; }
+        .product-header a { font-size: 20px !important; }
+        .product-header span { display: none !important; }
+        .stats-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 6px !important; }
+      }
+    </style>
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.prostagenix.com/special/special-offer" />
     <meta charset="utf-8" />
@@ -245,7 +270,7 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
     <!-- PRODUCT SHOWCASE -->
 
     <div class="product_section" style="background: #fff; padding: 40px 0;">
-      <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+      <div class="product-grid" style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
         <!-- LEFT: Product Image -->
         <div>
           <div style="background: linear-gradient(135deg, #054497 0%, #0a5cc7 100%); border-radius: 20px; padding: 40px; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center;">
@@ -308,15 +333,15 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
           </div>
 
           <!-- Hot Sale Banner -->
-          <div style="border: 2px solid #d40000; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; background: #fff5f5;">
-            <div style="width: 40px; height: 40px; background: #d40000; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <div class="product-hotsale" style="border: 2px solid #d40000; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; background: #fff5f5;">
+            <div style="width: 40px; height: 40px; background: #d40000; border-radius: 50%; display: flex; align-items: justify-content: center;">
               <span style="font-size: 20px;">🔥</span>
             </div>
             <div style="flex: 1;">
               <div style="color: #d40000; font-weight: 900; font-size: 14px;">OFERTA CALIENTE</div>
               <div style="color: #5a1010; font-size: 13px;">Ordena antes del 11 de julio de 2026 para recibir regalos GRATIS</div>
             </div>
-            <div style="display: flex; gap: 8px;">
+            <div class="countdown-boxes" style="display: flex; gap: 8px;">
               <div style="background: #d40000; color: #fff; padding: 8px 12px; border-radius: 8px; text-align: center; min-width: 50px;">
                 <div style="font-weight: 900; font-size: 18px;">03</div>
                 <div style="font-size: 10px;">HRS</div>
@@ -335,7 +360,7 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
           <!-- Deal Options -->
           <div id="deal-options" style="display: flex; flex-direction: column; gap: 12px;">
             <!-- Option 1 -->
-            <div data-deal="sale5" onclick="selectDeal(this, 'sale5')" style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;">
+            <div data-deal="sale5" onclick="selectDeal(this, 'sale5')" class="deal-option" style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div class="radio-circle" style="width: 20px; height: 20px; border: 2px solid #c9cee0; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"></div>
                 <div>
@@ -351,7 +376,7 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
             </div>
 
             <!-- Option 2 (selected by default) -->
-            <div data-deal="sale18" onclick="selectDeal(this, 'sale18')" style="border: 2px solid #054497; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: #eef3fb; position: relative; transition: all 0.2s;">
+            <div data-deal="sale18" onclick="selectDeal(this, 'sale18')" class="deal-option" style="border: 2px solid #054497; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: #eef3fb; position: relative; transition: all 0.2s;">
               <div style="position: absolute; top: -10px; left: 16px; background: #054497; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">MÁS POPULAR</div>
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div class="radio-circle" style="width: 20px; height: 20px; border: 2px solid #054497; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
@@ -370,7 +395,7 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
             </div>
 
             <!-- Option 3 -->
-            <div data-deal="sale71" onclick="selectDeal(this, 'sale71')" style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; position: relative; transition: all 0.2s;">
+            <div data-deal="sale71" onclick="selectDeal(this, 'sale71')" class="deal-option" style="border: 2px solid #e3e6ee; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; position: relative; transition: all 0.2s;">
               <div style="position: absolute; top: -10px; left: 16px; background: #2f7a3a; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">MEJOR OFERTA</div>
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div class="radio-circle" style="width: 20px; height: 20px; border: 2px solid #c9cee0; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"></div>
@@ -388,7 +413,7 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
           </div>
 
           <!-- CTA Button -->
-          <a id="cta-btn" href="/product?deal=sale18" target="_top" style="display: block; margin-top: 24px; background: linear-gradient(180deg, #f39200, #d97900); color: #fff; text-align: center; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 16px; letter-spacing: 1px; text-decoration: none; box-shadow: 0 8px 20px rgba(243,146,0,0.35);">
+          <a id="cta-btn" href="/product?deal=sale18" target="_top" class="cta-button" style="display: block; margin-top: 24px; background: linear-gradient(180deg, #f39200, #d97900); color: #fff; text-align: center; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 16px; letter-spacing: 1px; text-decoration: none; box-shadow: 0 8px 20px rgba(243,146,0,0.35);">
             AGREGAR AL CARRITO →
           </a>
         </div>
