@@ -235,76 +235,124 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
         object-fit: contain;
       }
 
-      /* Excalvo-style pod card overrides */
+      /* PODS - SPECIAL (copiado del original prostagenix.com/special/special-offer/) */
+      :root {
+        --col-brand: #0b5d8d;
+        --col-brand-alt: #1aa5d6;
+      }
+      .pods_special { font-size: 1rem; text-align: center; }
+      .pods_special .wrapper { padding: 60px 5rem; }
+      .pods_special .wrapper > h2 { font-size: 3em; color: var(--col-brand); margin: 0; font-family: 'Montserrat', system-ui, sans-serif; font-weight: 900; }
       .pods_special .pod {
-        font-size: 0.85rem !important;
-        padding: 0.6em 0.4em !important;
-        margin-top: 1.2em !important;
+        width: 100%; font-size: 1em;
+        background: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+        border-radius: 10px;
+        filter: drop-shadow(0 0 4px rgba(0,0,0,0.15));
+        padding: 1em 0.5em; position: relative; margin-top: 2em;
+        transition: transform .3s ease-in-out;
       }
-      .pods_special .pod .split:last-child > .heading {
-        font-size: 2em !important;
-        margin: 0 !important;
-      }
-      .pods_special .pod .split:last-child > .price span:nth-child(2) {
-        font-size: 3.5em !important;
-      }
-      .pods_special .pod .split:last-child > ul {
-        font-size: 1em !important;
-      }
+      .pods_special .pod:hover { transform: scale(1.01); }
+      .pods_special .pod .split { width: 48%; text-align: left; display: inline-block; vertical-align: middle; position: relative; }
       .pods_special .pod .split:first-child > .plus {
-        font-size: 2.5em !important;
-      }
-      .pods_special .pod .split .bottles_three > img:nth-child(2) {
-        width: 35% !important;
-      }
-      .pods_special .pod .split .bottles_three > img:nth-child(1),
-      .pods_special .pod .split .bottles_three > img:nth-child(3) {
-        width: 30% !important;
-      }
-      .pods_special .pod .split .bottles_two > img:nth-child(1) {
-        width: 50% !important;
-      }
-      .pods_special .pod .split .bottles_two > img:nth-child(2) {
-        width: 55% !important;
-      }
-      .pods_special .pod .split .bottles_one > img:first-child {
-        width: 30% !important;
-      }
-      .pods_special .pod .split .bottles_one {
-        width: auto !important;
-      }
-      .pods_special .pod .split > img.hero {
-        max-width: 260px !important;
-        width: 60% !important;
-        height: auto !important;
-      }
-      .pods_special .pod .split:last-child .price .btn,
-      .pods_special .pod .split:last-child .price .btn_orange {
-        background: #3b82f6 !important;
-        border-radius: 50px !important;
-        font-size: 0.95em !important;
-        padding: 0.5em 1.2em !important;
-        filter: none !important;
-        font-family: 'Montserrat', system-ui, sans-serif !important;
-        text-transform: none !important;
-        font-weight: 700 !important;
-        letter-spacing: 0 !important;
-      }
-      .pods_special .pod .split:last-child .price .btn_orange::before {
-        display: none !important;
-      }
-      .pods_special .pod .split:last-child .price .btn span {
-        color: #fff !important;
-        font-weight: 700 !important;
-      }
-      .pods_special .pod .split:last-child .savings {
-        font-size: 1.2em !important;
-      }
-      .pods_special .pod .split:last-child .badge {
-        width: 14% !important;
+        font-family: 'Montserrat', system-ui, sans-serif; font-weight: 900;
+        font-size: 4em; color: var(--col-brand-alt); line-height: 1em;
+        filter: drop-shadow(4px 4px 1px rgba(0,0,0,0.15));
+        padding: 0 1%; display: inline-block; vertical-align: middle;
       }
       .pods_special .pod .split:first-child > .badge {
-        width: 12% !important;
+        z-index: 2; width: 15%; position: absolute; top: 0; right: 23%;
+        filter: drop-shadow(4px 4px 1px rgba(0,0,0,0.25));
+      }
+      .pods_special .pod .split .bottles { width: 50%; text-align: center; display: inline-block; vertical-align: middle; position: relative; }
+      .pods_special .pod .split .bottles_three > img:nth-child(1),
+      .pods_special .pod .split .bottles_three > img:nth-child(3) { z-index:1; width:45%; position:absolute; top:3%; }
+      .pods_special .pod .split .bottles_three > img:nth-child(1) { left: 0; }
+      .pods_special .pod .split .bottles_three > img:nth-child(2) { z-index: 2; width: 50%; position: relative; }
+      .pods_special .pod .split .bottles_three > img:nth-child(3) { right: 0; }
+      .pods_special .pod .split .bottles_four > img:nth-child(1) { left: 13% !important; }
+      .pods_special .pod .split .bottles_four > img:nth-child(2) { width: 60%; padding-left: 10%; }
+      .pods_special .pod .split .bottles_three > img:nth-child(4) { z-index: 0; width: 40%; position: absolute; top: 6%; left: 0; }
+      .pods_special .pod .split .bottles_two { width: 18%; text-align: right; }
+      .pods_special .pod .split .bottles_two > img:nth-child(1) { width: 62%; }
+      .pods_special .pod .split .bottles_two > img:nth-child(2) { width: 70%; }
+      .pods_special .pod .split .bottles_one { width: 12.5%; }
+      .pods_special .pod .split .bottles_one > img:first-child { z-index: 2; width: 100%; display: inline-block; position: relative; top: auto; left: auto; }
+      .pods_special .pod .split:last-child { margin-left: 2%; }
+      .pods_special .pod .split:last-child > .heading {
+        font-family: 'Montserrat', system-ui, sans-serif; font-weight: 900;
+        font-size: 3.5em; margin: 0; color: #111; display: block; line-height: 1.05;
+      }
+      .pods_special .pod .split:last-child > .heading strong { font-weight: normal; color: var(--col-brand); }
+      .pods_special .pod .split:last-child > ul {
+        width: 45%; font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700;
+        font-size: 1.25em; line-height: 1.25em; list-style: none; padding: 0; margin: 0;
+        display: inline-block; vertical-align: top; position: relative;
+      }
+      .pods_special .pod .split:last-child > ul > li { margin-top: 0.25em; padding-left: 1.5em; position: relative; }
+      .pods_special .pod .split:last-child > ul > li::before {
+        width: 1.75em; height: 1.75em; content: "";
+        background-image: url("https://www.prostagenix.com/special/special-offer/img/tick-blue.svg");
+        background-size: contain; background-repeat: no-repeat; position: absolute; top: -0.25em; left: -0.25em;
+      }
+      .pods_special .pod .split:last-child > ul > li s { color: red; }
+      .pods_special .pod .split:last-child > ul > li strong { color: green; }
+      .pods_special .pod .split:last-child > .price { width: 54%; text-align: center; display: inline-block; vertical-align: top; position: relative; }
+      .pods_special .pod .split:last-child > .price span { line-height: 1em; display: block; margin: 0 auto; }
+      .pods_special .pod .split:last-child > .price span:nth-child(1) {
+        font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700;
+        font-size: 1.5em; color: var(--col-brand-alt); letter-spacing: 0.1em; text-transform: uppercase;
+      }
+      .pods_special .pod .split:last-child > .price span:nth-child(2) {
+        font-family: 'Montserrat', system-ui, sans-serif; font-weight: 900;
+        font-size: 6em; margin-top: -0.15em; filter: drop-shadow(4px 4px 1px rgba(0,0,0,0.25));
+      }
+      .pods_special .pod .split:last-child > .price span:nth-child(2) sup { font-size: 0.5em; vertical-align: text-top; }
+      .pods_special .pod .split:last-child .price a { text-decoration: none; }
+      .pods_special .pod .split:last-child .price .btn {
+        width: 100%; font-size: 1.5em; padding: 1em 0; margin-top: 0.5em;
+        background: #f26522; color: #fff; border-radius: 4px; display: block; text-align: center;
+        font-family: 'Montserrat', system-ui, sans-serif; font-weight: 900; text-transform: uppercase;
+        cursor: pointer;
+      }
+      .pods_special .pod .split:last-child .price .btn:hover { background: #d9541a; }
+      .pods_special .pod .split:last-child .price .btn span { color: #fff; }
+      .pods_special .pod .split:last-child .badge {
+        width: 18%; filter: drop-shadow(4px 4px 1px rgba(0,0,0,0.25));
+        position: absolute; bottom: 20%; left: 8%;
+      }
+      .pods_special .pod .split:last-child .savings {
+        font-family: 'Montserrat', system-ui, sans-serif; font-weight: 900;
+        font-size: 2.75em; color: red; text-transform: uppercase;
+        filter: drop-shadow(4px 4px 1px rgba(0,0,0,0.15));
+        display: block; position: absolute; bottom: 5%; left: 0;
+      }
+      .pods_special .pod:nth-child(2) .split:first-child .bottles_three:last-child { width: 38%; }
+      .pods_special .pod:nth-child(3) .split:first-child .bottles_two:last-child { width: 35%; }
+      .pods_special .pod:nth-child(4) .split:first-child .bottles:nth-child(2) { width: 35%; margin-left: 10%; }
+      .pods_special .pod:nth-child(4) .split:first-child .bottles_one:last-child { z-index: 1; width: 25%; margin-left: 8%; }
+      .pods_special .pod:nth-child(4) .split:first-child .plus { margin-left: 7%; }
+      .pods_special .pod:nth-child(5) .split:first-child .hero { width: 47%; margin-left: 35%; }
+      .pods_special .pod:nth-child(5) .split:first-child .badge { width: 18%; top: 20px; right: 52%; }
+
+      @media (max-width: 767px) {
+        .pods_special .wrapper { padding: 30px 2.5%; }
+        .pods_special .wrapper > h2 { font-size: 1.75em; line-height: 1.1em; }
+        .pods_special .pod { padding: 1em 0.5em; margin-top: 2em; }
+        .pods_special .pod .split { width: 100%; text-align: center; display: block; }
+        .pods_special .pod .split:first-child > .plus { font-size: 3em; padding: 0 0.5%; }
+        .pods_special .pod .split:first-child > .badge { z-index: 3; top: -20px; right: -5%; }
+        .pods_special .pod .split .bottles { width: 40%; }
+        .pods_special .pod .split:last-child { margin-left: 0; margin-top: 10px; }
+        .pods_special .pod .split:last-child > .heading { font-size: 2em; }
+        .pods_special .pod .split:last-child > ul { width: 85%; font-size: 1.25em; text-align: left; margin: 0 auto; display: block; }
+        .pods_special .pod .split:last-child > .price { width: 100%; display: block; margin: 15px auto; }
+        .pods_special .pod .split:last-child .price .btn { font-size: 1.25em; padding: 1em 0; margin-top: 50px; }
+        .pods_special .pod .split:last-child .badge { width: 22%; bottom: 70%; left: auto; right: -6%; }
+        .pods_special .pod .split:last-child .savings { width: 100%; font-size: 2em; letter-spacing: 0.1em; bottom: 24%; left: 50%; transform: translateX(-50%); }
+        .pods_special .pod:nth-child(3) .split:first-child .bottles_two:last-child { width: 30%; }
+        .pods_special .pod:nth-child(4) .split:first-child .bottles:nth-child(2) { margin-left: 0; }
+        .pods_special .pod:nth-child(5) .split:first-child .hero { width: 60%; margin-left: auto; }
+        .pods_special .pod:nth-child(5) .split:first-child .badge { width: 22%; top: -20px; right: auto; left: 8%; }
       }
 
       /* Hot sale countdown - Excalvo style */
