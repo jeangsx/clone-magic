@@ -70,6 +70,29 @@ function ProductPage() {
 
   return (
     <div style={{ background: "#fff", minHeight: "100vh", color: "#0b1a3a", fontFamily: "'Montserrat', system-ui, sans-serif" }}>
+      <style>{`
+        .lv-p-main { max-width: 1280px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 40px; }
+        .lv-p-gallery { display: flex; gap: 12px; }
+        .lv-p-thumbs { display: flex; flex-direction: column; gap: 10px; }
+        .lv-p-hero { flex: 1; min-width: 0; }
+        .lv-p-h1 { font-size: 34px; line-height: 1.15; }
+        .lv-p-hot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .lv-p-benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+        @media (max-width: 900px) {
+          .lv-p-main { grid-template-columns: 1fr; gap: 24px; padding: 20px 14px; }
+          .lv-p-h1 { font-size: 24px; }
+          .lv-p-thumbs { flex-direction: row; overflow-x: auto; }
+          .lv-p-thumbs button { width: 64px !important; height: 64px !important; flex: 0 0 auto; }
+          .lv-p-gallery { flex-direction: column-reverse; }
+          .lv-p-hero { min-height: 320px !important; padding: 12px !important; }
+          .lv-p-hero img { max-height: 300px !important; }
+          .lv-p-badge { font-size: 10px !important; padding: 4px 10px !important; }
+        }
+        @media (max-width: 480px) {
+          .lv-p-benefits { grid-template-columns: 1fr 1fr; }
+          .lv-p-benefits > div:nth-child(3) { grid-column: span 2; }
+        }
+      `}</style>
       {/* Top banner */}
       <div style={{ background: BLUE, color: "#fff", textAlign: "center", padding: "10px 16px", fontWeight: 700, fontSize: 14, letterSpacing: 1 }}>
         GREAT DEAL · Envío GRATIS en pedidos hoy · Garantía 90 Días
@@ -81,11 +104,11 @@ function ProductPage() {
         <span style={{ color: "#555", fontSize: 13 }}>#1 Rated Prostate Pill in the World</span>
       </header>
 
-      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 24px", display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 40 }}>
+      <main className="lv-p-main">
         {/* LEFT: gallery */}
-        <section>
-          <div style={{ display: "flex", gap: 12 }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <section style={{ minWidth: 0 }}>
+          <div className="lv-p-gallery">
+            <div className="lv-p-thumbs">
               {GALLERY.map((src, i) => (
                 <button key={i} onClick={() => setHeroIdx(i)} style={{
                   width: 78, height: 78, border: `2px solid ${i === heroIdx ? BLUE : "#e3e6ee"}`, borderRadius: 10,
@@ -95,8 +118,8 @@ function ProductPage() {
                 </button>
               ))}
             </div>
-            <div style={{ flex: 1, position: "relative", background: "linear-gradient(180deg,#eef3fb,#fff)", borderRadius: 16, padding: 24, minHeight: 480, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #e3e6ee" }}>
-              <span style={{ position: "absolute", top: 16, left: 16, background: RED, color: "#fff", fontWeight: 900, padding: "6px 12px", borderRadius: 999, fontSize: 12, letterSpacing: 1 }}>UP TO 70% OFF</span>
+            <div className="lv-p-hero" style={{ position: "relative", background: "linear-gradient(180deg,#eef3fb,#fff)", borderRadius: 16, padding: 24, minHeight: 480, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #e3e6ee" }}>
+              <span className="lv-p-badge" style={{ position: "absolute", top: 12, left: 12, background: RED, color: "#fff", fontWeight: 900, padding: "6px 12px", borderRadius: 999, fontSize: 12, letterSpacing: 1, whiteSpace: "nowrap" }}>UP TO 70% OFF</span>
               <img src={GALLERY[heroIdx]} alt="ProstaGenix" style={{ maxWidth: "100%", maxHeight: 460, objectFit: "contain" }} />
             </div>
           </div>
@@ -108,18 +131,18 @@ function ProductPage() {
         </section>
 
         {/* RIGHT: purchase panel */}
-        <section>
+        <section style={{ minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
             <span style={{ color: ORANGE, fontSize: 20 }}>★★★★★</span>
             <span style={{ color: "#555", fontWeight: 600 }}>4.8 (13,167)</span>
             <span style={{ background: BLUE, color: "#fff", fontWeight: 800, fontSize: 11, padding: "4px 10px", borderRadius: 999, letterSpacing: 1 }}>RECOMENDADO POR MÉDICOS</span>
           </div>
 
-          <h1 style={{ fontSize: 34, lineHeight: 1.15, fontWeight: 900, margin: "6px 0 18px", color: "#0b1a3a" }}>
+          <h1 className="lv-p-h1" style={{ fontWeight: 900, margin: "6px 0 18px", color: "#0b1a3a" }}>
             ProstaGenix™ – Fórmula Clínica para la Próstata
           </h1>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 18 }}>
+          <div className="lv-p-benefits" style={{ marginBottom: 18 }}>
             {[
               { t: "Reduce DHT", d: "Bloquea la dihidrotestosterona" },
               { t: "100% Natural", d: "Sin químicos agresivos" },
@@ -133,8 +156,8 @@ function ProductPage() {
           </div>
 
           {/* HOT SALE countdown */}
-          <div style={{ border: `2px solid ${RED}`, borderRadius: 14, padding: 14, display: "flex", alignItems: "center", gap: 14, marginBottom: 22, background: "#fff5f5" }}>
-            <div style={{ flex: 1 }}>
+          <div className="lv-p-hot" style={{ border: `2px solid ${RED}`, borderRadius: 14, padding: 14, marginBottom: 22, background: "#fff5f5" }}>
+            <div style={{ flex: "1 1 180px", minWidth: 0 }}>
               <div style={{ color: RED, fontWeight: 900, letterSpacing: 1 }}>🔥 HOT SALE</div>
               <div style={{ fontSize: 13, color: "#5a1010" }}>Ordena hoy para asegurar tu 70% de descuento y regalos GRATIS</div>
             </div>
