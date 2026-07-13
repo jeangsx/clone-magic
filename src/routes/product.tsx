@@ -235,13 +235,13 @@ function ProductPage() {
                       </span>
                       <div>
                         <div style={{ fontWeight: 800, fontSize: 15 }}>{d.label}</div>
-                        <div style={{ fontSize: 12, color: "#666" }}>${d.perUnit.toFixed(2)}/botella · {d.months}</div>
+                        <div style={{ fontSize: 12, color: "#666" }}>S/ {d.perUnit.toFixed(2)}/botella · {d.months}</div>
                       </div>
                     </div>
                     <div style={{ textAlign: "right" }}>
-                      <div style={{ color: "#888", textDecoration: "line-through", fontSize: 13 }}>${d.retail.toFixed(2)}</div>
-                      <div style={{ fontWeight: 900, fontSize: 20, color: "#0b1a3a" }}>${d.price.toFixed(2)}</div>
-                      <div style={{ color: BLUE, fontSize: 11, fontWeight: 700 }}>Ahorras ${(d.retail - d.price).toFixed(2)}</div>
+                      <div style={{ color: "#888", textDecoration: "line-through", fontSize: 13 }}>S/ {d.retail.toFixed(2)}</div>
+                      <div style={{ fontWeight: 900, fontSize: 20, color: "#0b1a3a" }}>S/ {d.price.toFixed(2)}</div>
+                      <div style={{ color: BLUE, fontSize: 11, fontWeight: 700 }}>Ahorras S/ {(d.retail - d.price).toFixed(2)}</div>
                     </div>
                   </div>
                 </button>
@@ -256,12 +256,12 @@ function ProductPage() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
             <span style={{ color: "#666" }}>Total ({cur.bottles} {cur.bottles === 1 ? "botella" : "botellas"})</span>
             <div>
-              <span style={{ color: "#888", textDecoration: "line-through", marginRight: 10 }}>${cur.retail.toFixed(2)}</span>
-              <span style={{ fontWeight: 900, fontSize: 28, color: "#0b1a3a" }}>${cur.price.toFixed(2)}</span>
-              <span style={{ color: "#666", marginLeft: 6 }}>USD</span>
+              <span style={{ color: "#888", textDecoration: "line-through", marginRight: 10 }}>S/ {cur.retail.toFixed(2)}</span>
+              <span style={{ fontWeight: 900, fontSize: 28, color: "#0b1a3a" }}>S/ {cur.price.toFixed(2)}</span>
+              <span style={{ color: "#666", marginLeft: 6 }}>PEN</span>
             </div>
           </div>
-          <div style={{ textAlign: "right", color: BLUE, fontWeight: 800, marginBottom: 14 }}>Ahorras ${(cur.retail - cur.price).toFixed(2)}</div>
+          <div style={{ textAlign: "right", color: BLUE, fontWeight: 800, marginBottom: 14 }}>Ahorras S/ {(cur.retail - cur.price).toFixed(2)}</div>
 
           <button onClick={() => navigate({ to: "/checkout", search: { deal: selected } })} style={{
             width: "100%", padding: "18px 20px", borderRadius: 12, border: 0, cursor: "pointer",
@@ -278,25 +278,7 @@ function ProductPage() {
             IR A PAGAR AHORA →
           </button>
 
-          {/* Free gifts */}
-          <div style={{ marginTop: 18, background: `linear-gradient(135deg, ${BLUE}, #0a5cc7)`, color: "#fff", borderRadius: 14, padding: 18 }}>
-            <div style={{ textAlign: "center", fontWeight: 900, letterSpacing: 1, marginBottom: 12 }}>REGALOS GRATIS CON TU COMPRA</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, textAlign: "center", fontSize: 12 }}>
-              {[
-                { t: "Ebook Exclusivo", i: "📘" },
-                { t: "Envío Gratis", i: "🚚" },
-                { t: "Comunidad VIP", i: "🌟" },
-              ].map((g) => (
-                <div key={g.t} style={{ background: "rgba(255,255,255,0.12)", borderRadius: 10, padding: 12 }}>
-                  <div style={{ fontSize: 28 }}>{g.i}</div>
-                  <div style={{ fontWeight: 800, marginTop: 6 }}>{g.t}</div>
-                  <div style={{ opacity: 0.9 }}>✓ Incluido</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div style={{ marginTop: 16, display: "flex", justifyContent: "space-around", alignItems: "center", padding: 14, border: "1px solid #e3e6ee", borderRadius: 12, fontSize: 13, color: "#333" }}>
+          <div style={{ marginTop: 18, display: "flex", justifyContent: "space-around", alignItems: "center", padding: 14, border: "1px solid #e3e6ee", borderRadius: 12, fontSize: 13, color: "#333" }}>
             <span>🔄 Garantía 90 Días</span>
             <span>🚚 Envío Rápido</span>
             <span>🔒 Pago Seguro</span>
