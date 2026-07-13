@@ -4,16 +4,16 @@ import { useState } from "react";
 type DealKey = "sale71" | "sale18" | "sale5" | "single";
 
 const DEALS: Record<DealKey, { label: string; bottles: number; price: number; retail: number }> = {
-  single: { label: "Compra 1 llévate 1 GRATIS", bottles: 2, price: 104, retail: 208 },
-  sale5: { label: "Compra 2 llévate 2 GRATIS", bottles: 4, price: 208, retail: 416 },
-  sale18: { label: "Compra 3 llévate 3 GRATIS", bottles: 6, price: 312, retail: 624 },
-  sale71: { label: "Compra 4 llévate 3 GRATIS", bottles: 7, price: 364, retail: 728 },
+  sale71: { label: "Compra 4 llévate 3 GRATIS", bottles: 7, price: 159.95, retail: 490 },
+  sale18: { label: "Compra 3 llévate 2 GRATIS", bottles: 5, price: 119.95, retail: 350 },
+  sale5: { label: "Compra 2 llévate 1 GRATIS", bottles: 3, price: 79.95, retail: 210 },
+  single: { label: "1 Mes de Suministro", bottles: 1, price: 39.95, retail: 70 },
 };
 
 export default function CheckoutPage() {
   const [searchParams] = useSearchParams();
-  const dealParam = searchParams.get("deal") ?? "single";
-  const d = DEALS[dealParam as DealKey] ?? DEALS.single;
+  const dealParam = searchParams.get("deal") ?? "sale18";
+  const d = DEALS[dealParam as DealKey] ?? DEALS.sale18;
   const [pay, setPay] = useState<"card" | "paypal">("card");
   const [placed, setPlaced] = useState(false);
 
@@ -213,17 +213,19 @@ export default function CheckoutPage() {
             style={{
               marginTop: 22,
               width: "100%",
-              padding: "14px 20px",
-              borderRadius: 50,
+              padding: "18px",
+              borderRadius: 12,
               border: 0,
               cursor: "pointer",
-              background: "#1e293b",
+              background: `linear-gradient(180deg, ${ORANGE}, #d97900)`,
               color: "#fff",
-              fontWeight: 700,
-              fontSize: 16,
+              fontWeight: 900,
+              fontSize: 17,
+              letterSpacing: 1,
+              boxShadow: "0 8px 20px rgba(243,146,0,0.35)",
             }}
           >
-            Pagar S/ {total.toFixed(2)}
+            PAGAR S/ {total.toFixed(2)} →
           </button>
 
           <div
