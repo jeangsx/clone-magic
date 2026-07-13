@@ -119,7 +119,7 @@ function CheckoutPage() {
             marginTop: 22, width: "100%", padding: "18px", borderRadius: 12, border: 0, cursor: "pointer",
             background: `linear-gradient(180deg, ${ORANGE}, #d97900)`, color: "#fff",
             fontWeight: 900, fontSize: 17, letterSpacing: 1, boxShadow: "0 8px 20px rgba(243,146,0,0.35)",
-          }}>PAGAR ${total.toFixed(2)} USD →</button>
+          }}>PAGAR S/ {total.toFixed(2)} PEN →</button>
 
           <div style={{ marginTop: 14, display: "flex", justifyContent: "space-around", fontSize: 12, color: "#555" }}>
             <span>🔒 Pago Seguro</span><span>🔄 Garantía 90 Días</span><span>🚚 Envío Gratis</span>
@@ -136,18 +136,18 @@ function CheckoutPage() {
               <div style={{ fontSize: 12, color: "#666" }}>{d.label}</div>
               <div style={{ fontSize: 12, color: "#666" }}>{d.bottles} {d.bottles === 1 ? "botella" : "botellas"}</div>
             </div>
-            <div style={{ fontWeight: 900 }}>${d.price.toFixed(2)}</div>
+            <div style={{ fontWeight: 900 }}>S/ {d.price.toFixed(2)}</div>
           </div>
 
           <div style={{ marginTop: 14, fontSize: 14, display: "grid", gap: 6 }}>
-            <Row k="Subtotal" v={`$${d.price.toFixed(2)}`} />
-            <Row k="Descuento" v={`- $${(d.retail - d.price).toFixed(2)}`} color="#2f7a3a" />
+            <Row k="Subtotal" v={`S/ ${d.price.toFixed(2)}`} />
+            <Row k="Descuento" v={`- S/ ${(d.retail - d.price).toFixed(2)}`} color="#2f7a3a" />
             <Row k="Envío" v="GRATIS" color="#2f7a3a" />
-            <Row k="Impuestos" v={`$${tax.toFixed(2)}`} />
+            <Row k="Impuestos" v={`S/ ${tax.toFixed(2)}`} />
           </div>
           <div style={{ borderTop: "1px dashed #ccc", marginTop: 12, paddingTop: 12, display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
             <span style={{ fontWeight: 800 }}>Total</span>
-            <span style={{ fontWeight: 900, fontSize: 22, color: BLUE }}>${total.toFixed(2)} <span style={{ fontSize: 12, color: "#666" }}>USD</span></span>
+            <span style={{ fontWeight: 900, fontSize: 22, color: BLUE }}>S/ {total.toFixed(2)} <span style={{ fontSize: 12, color: "#666" }}>PEN</span></span>
           </div>
 
           <div style={{ marginTop: 14, padding: 12, background: "#fff5f5", border: `1px solid ${RED}`, borderRadius: 10, fontSize: 12, color: "#5a1010" }}>
