@@ -48,6 +48,20 @@ function CheckoutPage() {
 
   return (
     <div style={{ background: "#f7f8fb", minHeight: "100vh", color: "#0b1a3a", fontFamily: "'Montserrat',system-ui,sans-serif" }}>
+      <style>{`
+        .lv-co-grid { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 28px; max-width: 1100px; margin: 0 auto; padding: 28px 20px; }
+        .lv-co-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .lv-co-aside { position: sticky; top: 20px; }
+        @media (max-width: 860px) {
+          .lv-co-grid { grid-template-columns: 1fr; gap: 16px; padding: 16px 12px; }
+          .lv-co-aside { position: static; order: -1; }
+          .lv-co-form { padding: 18px !important; }
+          .lv-co-h2 { font-size: 17px !important; }
+        }
+        @media (max-width: 420px) {
+          .lv-co-row2 { grid-template-columns: 1fr; }
+        }
+      `}</style>
       <div style={{ background: BLUE, color: "#fff", textAlign: "center", padding: "10px 16px", fontWeight: 700, fontSize: 13, letterSpacing: 1 }}>
         🔒 CHECKOUT 100% SEGURO · Envío GRATIS · Garantía 90 Días
       </div>
@@ -57,30 +71,30 @@ function CheckoutPage() {
         <span style={{ color: "#555", fontSize: 13 }}>🔒 Conexión Segura SSL</span>
       </header>
 
-      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "28px 20px", display: "grid", gridTemplateColumns: "minmax(0,1.3fr) minmax(0,1fr)", gap: 28 }}>
+      <main className="lv-co-grid">
         {/* Form */}
-        <form onSubmit={(e) => { e.preventDefault(); setPlaced(true); }} style={{ background: "#fff", borderRadius: 14, padding: 24, border: "1px solid #e3e6ee" }}>
-          <h2 style={{ margin: 0, color: BLUE, fontWeight: 900, fontSize: 20 }}>1. Información de Contacto</h2>
+        <form className="lv-co-form" onSubmit={(e) => { e.preventDefault(); setPlaced(true); }} style={{ background: "#fff", borderRadius: 14, padding: 24, border: "1px solid #e3e6ee", minWidth: 0 }}>
+          <h2 className="lv-co-h2" style={{ margin: 0, color: BLUE, fontWeight: 900, fontSize: 20 }}>1. Información de Contacto</h2>
           <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
             <input required type="email" placeholder="Correo electrónico" style={inp} />
-            <div style={row2}>
+            <div className="lv-co-row2">
               <input required placeholder="Nombre" style={inp} />
               <input required placeholder="Apellido" style={inp} />
             </div>
             <input required placeholder="Teléfono" style={inp} />
           </div>
 
-          <h2 style={{ marginTop: 24, color: BLUE, fontWeight: 900, fontSize: 20 }}>2. Dirección de Envío</h2>
+          <h2 className="lv-co-h2" style={{ marginTop: 24, color: BLUE, fontWeight: 900, fontSize: 20 }}>2. Dirección de Envío</h2>
           <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
             <input required placeholder="Dirección" style={inp} />
-            <div style={row2}>
+            <div className="lv-co-row2">
               <input required placeholder="Ciudad" style={inp} />
               <input required placeholder="Código Postal" style={inp} />
             </div>
             <input required placeholder="País" defaultValue="México" style={inp} />
           </div>
 
-          <h2 style={{ marginTop: 24, color: BLUE, fontWeight: 900, fontSize: 20 }}>3. Método de Pago</h2>
+          <h2 className="lv-co-h2" style={{ marginTop: 24, color: BLUE, fontWeight: 900, fontSize: 20 }}>3. Método de Pago</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 14 }}>
             {(["card", "paypal"] as const).map((k) => (
               <button type="button" key={k} onClick={() => setPay(k)} style={{
@@ -93,7 +107,7 @@ function CheckoutPage() {
           {pay === "card" && (
             <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
               <input required placeholder="Número de tarjeta" style={inp} />
-              <div style={row2}>
+              <div className="lv-co-row2">
                 <input required placeholder="MM / AA" style={inp} />
                 <input required placeholder="CVV" style={inp} />
               </div>
@@ -113,7 +127,7 @@ function CheckoutPage() {
         </form>
 
         {/* Summary */}
-        <aside style={{ background: "#fff", borderRadius: 14, padding: 22, border: "1px solid #e3e6ee", height: "fit-content", position: "sticky", top: 20 }}>
+        <aside className="lv-co-aside" style={{ background: "#fff", borderRadius: 14, padding: 22, border: "1px solid #e3e6ee", height: "fit-content", minWidth: 0 }}>
           <h3 style={{ margin: 0, color: BLUE, fontWeight: 900 }}>Resumen del Pedido</h3>
           <div style={{ marginTop: 14, padding: 14, background: "#f7f8fb", borderRadius: 10, display: "flex", gap: 12, alignItems: "center" }}>
             <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="" style={{ width: 70, height: 70, objectFit: "contain" }} />
