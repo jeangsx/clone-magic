@@ -52,10 +52,10 @@ const DEALS: Record<
 };
 
 const GALLERY = [
-  "https://www.prostagenix.com/images/home/dudley-danoff.png",
   "https://www.prostagenix.com/images/product/bottle_box.png",
   "https://www.prostagenix.com/images/product/bottle.png",
   "https://www.prostagenix.com/special/special-offer/img/number-one-award.png",
+  "https://www.prostagenix.com/images/home/dudley-danoff.png",
 ];
 
 function useCountdown() {
@@ -119,23 +119,23 @@ export default function ProductPage() {
           .product-gallery-wrap { flex-direction: column-reverse !important; }
           .product-thumbs { flex-direction: row !important; overflow-x: auto; width: 100%; justify-content: center; }
         }
-        @media (max-width: 720px) {
+        @media (max-width: 640px) {
           .product-root {
-            background: #334155 !important;
-            padding: 0 12px !important;
+            background: #fff !important;
+            padding: 0 !important;
           }
           .product-shell {
             width: 100% !important;
-            max-width: 390px !important;
+            max-width: none !important;
             margin: 0 auto !important;
             background: #fff !important;
-            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.26) !important;
+            box-shadow: none !important;
           }
           .product-grid {
             display: flex !important;
             flex-direction: column !important;
             gap: 14px !important;
-            max-width: 390px !important;
+            max-width: 430px !important;
             padding: 16px !important;
             background: #fff !important;
           }
@@ -161,28 +161,27 @@ export default function ProductPage() {
             display: none !important;
           }
           .product-gallery-wrap {
-            flex-direction: column !important;
+            flex-direction: column-reverse !important;
             gap: 12px !important;
           }
           .gallery-panel {
             padding-top: 16px !important;
           }
           .product-hero {
-            min-height: 383px !important;
-            height: 383px !important;
-            padding: 0 !important;
+            min-height: 0 !important;
+            height: auto !important;
+            aspect-ratio: 1 / 0.9 !important;
+            padding: 14px !important;
             border-radius: 16px !important;
-            background: #f3e8df !important;
+            background: linear-gradient(180deg,#f8fbff,#fff) !important;
             overflow: hidden !important;
-            align-items: stretch !important;
-            justify-content: stretch !important;
+            align-items: center !important;
+            justify-content: center !important;
             box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08) !important;
           }
           .product-hero-discount { display: none !important; }
           .product-hero-scene {
-            display: block !important;
-            position: absolute !important;
-            inset: 0 !important;
+            display: none !important;
           }
           .product-hero-scene::before {
             content: "" !important;
@@ -272,11 +271,26 @@ export default function ProductPage() {
             font-weight: 900 !important;
             box-shadow: 0 8px 16px rgba(15, 23, 42, 0.14) !important;
           }
-          .product-standard-img { display: none !important; }
+          .product-standard-img {
+            display: block !important;
+            width: 92% !important;
+            height: 92% !important;
+            max-width: 330px !important;
+            max-height: 330px !important;
+            object-fit: contain !important;
+          }
           .product-thumbs {
             justify-content: flex-start !important;
             padding: 0 0 6px !important;
             gap: 10px !important;
+          }
+          .product-info-card,
+          .product-stats,
+          .product-reviews,
+          .product-rating,
+          .product-title,
+          .product-benefits {
+            display: none !important;
           }
           .product-thumbs button {
             width: 62px !important;
@@ -328,10 +342,10 @@ export default function ProductPage() {
           }
           .product-hotsale {
             display: grid !important;
-            grid-template-columns: 44px minmax(0, 1fr) 126px !important;
+            grid-template-columns: 34px minmax(0, 1fr) minmax(106px, 126px) !important;
             align-items: center !important;
-            gap: 10px !important;
-            padding: 16px 12px !important;
+            gap: 8px !important;
+            padding: 14px 10px !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
             border-radius: 16px !important;
@@ -343,10 +357,10 @@ export default function ProductPage() {
             justify-content: center !important;
             color: #fb3b42 !important;
           }
-          .product-hotsale-title { font-size: 16px !important; }
-          .product-hotsale-subtitle { font-size: 12px !important; margin-top: 2px !important; line-height: 1.25 !important; font-weight: 700 !important; }
-          .product-hotsale-timer { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 8px !important; justify-content: center; }
-          .product-hotsale-timer > div { min-width: 0 !important; padding: 8px 5px !important; border-radius: 7px !important; }
+          .product-hotsale-title { font-size: 13px !important; line-height: 1.05 !important; }
+          .product-hotsale-subtitle { font-size: 11px !important; margin-top: 2px !important; line-height: 1.16 !important; font-weight: 700 !important; }
+          .product-hotsale-timer { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px !important; justify-content: center; }
+          .product-hotsale-timer > div { min-width: 0 !important; padding: 7px 4px !important; border-radius: 7px !important; }
           .product-hotsale-timer > div > div:first-child { font-size: 15px !important; }
           .deal-option { margin-top: 10px !important; padding-top: 20px !important; }
           .deal-badge { top: -12px !important; }
@@ -364,7 +378,7 @@ export default function ProductPage() {
             justify-items: end !important;
             gap: 3px !important;
           }
-          .deal-price { font-size: 25px !important; line-height: 1 !important; font-weight: 900 !important; }
+          .deal-price { font-size: 22px !important; line-height: 1 !important; font-weight: 900 !important; }
           .deal-save {
             border: 1px solid #93c5fd !important;
             background: #dbeafe !important;
@@ -401,7 +415,7 @@ export default function ProductPage() {
             text-align: center !important;
           }
           .product-bottom-testimonial {
-            max-width: 390px !important;
+            max-width: 430px !important;
             background: #fff !important;
             padding: 16px !important;
           }
@@ -410,7 +424,7 @@ export default function ProductPage() {
           .product-title { font-size: 20px !important; }
           .product-grid { padding: 14px !important; }
           .deal-option-inner { gap: 8px !important; }
-          .deal-price-col { min-width: 92px !important; }
+          .deal-price-col { min-width: 86px !important; }
           .deal-price { font-size: 17px !important; }
           .deal-save { font-size: 10px !important; padding: 4px 7px !important; }
           .product-benefits > div > div:last-child { font-size: 10px !important; }
@@ -622,7 +636,7 @@ export default function ProductPage() {
           </div>
 
           {/* Testimonios */}
-          <div style={{ marginTop: 18, display: "grid", gap: 10 }}>
+          <div className="product-reviews" style={{ marginTop: 18, display: "grid", gap: 10 }}>
             {[
               {
                 name: "Carlos R.",
