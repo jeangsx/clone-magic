@@ -1661,6 +1661,8 @@
   letter-spacing: 1px;
 }
 .lv-preview-info { padding: 28px 28px 28px 4px; display: flex; flex-direction: column; justify-content: center; }
+.lv-preview-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+.lv-preview-chip { background: #eaf1fb; color: #0b5d8d; font-weight: 700; font-size: 12px; padding: 8px 6px; border-radius: 10px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .lv-preview-stars { color: #f39200; font-size: 18px; margin-bottom: 8px; }
 .lv-preview-stars span { color: #555; font-size: 13px; font-weight: 600; margin-left: 6px; }
 .lv-preview-info h3 {
@@ -1692,4 +1694,6 @@
   .lv-preview-info { padding: 20px 20px 24px; }
   .lv-preview-info h3 { font-size: 20px; }
   .lv-preview-cta { align-self: stretch; }
+  .lv-preview-chips { gap: 6px; }
+  .lv-preview-chip { font-size: 10px; padding: 6px 4px; }
 }
