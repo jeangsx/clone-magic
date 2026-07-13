@@ -38,17 +38,16 @@ export const Route = createFileRoute("/product")({
 });
 
 function useCountdown() {
-  const target = useMemo(() => {
+  const [diff, setDiff] = useState(24 * 3_600_000 - 1000);
+  useEffect(() => {
     const t = new Date();
     t.setHours(23, 59, 59, 999);
-    return t.getTime();
-  }, []);
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
+    const target = t.getTime();
+    const tick = () => setDiff(Math.max(0, target - Date.now()));
+    tick();
+    const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
-  const diff = Math.max(0, target - now);
   const h = String(Math.floor(diff / 3_600_000)).padStart(2, "0");
   const m = String(Math.floor((diff % 3_600_000) / 60_000)).padStart(2, "0");
   const s = String(Math.floor((diff % 60_000) / 1000)).padStart(2, "0");
