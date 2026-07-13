@@ -1708,17 +1708,19 @@
 .lv-preview-timebox b { display: block; font-size: 16px; font-weight: 900; line-height: 1; }
 .lv-preview-timebox span { font-size: 9px; letter-spacing: 1px; }
 .lv-preview-deals { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
-.lv-preview-deal { display: block; position: relative; border: 2px solid #e3e6ee; background: #fff; border-radius: 12px; padding: 12px 14px; text-decoration: none; color: #0b1a3a; transition: all .2s; }
+.lv-preview-deal { display: block; position: relative; border: 2px solid #e3e6ee; background: #fff; border-radius: 12px; padding: 18px 14px 14px; margin-top: 8px; text-decoration: none; color: #0b1a3a; transition: all .2s; }
 .lv-preview-deal:hover { border-color: #0b5d8d; }
 .lv-preview-deal--active { border-color: #0b5d8d; background: #eef3fb; }
-.lv-preview-deal-badge { position: absolute; top: -10px; left: 12px; background: #0b5d8d; color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 3px 10px; border-radius: 999px; }
+.lv-preview-deal-badge { position: absolute; top: -10px; left: 12px; background: #0b5d8d; color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 3px 10px; border-radius: 999px; white-space: nowrap; z-index: 1; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
 .lv-preview-deal-badge--pop { background: #d40000; }
-.lv-preview-deal-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-.lv-preview-deal-label { font-weight: 800; font-size: 13px; }
+.lv-preview-deal-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.lv-preview-deal-row > div:first-child { min-width: 0; flex: 1 1 auto; }
+.lv-preview-deal-label { font-weight: 800; font-size: 14px; line-height: 1.25; }
 .lv-preview-deal-sub { font-size: 11px; color: #666; margin-top: 2px; }
-.lv-preview-deal-price { text-align: right; }
-.lv-preview-deal-price s { color: #888; font-size: 11px; display: block; }
-.lv-preview-deal-price b { color: #0b1a3a; font-size: 17px; font-weight: 900; }
+.lv-preview-deal-price { text-align: right; flex: 0 0 auto; }
+.lv-preview-deal-price s { color: #888; font-size: 12px; display: block; line-height: 1.2; }
+.lv-preview-deal-price b { color: #0b1a3a; font-size: 18px; font-weight: 900; line-height: 1.2; }
+.lv-preview-deals { display: flex; flex-direction: column; gap: 14px; margin: 6px 0 16px; }
 .lv-preview-cta--primary { display: block; width: 100%; box-sizing: border-box; padding: 14px 20px; text-decoration: none; }
 .lv-preview-cta--outline { display: block; width: 100%; box-sizing: border-box; margin-top: 10px; background: #fff; color: #0b5d8d; border: 2px solid #0b5d8d; padding: 12px 20px; border-radius: 12px; text-align: center; font-weight: 900; letter-spacing: 1px; text-decoration: none; box-shadow: none; }
 .lv-preview-trust { display: flex; justify-content: space-around; align-items: center; margin-top: 14px; padding: 10px; border: 1px solid #e3e6ee; border-radius: 10px; font-size: 12px; color: #333; gap: 8px; flex-wrap: wrap; }
