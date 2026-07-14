@@ -1,28 +1,91 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { DEALS, resolveDealKey } from "../lib/deals";
+import {
+  fetchProductByHandle,
+  fmtMoney,
+  productImages,
+  productVariants,
+  variantCompare,
+  variantPrice,
+} from "../lib/shopify";
 import { CLONE_HOME } from "../lib/static-hosting";
+
+const BLUE = "#054497";
+const RED = "#d40000";
+const ORANGE = "#f39200";
+
+type Summary = {
+  title: string;
+  label: string;
+  image: string;
+  price: number;
+  retail: number;
+  currency: string;
+  editTo: string;
+};
 
 export default function CheckoutPage() {
   const [searchParams] = useSearchParams();
   const deal = searchParams.get("deal");
+  const handle = searchParams.get("handle");
+  const variantId = searchParams.get("variant");
+
+  const [summary, setSummary] = useState<Summary | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [pay, setPay] = useState<"card" | "paypal">("card");
+  const [placed, setPlaced] = useState(false);
 
   useEffect(() => {
     document.title = "ProstaGenix - Checkout Seguro";
   }, []);
-  const d = DEALS[resolveDealKey(deal)];
-  const [pay, setPay] = useState<"card" | "paypal">("card");
-  const [placed, setPlaced] = useState(false);
 
-  const BLUE = "#054497";
-  const RED = "#d40000";
-  const ORANGE = "#f39200";
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        if (handle) {
+          const product = await fetchProductByHandle(handle);
+          if (!product) throw new Error("Producto no encontrado");
+          const variants = productVariants(product);
+          const selected =
+            variants.find((v) => v.id === variantId) ?? variants[0];
+          if (!selected) throw new Error("Variante no encontrada");
+          if (cancelled) return;
+          setSummary({
+            title: product.title,
+            label:
+              selected.title === "Default Title" ? product.title : selected.title,
+            image: productImages(product)[0],
+            price: variantPrice(selected),
+            retail: variantCompare(selected),
+            currency: selected.price.currencyCode,
+            editTo: `/product?handle=${encodeURIComponent(handle)}`,
+          });
+          return;
+        }
 
-  const shipping = 0;
-  const tax = +(d.price * 0.0).toFixed(2);
-  const total = +(d.price + shipping + tax).toFixed(2);
+        const d = DEALS[resolveDealKey(deal)];
+        if (cancelled) return;
+        setSummary({
+          title: "ProstaGenix™",
+          label: d.label,
+          image: "https://www.prostagenix.com/images/product/bottle_box.png",
+          price: d.price,
+          retail: d.retail,
+          currency: "PEN",
+          editTo: `/product?deal=${resolveDealKey(deal)}`,
+        });
+      } catch (e) {
+        if (!cancelled) setError(String(e));
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [deal, handle, variantId]);
 
-  if (placed) {
+  if (placed && summary) {
     return (
       <div style={{ minHeight: "100vh", background: "#f7f8fb", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Montserrat',system-ui,sans-serif", padding: 24 }}>
         <div style={{ maxWidth: 520, background: "#fff", borderRadius: 16, padding: 32, textAlign: "center", border: "1px solid #e3e6ee" }}>
@@ -34,6 +97,17 @@ export default function CheckoutPage() {
       </div>
     );
   }
+
+  if (error) {
+    return <div style={{ padding: 24, fontFamily: "system-ui" }}>Error: {error}</div>;
+  }
+  if (!summary) {
+    return <div style={{ padding: 24, fontFamily: "system-ui", textAlign: "center" }}>Cargando checkout…</div>;
+  }
+
+  const shipping = 0;
+  const tax = 0;
+  const total = +(summary.price + shipping + tax).toFixed(2);
 
   return (
     <div style={{ background: "#f7f8fb", minHeight: "100vh", color: "#0b1a3a", fontFamily: "'Montserrat',system-ui,sans-serif" }}>
@@ -79,7 +153,7 @@ export default function CheckoutPage() {
               <input required placeholder="Ciudad" style={inp} />
               <input required placeholder="Código Postal" style={inp} />
             </div>
-            <input required placeholder="País" defaultValue="México" style={inp} />
+            <input required placeholder="País" defaultValue="Perú" style={inp} />
           </div>
 
           <h2 className="lv-co-h2" style={{ marginTop: 24, color: BLUE, fontWeight: 900, fontSize: 20 }}>3. Método de Pago</h2>
@@ -107,7 +181,7 @@ export default function CheckoutPage() {
             marginTop: 22, width: "100%", padding: "18px", borderRadius: 12, border: 0, cursor: "pointer",
             background: `linear-gradient(180deg, ${ORANGE}, #d97900)`, color: "#fff",
             fontWeight: 900, fontSize: 17, letterSpacing: 1, boxShadow: "0 8px 20px rgba(243,146,0,0.35)",
-          }}>PAGAR S/ {total.toFixed(2)} PEN →</button>
+          }}>PAGAR {fmtMoney(total, summary.currency)} →</button>
 
           <div style={{ marginTop: 14, display: "flex", justifyContent: "space-around", fontSize: 12, color: "#555" }}>
             <span>🔒 Pago Seguro</span><span>🔄 Garantía 90 Días</span><span>🚚 Envío Gratis</span>
@@ -117,31 +191,30 @@ export default function CheckoutPage() {
         <aside className="lv-co-aside" style={{ background: "#fff", borderRadius: 14, padding: 22, border: "1px solid #e3e6ee", height: "fit-content", minWidth: 0 }}>
           <h3 style={{ margin: 0, color: BLUE, fontWeight: 900 }}>Resumen del Pedido</h3>
           <div style={{ marginTop: 14, padding: 14, background: "#f7f8fb", borderRadius: 10, display: "flex", gap: 12, alignItems: "center" }}>
-            <img src="https://www.prostagenix.com/images/product/bottle_box.png" alt="" style={{ width: 70, height: 70, objectFit: "contain" }} />
+            <img src={summary.image} alt="" style={{ width: 70, height: 70, objectFit: "contain" }} />
             <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 800, fontSize: 14 }}>ProstaGenix™</div>
-              <div style={{ fontSize: 12, color: "#666" }}>{d.label}</div>
-              <div style={{ fontSize: 12, color: "#666" }}>{d.bottles} botellas</div>
+              <div style={{ fontWeight: 800, fontSize: 14 }}>{summary.title}</div>
+              <div style={{ fontSize: 12, color: "#666" }}>{summary.label}</div>
             </div>
-            <div style={{ fontWeight: 900, whiteSpace: "nowrap" }}>S/ {d.price.toFixed(2)}</div>
+            <div style={{ fontWeight: 900, whiteSpace: "nowrap" }}>{fmtMoney(summary.price, summary.currency)}</div>
           </div>
 
           <div style={{ marginTop: 14, fontSize: 14, display: "grid", gap: 6 }}>
-            <Row k="Subtotal" v={`S/ ${d.price.toFixed(2)}`} />
-            <Row k="Descuento" v={`- S/ ${(d.retail - d.price).toFixed(2)}`} color="#2f7a3a" />
+            <Row k="Subtotal" v={fmtMoney(summary.price, summary.currency)} />
+            <Row k="Descuento" v={`- ${fmtMoney(Math.max(0, summary.retail - summary.price), summary.currency)}`} color="#2f7a3a" />
             <Row k="Envío" v="GRATIS" color="#2f7a3a" />
-            <Row k="Impuestos" v={`S/ ${tax.toFixed(2)}`} />
+            <Row k="Impuestos" v={fmtMoney(tax, summary.currency)} />
           </div>
           <div style={{ borderTop: "1px dashed #ccc", marginTop: 12, paddingTop: 12, display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
             <span style={{ fontWeight: 800 }}>Total</span>
-            <span style={{ fontWeight: 900, fontSize: 22, color: BLUE, whiteSpace: "nowrap" }}>S/ {total.toFixed(2)} <span style={{ fontSize: 12, color: "#666" }}>PEN</span></span>
+            <span style={{ fontWeight: 900, fontSize: 22, color: BLUE, whiteSpace: "nowrap" }}>{fmtMoney(total, summary.currency)}</span>
           </div>
 
           <div style={{ marginTop: 14, padding: 12, background: "#fff5f5", border: `1px solid ${RED}`, borderRadius: 10, fontSize: 12, color: "#5a1010" }}>
             🔥 Precio con descuento válido solo por hoy.
           </div>
 
-          <Link to={`/product?deal=${resolveDealKey(deal)}`} style={{ display: "inline-block", marginTop: 14, color: BLUE, fontWeight: 700, textDecoration: "none", fontSize: 13 }}>← Editar pedido</Link>
+          <Link to={summary.editTo} style={{ display: "inline-block", marginTop: 14, color: BLUE, fontWeight: 700, textDecoration: "none", fontSize: 13 }}>← Editar pedido</Link>
         </aside>
       </main>
     </div>

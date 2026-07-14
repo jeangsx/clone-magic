@@ -8,8 +8,16 @@ export function appHashUrl(route: string) {
 }
 
 /** Navega al checkout desde la SPA o desde el iframe del preview en clone/. */
-export function goToCheckout(deal: string) {
-  const hash = `#/checkout?deal=${deal}`;
+export function goToCheckout(query: string) {
+  const q = query.includes("=") || query.startsWith("shopify:")
+    ? query.startsWith("shopify:")
+      ? (() => {
+          const [, handle = "", variant = ""] = query.split(":");
+          return `handle=${encodeURIComponent(handle)}&variant=${encodeURIComponent(variant)}`;
+        })()
+      : query
+    : `deal=${query}`;
+  const hash = `#/checkout?${q}`;
   const top = window.top ?? window;
 
   if (top.location.pathname.includes("/clone/")) {

@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { DEAL_KEYS, DEALS, resolveDealKey, type DealKey } from "../lib/deals";
+import {
+  fetchAllProducts,
+  fetchProductByHandle,
+  fmtMoney,
+  productImages,
+  productVariants,
+  variantCompare,
+  variantPrice,
+  type ShopifyProduct,
+  type ShopifyVariant,
+} from "../lib/shopify";
+import { useReportEmbedHeight } from "../lib/embed-height";
 import { goToCheckout } from "../lib/static-hosting";
-
-const GALLERY = [
-  "https://www.prostagenix.com/images/product/bottle_box.png",
-  "https://www.prostagenix.com/images/product/bottle.png",
-  "https://www.prostagenix.com/images/home/dudley-danoff.png",
-  "https://www.prostagenix.com/special/special-offer/img/number-one-award.png",
-];
 
 function useCountdown() {
   const [diff, setDiff] = useState(24 * 3_600_000 - 1000);
@@ -27,26 +31,71 @@ function useCountdown() {
   return { h, m, s };
 }
 
+const BLUE = "#054497";
+const RED = "#d40000";
+const ORANGE = "#f39200";
+
 export default function ProductEmbed() {
   const [searchParams] = useSearchParams();
-  const deal = searchParams.get("deal");
+  const handle = searchParams.get("handle");
+  const [product, setProduct] = useState<ShopifyProduct | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [heroIdx, setHeroIdx] = useState(0);
+  const { h, m, s } = useCountdown();
 
   useEffect(() => {
     document.title = "ProstaGenix Preview";
-  }, []);
+    let cancelled = false;
+    (async () => {
+      try {
+        let p: ShopifyProduct | null = null;
+        if (handle) p = await fetchProductByHandle(handle);
+        if (!p) {
+          const all = await fetchAllProducts();
+          p = all[0] ?? null;
+        }
+        if (cancelled) return;
+        if (!p) throw new Error("No hay productos en Shopify");
+        setProduct(p);
+        setSelectedId(productVariants(p)[0]?.id ?? null);
+      } catch (e) {
+        if (!cancelled) setError(String(e));
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [handle]);
 
-  const [selected, setSelected] = useState<DealKey>(resolveDealKey(deal));
-  const [heroIdx, setHeroIdx] = useState(0);
-  const { h, m, s } = useCountdown();
-  const cur = DEALS[selected];
+  const variants = useMemo(() => (product ? productVariants(product) : []), [product]);
+  const gallery = useMemo(() => (product ? productImages(product) : []), [product]);
+  const selected: ShopifyVariant | null =
+    variants.find((v) => v.id === selectedId) ?? variants[0] ?? null;
 
-  const BLUE = "#054497";
-  const RED = "#d40000";
-  const ORANGE = "#f39200";
+  useReportEmbedHeight(!!product && !!selected && !error);
+
+  if (error) {
+    return <div style={{ padding: 24, fontFamily: "system-ui" }}>Error: {error}</div>;
+  }
+  if (!product || !selected) {
+    return (
+      <div style={{ padding: 24, fontFamily: "system-ui", textAlign: "center" }}>
+        Cargando producto…
+      </div>
+    );
+  }
+
+  const price = variantPrice(selected);
+  const retail = variantCompare(selected);
+  const save = Math.max(0, +(retail - price).toFixed(2));
+  const currency = selected.price.currencyCode;
+  const pct = retail > price ? Math.round(((retail - price) / retail) * 100) : 0;
 
   return (
-    <div style={{ background: "#fff", color: "#0b1a3a", fontFamily: "'Montserrat', system-ui, sans-serif" }}>
+    <div data-embed-root style={{ background: "#fff", color: "#0b1a3a", fontFamily: "'Montserrat', system-ui, sans-serif", minHeight: 0, height: "auto", display: "block" }}>
       <style>{`
+        html, body, #root { height: auto !important; min-height: 0 !important; max-height: none !important; background: #fff !important; overflow: hidden !important; }
         .lv-pe-main { max-width: 1280px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 40px; }
         .lv-pe-gallery { display: flex; flex-direction: column; gap: 12px; }
         .lv-pe-thumbs { display: flex; flex-direction: row; gap: 10px; justify-content: center; flex-wrap: wrap; }
@@ -77,16 +126,61 @@ export default function ProductEmbed() {
       <main className="lv-pe-main">
         <section style={{ minWidth: 0 }}>
           <div className="lv-pe-gallery">
-            <div className="lv-pe-hero" style={{ position: "relative", background: "linear-gradient(180deg,#eef3fb,#fff)", borderRadius: 16, padding: 24, minHeight: 480, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #e3e6ee" }}>
-              <span style={{ position: "absolute", top: 12, left: 12, background: RED, color: "#fff", fontWeight: 900, padding: "6px 12px", borderRadius: 999, fontSize: 12, letterSpacing: 1, whiteSpace: "nowrap" }}>UP TO 70% OFF</span>
-              <img src={GALLERY[heroIdx]} alt="ProstaGenix" style={{ maxWidth: "100%", maxHeight: 460, objectFit: "contain" }} />
+            <div
+              className="lv-pe-hero"
+              style={{
+                position: "relative",
+                background: "linear-gradient(180deg,#eef3fb,#fff)",
+                borderRadius: 16,
+                padding: 24,
+                minHeight: 480,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                border: "1px solid #e3e6ee",
+              }}
+            >
+              {pct > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    left: 12,
+                    background: RED,
+                    color: "#fff",
+                    fontWeight: 900,
+                    padding: "6px 12px",
+                    borderRadius: 999,
+                    fontSize: 12,
+                    letterSpacing: 1,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  UP TO {pct}% OFF
+                </span>
+              )}
+              <img
+                src={gallery[heroIdx] || gallery[0]}
+                alt={product.title}
+                style={{ maxWidth: "100%", maxHeight: 460, objectFit: "contain" }}
+              />
             </div>
             <div className="lv-pe-thumbs">
-              {GALLERY.map((src, i) => (
-                <button key={i} onClick={() => setHeroIdx(i)} style={{
-                  width: 78, height: 78, border: `2px solid ${i === heroIdx ? BLUE : "#e3e6ee"}`, borderRadius: 10,
-                  background: "#f7f8fb", cursor: "pointer", padding: 4, overflow: "hidden",
-                }}>
+              {gallery.map((src, i) => (
+                <button
+                  key={src + i}
+                  onClick={() => setHeroIdx(i)}
+                  style={{
+                    width: 78,
+                    height: 78,
+                    border: `2px solid ${i === heroIdx ? BLUE : "#e3e6ee"}`,
+                    borderRadius: 10,
+                    background: "#f7f8fb",
+                    cursor: "pointer",
+                    padding: 4,
+                    overflow: "hidden",
+                  }}
+                >
                   <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                 </button>
               ))}
@@ -98,33 +192,93 @@ export default function ProductEmbed() {
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10, flexWrap: "wrap" }}>
             <span style={{ color: ORANGE, fontSize: 20 }}>★★★★★</span>
             <span style={{ color: "#555", fontWeight: 600 }}>4.8 (13,167)</span>
-            <span style={{ background: BLUE, color: "#fff", fontWeight: 800, fontSize: 11, padding: "4px 10px", borderRadius: 999, letterSpacing: 1 }}>RECOMENDADO POR MÉDICOS</span>
+            <span
+              style={{
+                background: BLUE,
+                color: "#fff",
+                fontWeight: 800,
+                fontSize: 11,
+                padding: "4px 10px",
+                borderRadius: 999,
+                letterSpacing: 1,
+              }}
+            >
+              RECOMENDADO POR MÉDICOS
+            </span>
           </div>
 
           <h1 className="lv-pe-h1" style={{ fontWeight: 900, margin: "6px 0 18px", color: "#0b1a3a" }}>
-            ProstaGenix™ – Fórmula Clínica para la Próstata
+            {product.title}
           </h1>
 
           <div className="lv-pe-benefits" style={{ marginBottom: 18 }}>
-            {[
-              { t: "Reduce DHT" },
-              { t: "100% Natural" },
-              { t: "Clínicamente Probado" },
-            ].map((b) => (
-              <div key={b.t} style={{ textAlign: "center", padding: 12, border: "1px solid #e3e6ee", borderRadius: 12, background: "#fff" }}>
-                <div style={{ width: 38, height: 38, borderRadius: "50%", background: "#eaf1fb", margin: "0 auto 6px", display: "flex", alignItems: "center", justifyContent: "center", color: BLUE, fontWeight: 900 }}>✓</div>
-                <div style={{ fontSize: 13, fontWeight: 800 }}>{b.t}</div>
+            {["Reduce DHT", "100% Natural", "Clínicamente Probado"].map((t) => (
+              <div
+                key={t}
+                style={{
+                  textAlign: "center",
+                  padding: 12,
+                  border: "1px solid #e3e6ee",
+                  borderRadius: 12,
+                  background: "#fff",
+                }}
+              >
+                <div
+                  style={{
+                    width: 38,
+                    height: 38,
+                    borderRadius: "50%",
+                    background: "#eaf1fb",
+                    margin: "0 auto 6px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: BLUE,
+                    fontWeight: 900,
+                  }}
+                >
+                  ✓
+                </div>
+                <div style={{ fontSize: 13, fontWeight: 800 }}>{t}</div>
               </div>
             ))}
           </div>
 
-          <div style={{ border: `2px solid ${RED}`, borderRadius: 14, padding: 14, marginBottom: 22, background: "#fff5f5", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+          <div
+            style={{
+              border: `2px solid ${RED}`,
+              borderRadius: 14,
+              padding: 14,
+              marginBottom: 22,
+              background: "#fff5f5",
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              flexWrap: "wrap",
+            }}
+          >
             <div style={{ flex: "1 1 180px", minWidth: 0 }}>
               <div style={{ color: RED, fontWeight: 900, letterSpacing: 1 }}>🔥 HOT SALE</div>
-              <div style={{ fontSize: 13, color: "#5a1010" }}>Ordena hoy para asegurar tu 70% de descuento y regalos GRATIS</div>
+              <div style={{ fontSize: 13, color: "#5a1010" }}>
+                Ordena hoy para asegurar tu {pct || 70}% de descuento y regalos GRATIS
+              </div>
             </div>
-            {[{ v: h, l: "HRS" }, { v: m, l: "MIN" }, { v: s, l: "SEG" }].map((x) => (
-              <div key={x.l} style={{ background: RED, color: "#fff", padding: "6px 10px", borderRadius: 8, textAlign: "center", minWidth: 46 }}>
+            {[
+              { v: h, l: "HRS" },
+              { v: m, l: "MIN" },
+              { v: s, l: "SEG" },
+            ].map((x) => (
+              <div
+                key={x.l}
+                style={{
+                  background: RED,
+                  color: "#fff",
+                  padding: "6px 10px",
+                  borderRadius: 8,
+                  textAlign: "center",
+                  minWidth: 46,
+                }}
+              >
                 <div style={{ fontWeight: 900, fontSize: 18, lineHeight: 1 }}>{x.v}</div>
                 <div style={{ fontSize: 10, letterSpacing: 1 }}>{x.l}</div>
               </div>
@@ -132,33 +286,104 @@ export default function ProductEmbed() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
-            {DEAL_KEYS.map((k) => {
-              const d = DEALS[k];
-              const active = k === selected;
+            {variants.map((v, idx) => {
+              const active = v.id === selected.id;
+              const vPrice = variantPrice(v);
+              const vRetail = variantCompare(v);
+              const label =
+                v.title === "Default Title" ? product.title : v.title;
               return (
-                <button key={k} className="lv-pe-deal-btn" onClick={() => setSelected(k)} style={{
-                  textAlign: "left", cursor: "pointer",
-                  border: `2px solid ${active ? BLUE : "#e3e6ee"}`,
-                  background: active ? "#eef3fb" : "#fff",
-                  borderRadius: 12, padding: "12px 14px", position: "relative",
-                }}>
-                  {d.badge && (
-                    <span style={{ position: "absolute", top: -10, left: 12, background: BLUE, color: "#fff", padding: "3px 10px", borderRadius: 999, fontSize: 10, fontWeight: 800, letterSpacing: 1 }}>{d.badge}</span>
+                <button
+                  key={v.id}
+                  className="lv-pe-deal-btn"
+                  onClick={() => setSelectedId(v.id)}
+                  style={{
+                    textAlign: "left",
+                    cursor: "pointer",
+                    border: `2px solid ${active ? BLUE : "#e3e6ee"}`,
+                    background: active ? "#eef3fb" : "#fff",
+                    borderRadius: 12,
+                    padding: "12px 14px",
+                    position: "relative",
+                  }}
+                >
+                  {idx === 0 && variants.length > 1 && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: -10,
+                        left: 12,
+                        background: BLUE,
+                        color: "#fff",
+                        padding: "3px 10px",
+                        borderRadius: 999,
+                        fontSize: 10,
+                        fontWeight: 800,
+                        letterSpacing: 1,
+                      }}
+                    >
+                      MEJOR OFERTA
+                    </span>
+                  )}
+                  {idx === 1 && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: -10,
+                        left: 12,
+                        background: BLUE,
+                        color: "#fff",
+                        padding: "3px 10px",
+                        borderRadius: 999,
+                        fontSize: 10,
+                        fontWeight: 800,
+                        letterSpacing: 1,
+                      }}
+                    >
+                      MÁS POPULAR
+                    </span>
                   )}
                   <div className="lv-pe-deal-row">
                     <div className="lv-pe-deal-info" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                      <span style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${active ? BLUE : "#c9cee0"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        {active && <span style={{ width: 8, height: 8, borderRadius: "50%", background: BLUE }} />}
+                      <span
+                        style={{
+                          width: 18,
+                          height: 18,
+                          borderRadius: "50%",
+                          border: `2px solid ${active ? BLUE : "#c9cee0"}`,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        {active && (
+                          <span style={{ width: 8, height: 8, borderRadius: "50%", background: BLUE }} />
+                        )}
                       </span>
                       <div style={{ minWidth: 0 }}>
-                        <div className="lv-pe-deal-label" style={{ fontWeight: 800, fontSize: 14, lineHeight: 1.2 }}>{d.label}</div>
-                        <div className="lv-pe-deal-sub" style={{ fontSize: 11, color: "#666", marginTop: 2, lineHeight: 1.2 }}>S/ {d.perUnit.toFixed(2)}/botella · {d.months}</div>
+                        <div className="lv-pe-deal-label" style={{ fontWeight: 800, fontSize: 14, lineHeight: 1.2 }}>
+                          {label}
+                        </div>
+                        <div
+                          className="lv-pe-deal-sub"
+                          style={{ fontSize: 11, color: "#666", marginTop: 2, lineHeight: 1.2 }}
+                        >
+                          {v.availableForSale ? "En stock" : "Agotado"}
+                          {v.sku ? ` · SKU ${v.sku}` : ""}
+                        </div>
                       </div>
                     </div>
                     <div className="lv-pe-deal-price">
-                      <div style={{ color: "#888", textDecoration: "line-through", fontSize: 12 }}>S/ {d.retail.toFixed(2)}</div>
-                      <div style={{ fontWeight: 900, fontSize: 18, color: "#0b1a3a" }}>S/ {d.price.toFixed(2)}</div>
-                      <div style={{ color: BLUE, fontSize: 10, fontWeight: 700 }}>Ahorras S/ {(d.retail - d.price).toFixed(2)}</div>
+                      <div style={{ color: "#888", textDecoration: "line-through", fontSize: 12 }}>
+                        {fmtMoney(vRetail, v.price.currencyCode)}
+                      </div>
+                      <div style={{ fontWeight: 900, fontSize: 18, color: "#0b1a3a" }}>
+                        {fmtMoney(vPrice, v.price.currencyCode)}
+                      </div>
+                      <div style={{ color: BLUE, fontSize: 10, fontWeight: 700 }}>
+                        Ahorras {fmtMoney(Math.max(0, vRetail - vPrice), v.price.currencyCode)}
+                      </div>
                     </div>
                   </div>
                 </button>
@@ -166,24 +391,63 @@ export default function ProductEmbed() {
             })}
           </div>
 
-          <div style={{ background: `linear-gradient(90deg, ${BLUE}, #0a5cc7)`, color: "#fff", textAlign: "center", padding: "12px", borderRadius: 10, fontWeight: 800, marginBottom: 14 }}>
+          <div
+            style={{
+              background: `linear-gradient(90deg, ${BLUE}, #0a5cc7)`,
+              color: "#fff",
+              textAlign: "center",
+              padding: "12px",
+              borderRadius: 10,
+              fontWeight: 800,
+              marginBottom: 14,
+            }}
+          >
             Ordena antes de hoy a medianoche para recibir regalos GRATIS
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
-            <span style={{ color: "#666" }}>Total ({cur.bottles} botellas)</span>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              marginBottom: 10,
+              flexWrap: "wrap",
+              gap: 8,
+            }}
+          >
+            <span style={{ color: "#666" }}>Total</span>
             <div style={{ whiteSpace: "nowrap" }}>
-              <span style={{ color: "#888", textDecoration: "line-through", marginRight: 10 }}>S/ {cur.retail.toFixed(2)}</span>
-              <span style={{ fontWeight: 900, fontSize: 28, color: "#0b1a3a" }}>S/ {cur.price.toFixed(2)}</span>
-              <span style={{ color: "#666", marginLeft: 6 }}>PEN</span>
+              <span style={{ color: "#888", textDecoration: "line-through", marginRight: 10 }}>
+                {fmtMoney(retail, currency)}
+              </span>
+              <span style={{ fontWeight: 900, fontSize: 28, color: "#0b1a3a" }}>
+                {fmtMoney(price, currency)}
+              </span>
             </div>
           </div>
-          <div style={{ textAlign: "right", color: BLUE, fontWeight: 800, marginBottom: 14 }}>Ahorras S/ {(cur.retail - cur.price).toFixed(2)}</div>
+          <div style={{ textAlign: "right", color: BLUE, fontWeight: 800, marginBottom: 14 }}>
+            Ahorras {fmtMoney(save, currency)}
+          </div>
 
-          <button onClick={() => goToCheckout(selected)} style={{
-            width: "100%", padding: "14px 20px", borderRadius: 12, border: `2px solid ${BLUE}`, cursor: "pointer",
-            background: "#fff", color: BLUE, fontWeight: 900, fontSize: 15, letterSpacing: 1,
-          }}>
+          <button
+            onClick={() =>
+              goToCheckout(
+                `shopify:${product.handle}:${encodeURIComponent(selected.id)}`,
+              )
+            }
+            style={{
+              width: "100%",
+              padding: "14px 20px",
+              borderRadius: 12,
+              border: `2px solid ${BLUE}`,
+              cursor: "pointer",
+              background: "#fff",
+              color: BLUE,
+              fontWeight: 900,
+              fontSize: 15,
+              letterSpacing: 1,
+            }}
+          >
             IR A PAGAR AHORA →
           </button>
         </section>

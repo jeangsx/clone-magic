@@ -1,142 +1,200 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import {
+  fetchAllProducts,
+  fmtMoney,
+  productOfferSummary,
+  type ShopifyProduct,
+} from "../lib/shopify";
+import { useReportEmbedHeight } from "../lib/embed-height";
+import { appHashUrl } from "../lib/static-hosting";
 
-const SHOPIFY_DOMAIN = "k3btq8-6r.myshopify.com";
-const SHOPIFY_TOKEN = "e703eaa742c1c9a73964e3d646ec51fd";
-const SHOPIFY_URL = `https://${SHOPIFY_DOMAIN}/api/2025-07/graphql.json`;
+const BLUE = "#054497";
+const RED = "#d40000";
+const ORANGE = "#f39200";
+const GREEN = "#2f7a3a";
 
-type Variant = {
-  id: string;
-  title: string;
-  availableForSale: boolean;
-  sku: string | null;
-  price: { amount: string; currencyCode: string };
-  compareAtPrice: { amount: string; currencyCode: string } | null;
-  selectedOptions: { name: string; value: string }[];
-};
+function OfferCard({ product }: { product: ShopifyProduct }) {
+  const offer = productOfferSummary(product);
+  const href = appHashUrl(`/product?handle=${encodeURIComponent(product.handle)}`);
 
-type Product = {
-  id: string;
-  title: string;
-  handle: string;
-  description: string;
-  vendor: string;
-  productType: string;
-  tags: string[];
-  priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
-  images: { edges: { node: { url: string; altText: string | null } }[] };
-  options: { name: string; values: string[] }[];
-  variants: { edges: { node: Variant }[] };
-};
+  return (
+    <article className="lv-offer-pod">
+      <div className="lv-offer-visual">
+        <span className="lv-offer-bonus">OFERTA</span>
+        <div className="lv-offer-bottles">
+          <img src={offer.image} alt={product.title} />
+        </div>
+      </div>
 
-const QUERY = `query($cursor:String){products(first:50,after:$cursor){pageInfo{hasNextPage endCursor}edges{node{id title handle description vendor productType tags priceRange{minVariantPrice{amount currencyCode}}images(first:10){edges{node{url altText}}}options{name values}variants(first:50){edges{node{id title availableForSale sku price{amount currencyCode}compareAtPrice{amount currencyCode}selectedOptions{name value}}}}}}}}`;
+      <div className="lv-offer-copy">
+        <h3 className="lv-offer-title">{product.title}</h3>
 
-async function fetchAll(): Promise<Product[]> {
-  const all: Product[] = [];
-  let cursor: string | null = null;
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const res: Response = await fetch(SHOPIFY_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Shopify-Storefront-Access-Token": SHOPIFY_TOKEN,
-      },
-      body: JSON.stringify({ query: QUERY, variables: { cursor } }),
-    });
-    const j: { data: { products: { pageInfo: { hasNextPage: boolean; endCursor: string }; edges: { node: Product }[] } }; errors?: unknown } = await res.json();
-    if (j.errors) throw new Error(JSON.stringify(j.errors));
-    const p = j.data.products;
-    all.push(...p.edges.map((e) => e.node));
-    if (!p.pageInfo.hasNextPage) break;
-    cursor = p.pageInfo.endCursor;
-  }
-  return all;
-}
+        <ul className="lv-offer-list">
+          <li>
+            Precio retail: <s style={{ color: RED }}>{fmtMoney(offer.retail, offer.currency)}</s>
+          </li>
+          <li>
+            Ahorras:{" "}
+            <strong style={{ color: GREEN }}>{fmtMoney(offer.save, offer.currency)}</strong>
+          </li>
+        </ul>
 
-function fmt(amount: string, cur: string) {
-  const n = Number(amount);
-  return `${cur === "PEN" ? "S/ " : cur + " "}${n.toFixed(2)}`;
+        <div className="lv-offer-price-block">
+          <span className="lv-offer-instant">INSTANT SAVINGS</span>
+          <div className="lv-offer-price">{fmtMoney(offer.price, offer.currency)}</div>
+          <span className="lv-offer-pct">{offer.pct}% SAVINGS</span>
+        </div>
+
+        <div className="lv-offer-actions">
+          <a href={href} target="_top" className="lv-offer-cta">
+            ORDER NOW
+          </a>
+          <div className="lv-offer-guarantee">90 DAY MONEY BACK GUARANTEE</div>
+        </div>
+      </div>
+    </article>
+  );
 }
 
 export default function ProductosPage() {
-  const [products, setProducts] = useState<Product[] | null>(null);
+  const [searchParams] = useSearchParams();
+  const embed = searchParams.get("embed") === "1";
+  const [products, setProducts] = useState<ShopifyProduct[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [q, setQ] = useState("");
 
   useEffect(() => {
-    document.title = "Catálogo Shopify — Productos y variantes";
-    fetchAll().then(setProducts).catch((e) => setError(String(e)));
+    document.title = "Ofertas especiales";
+    fetchAllProducts().then(setProducts).catch((e) => setError(String(e)));
   }, []);
 
-  if (error) return <div style={{ padding: 24, fontFamily: "system-ui" }}>Error: {error}</div>;
-  if (!products) return <div style={{ padding: 24, fontFamily: "system-ui" }}>Cargando catálogo…</div>;
+  useReportEmbedHeight(!!products && !error);
 
-  const filtered = products.filter((p) => p.title.toLowerCase().includes(q.toLowerCase()));
-  const totalVariants = products.reduce((s, p) => s + p.variants.edges.length, 0);
+  if (error) {
+    return (
+      <div style={{ padding: 24, fontFamily: "system-ui" }}>Error: {error}</div>
+    );
+  }
+  if (!products) {
+    return (
+      <div style={{ padding: 24, fontFamily: "system-ui", textAlign: "center" }}>
+        Cargando ofertas…
+      </div>
+    );
+  }
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", background: "#f7f8fb", minHeight: "100vh", color: "#0b1a3a" }}>
-      <header style={{ background: "#054497", color: "#fff", padding: "18px 20px" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-          <div>
-            <div style={{ fontSize: 22, fontWeight: 900 }}>Catálogo Shopify</div>
-            <div style={{ fontSize: 13, opacity: 0.85 }}>{products.length} productos · {totalVariants} variantes · {SHOPIFY_DOMAIN}</div>
-          </div>
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Buscar producto…"
-            style={{ padding: "10px 14px", borderRadius: 8, border: 0, minWidth: 260, fontSize: 14 }}
-          />
-        </div>
-      </header>
+    <div
+      data-embed-root
+      style={{
+        fontFamily: "'Montserrat', system-ui, sans-serif",
+        background: embed ? "#fff" : "#f7f8fb",
+        minHeight: embed ? 0 : "100vh",
+        height: "auto",
+        color: "#0b1a3a",
+        padding: embed ? "12px 8px 24px" : "24px 16px 40px",
+      }}
+    >
+      <style>{`
+        html, body, #root { height: auto !important; min-height: 0 !important; max-height: none !important; background: #fff !important; overflow: hidden !important; }
+        .lv-offers-wrap { max-width: 1100px; margin: 0 auto; }
+        .lv-offers-heading {
+          text-align: center; font-size: 28px; font-weight: 900; color: ${BLUE};
+          margin: 0 0 20px; letter-spacing: -0.3px;
+        }
+        .lv-offers-list { display: flex; flex-direction: column; gap: 18px; }
+        .lv-offer-pod {
+          display: grid; grid-template-columns: minmax(280px,1.2fr) minmax(0,1fr);
+          gap: 22px; align-items: stretch;
+          background: linear-gradient(180deg,#f7f8fb,#fff);
+          border: 1px solid #e3e6ee; border-radius: 14px; padding: 16px 18px;
+          box-shadow: 0 8px 28px rgba(0,0,0,.06);
+        }
+        .lv-offer-visual {
+          position: relative; display: flex; align-items: center; justify-content: center;
+          min-height: 280px; width: 100%; height: 100%;
+          background: linear-gradient(180deg,#eef3fb,#fff);
+          border-radius: 12px; border: 1px solid #e3e6ee; padding: 12px;
+          overflow: hidden;
+        }
+        .lv-offer-bonus {
+          position: absolute; top: 10px; right: 10px; z-index: 2;
+          background: ${BLUE}; color: #fff; font-size: 10px; font-weight: 900;
+          letter-spacing: 1px; padding: 6px 10px; border-radius: 999px;
+          box-shadow: 0 4px 12px rgba(5,68,151,.35);
+        }
+        .lv-offer-bottles {
+          width: 100%; height: 100%; min-height: 260px;
+          display: flex; align-items: center; justify-content: center;
+        }
+        .lv-offer-bottles img {
+          width: 100%; height: 100%;
+          max-width: none; max-height: none;
+          object-fit: contain; object-position: center;
+        }
+        .lv-offer-copy { min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 4px 4px 4px 0; }
+        .lv-offer-title {
+          margin: 0 0 14px; font-size: 34px; font-weight: 900; color: #111;
+          line-height: 1.15; letter-spacing: -0.3px;
+        }
+        .lv-offer-title strong { color: ${BLUE}; }
+        .lv-offer-list { list-style: none; margin: 0 0 16px; padding: 0; font-size: 18px; line-height: 1.45; }
+        .lv-offer-list li { margin: 6px 0; }
+        .lv-offer-list s { font-size: 18px; }
+        .lv-offer-list strong { font-size: 18px; }
+        .lv-offer-price-block { margin-top: 4px; }
+        .lv-offer-instant {
+          display: block; color: #3d7fd6; font-size: 15px; font-weight: 800;
+          letter-spacing: 1px; margin-bottom: 4px;
+        }
+        .lv-offer-price {
+          font-size: 52px; font-weight: 900; color: #111; line-height: 1;
+          text-shadow: 0 1px 0 rgba(0,0,0,.08);
+        }
+        .lv-offer-pct {
+          display: block; color: ${RED}; font-size: 28px; font-weight: 900;
+          margin: 6px 0 16px;
+        }
+        .lv-offer-cta {
+          display: inline-flex; align-items: center; justify-content: center;
+          min-width: 260px; padding: 16px 28px; border-radius: 8px;
+          background: linear-gradient(180deg, #ffb347, ${ORANGE} 45%, #e07800);
+          color: #fff; font-weight: 900; font-size: 22px; letter-spacing: 1px;
+          text-decoration: none; box-shadow: 0 6px 16px rgba(243,146,0,.4);
+        }
+        .lv-offer-cta:hover { filter: brightness(1.05); }
+        .lv-offer-guarantee {
+          margin-top: 14px; font-size: 14px; font-weight: 800; color: ${BLUE};
+          letter-spacing: .5px;
+        }
+        @media (max-width: 760px) {
+          .lv-offers-heading { font-size: 24px; }
+          .lv-offer-pod { grid-template-columns: 1fr; padding: 14px; gap: 12px; }
+          .lv-offer-visual { min-height: 240px; }
+          .lv-offer-bottles { min-height: 220px; }
+          .lv-offer-title { font-size: 28px; }
+          .lv-offer-list { font-size: 16px; }
+          .lv-offer-instant { font-size: 13px; }
+          .lv-offer-price { font-size: 44px; }
+          .lv-offer-pct { font-size: 22px; }
+          .lv-offer-cta { width: 100%; font-size: 20px; }
+          .lv-offer-guarantee { font-size: 13px; }
+        }
+      `}</style>
 
-      <main style={{ maxWidth: 1200, margin: "0 auto", padding: 20, display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))" }}>
-        {filtered.map((p) => {
-          const img = p.images.edges[0]?.node.url;
-          const variants = p.variants.edges.map((e) => e.node);
-          const hasRealVariants = !(variants.length === 1 && variants[0].title === "Default Title");
-          return (
-            <article key={p.id} style={{ background: "#fff", borderRadius: 12, border: "1px solid #e3e6ee", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-              <div style={{ background: "#eef3fb", aspectRatio: "1", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {img ? <img src={img} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} loading="lazy" /> : <span style={{ color: "#888" }}>Sin imagen</span>}
-              </div>
-              <div style={{ padding: 14, display: "flex", flexDirection: "column", gap: 8, flex: 1 }}>
-                <h2 style={{ margin: 0, fontSize: 15, fontWeight: 800, lineHeight: 1.25 }}>{p.title}</h2>
-                <div style={{ fontSize: 12, color: "#666" }}>{p.vendor || "—"} · {p.images.edges.length} img</div>
-                <div style={{ fontWeight: 900, fontSize: 18, color: "#054497" }}>
-                  Desde {fmt(p.priceRange.minVariantPrice.amount, p.priceRange.minVariantPrice.currencyCode)}
-                </div>
-                {hasRealVariants && (
-                  <div style={{ marginTop: 4 }}>
-                    <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1, color: "#888", marginBottom: 4 }}>VARIANTES ({variants.length})</div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                      {variants.map((v) => (
-                        <div key={v.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "6px 8px", background: "#f7f8fb", borderRadius: 6 }}>
-                          <span style={{ fontWeight: 700 }}>{v.title}</span>
-                          <span style={{ color: v.availableForSale ? "#2f7a3a" : "#d40000", fontWeight: 700 }}>
-                            {fmt(v.price.amount, v.price.currencyCode)} · {v.availableForSale ? "Stock" : "Agotado"}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {!hasRealVariants && (
-                  <div style={{ fontSize: 11, color: variants[0]?.availableForSale ? "#2f7a3a" : "#d40000", fontWeight: 700 }}>
-                    {variants[0]?.availableForSale ? "✓ En stock" : "✗ Agotado"} · 1 variante
-                  </div>
-                )}
-                {p.options.length > 0 && (
-                  <div style={{ fontSize: 11, color: "#666" }}>
-                    Opciones: {p.options.map((o) => `${o.name} (${o.values.length})`).join(" · ")}
-                  </div>
-                )}
-              </div>
-            </article>
-          );
-        })}
-      </main>
+      <div className="lv-offers-wrap">
+        {!embed && (
+          <h1 className="lv-offers-heading">Special Internet-Only Offer</h1>
+        )}
+        {embed && (
+          <h2 className="lv-offers-heading">Special Internet-Only Offer</h2>
+        )}
+        <div className="lv-offers-list">
+          {products.map((p) => (
+            <OfferCard key={p.id} product={p} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

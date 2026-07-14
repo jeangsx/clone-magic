@@ -1667,7 +1667,7 @@
   .lv-header-wa { font-size: 12px; padding: 8px 12px; }
 }
 
-/* ===== Product preview card (below hero) ===== */
+/* ===== Product preview card (below hero) — altura adaptable ===== */
 .lv-preview-embed-wrap {
   background: #f7f8fb;
   padding: 24px 12px;
@@ -1677,18 +1677,39 @@
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
-  height: 1250px;
+  height: 80px; /* crece vía postMessage según contenido real */
+  min-height: 0;
   border: 0;
   border-radius: 16px;
   background: #fff;
   box-shadow: 0 10px 40px rgba(0,0,0,.08);
-}
-@media (max-width: 900px) {
-  .lv-preview-embed { height: 1450px; }
+  overflow: hidden;
 }
 @media (max-width: 480px) {
-  .lv-preview-embed { height: 1380px; border-radius: 10px; }
+  .lv-preview-embed { border-radius: 10px; }
   .lv-preview-embed-wrap { padding: 12px 6px; }
+}
+
+/* ===== Ofertas Shopify — altura adaptable ===== */
+.lv-catalog-embed-wrap {
+  background: #fff;
+  padding: 24px 12px 40px;
+}
+.lv-catalog-embed {
+  display: block;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 80px;
+  min-height: 0;
+  border: 0;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+}
+@media (max-width: 480px) {
+  .lv-catalog-embed { border-radius: 10px; }
+  .lv-catalog-embed-wrap { padding: 12px 6px 24px; }
 }
 
 .lv-preview-wrap {
