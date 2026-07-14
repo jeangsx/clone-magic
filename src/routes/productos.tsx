@@ -33,8 +33,9 @@ const QUERY = `query($cursor:String){products(first:50,after:$cursor){pageInfo{h
 async function fetchAll(): Promise<Product[]> {
   const all: Product[] = [];
   let cursor: string | null = null;
+  // eslint-disable-next-line no-constant-condition
   while (true) {
-    const res = await fetch(SHOPIFY_URL, {
+    const res: Response = await fetch(SHOPIFY_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,10 +43,10 @@ async function fetchAll(): Promise<Product[]> {
       },
       body: JSON.stringify({ query: QUERY, variables: { cursor } }),
     });
-    const j = await res.json();
+    const j: { data: { products: { pageInfo: { hasNextPage: boolean; endCursor: string }; edges: { node: Product }[] } }; errors?: unknown } = await res.json();
     if (j.errors) throw new Error(JSON.stringify(j.errors));
     const p = j.data.products;
-    all.push(...p.edges.map((e: { node: Product }) => e.node));
+    all.push(...p.edges.map((e) => e.node));
     if (!p.pageInfo.hasNextPage) break;
     cursor = p.pageInfo.endCursor;
   }
