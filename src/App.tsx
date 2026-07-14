@@ -6,6 +6,7 @@ import CheckoutPage from "./routes/checkout";
 import IndexPage from "./routes/index";
 import ProductPage from "./routes/product";
 import ProductEmbedPage from "./routes/product-embed";
+import ProductosPage from "./routes/productos";
 import { reportLovableError } from "./lib/lovable-error-reporting";
 import { CLONE_HOME } from "./lib/static-hosting";
 
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="/product" element={<ProductPage />} />
           <Route path="/product-embed" element={<ProductEmbedPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/productos" element={<ProductosPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppErrorBoundary>
