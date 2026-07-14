@@ -102,19 +102,19 @@ export default function ProductosPage() {
           text-align: center; font-size: 28px; font-weight: 900; color: ${BLUE};
           margin: 0 0 20px; letter-spacing: -0.3px;
         }
-        .lv-offers-list { display: flex; flex-direction: column; gap: 14px; }
+        .lv-offers-list { display: flex; flex-direction: column; gap: 12px; }
         .lv-offer-pod {
-          display: grid; grid-template-columns: 1fr 1fr;
-          gap: 14px; align-items: stretch;
+          display: grid; grid-template-columns: 1.05fr 0.95fr;
+          gap: 12px; align-items: center;
           background: linear-gradient(180deg,#f7f8fb,#fff);
-          border: 1px solid #e3e6ee; border-radius: 14px; padding: 12px;
+          border: 1px solid #e3e6ee; border-radius: 14px; padding: 10px;
           box-shadow: 0 8px 28px rgba(0,0,0,.06);
         }
         .lv-offer-visual {
           position: relative; display: flex; align-items: center; justify-content: center;
-          width: 100%; min-height: 0; height: 100%;
+          width: 100%;
           background: linear-gradient(180deg,#eef3fb,#fff);
-          border-radius: 12px; border: 1px solid #e3e6ee; padding: 8px;
+          border-radius: 12px; border: 1px solid #e3e6ee; padding: 6px;
           overflow: hidden;
         }
         .lv-offer-bonus {
@@ -124,61 +124,63 @@ export default function ProductosPage() {
           box-shadow: 0 4px 12px rgba(5,68,151,.35);
         }
         .lv-offer-bottles {
-          width: 100%; height: 100%;
-          display: flex; align-items: stretch; justify-content: center;
+          width: 100%;
+          display: flex; align-items: center; justify-content: center;
         }
         .lv-offer-bottles img {
-          width: 100%; height: 100%;
+          display: block;
+          width: 100%;
+          height: auto;
+          max-height: 320px;
           object-fit: contain; object-position: center;
         }
         .lv-offer-copy {
-          min-width: 0; height: 100%;
-          display: flex; flex-direction: column; justify-content: space-between;
-          gap: 8px; padding: 6px 4px;
+          min-width: 0;
+          display: flex; flex-direction: column; justify-content: center;
+          gap: 6px; padding: 4px 6px 4px 2px;
         }
         .lv-offer-title {
-          margin: 0; font-size: 26px; font-weight: 900; color: #0b1a3a;
-          line-height: 1.15; letter-spacing: -0.2px;
+          margin: 0; font-size: 22px; font-weight: 900; color: #0b1a3a;
+          line-height: 1.2; letter-spacing: -0.2px;
         }
-        .lv-offer-list { list-style: none; margin: 0; padding: 0; font-size: 16px; line-height: 1.35; }
-        .lv-offer-list li { margin: 2px 0; }
+        .lv-offer-list { list-style: none; margin: 0; padding: 0; font-size: 15px; line-height: 1.3; }
+        .lv-offer-list li { margin: 0; }
         .lv-offer-price-block { margin: 0; }
         .lv-offer-instant {
-          display: block; color: #3d7fd6; font-size: 13px; font-weight: 800;
-          letter-spacing: 1px; margin-bottom: 2px;
+          display: block; color: #3d7fd6; font-size: 12px; font-weight: 800;
+          letter-spacing: 1px; margin-bottom: 0;
         }
         .lv-offer-price {
-          font-size: 44px; font-weight: 900; color: #111; line-height: 1;
+          font-size: 40px; font-weight: 900; color: #111; line-height: 1.05;
           text-shadow: 0 1px 0 rgba(0,0,0,.08);
         }
         .lv-offer-pct {
-          display: block; color: ${RED}; font-size: 22px; font-weight: 900;
-          margin: 2px 0 0;
+          display: block; color: ${RED}; font-size: 20px; font-weight: 900;
+          margin: 0;
         }
-        .lv-offer-actions { display: flex; flex-direction: column; gap: 8px; }
+        .lv-offer-actions { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
         .lv-offer-cta {
           display: inline-flex; align-items: center; justify-content: center;
-          width: 100%; padding: 14px 20px; border-radius: 8px;
+          width: 100%; padding: 12px 18px; border-radius: 8px;
           background: linear-gradient(180deg, #ffb347, ${ORANGE} 45%, #e07800);
-          color: #fff; font-weight: 900; font-size: 20px; letter-spacing: 1px;
+          color: #fff; font-weight: 900; font-size: 18px; letter-spacing: 1px;
           text-decoration: none; box-shadow: 0 6px 16px rgba(243,146,0,.4);
           box-sizing: border-box;
         }
         .lv-offer-cta:hover { filter: brightness(1.05); }
         .lv-offer-guarantee {
-          margin: 0; font-size: 12px; font-weight: 800; color: ${BLUE};
+          margin: 0; font-size: 11px; font-weight: 800; color: ${BLUE};
           letter-spacing: .5px;
         }
         @media (max-width: 760px) {
           .lv-offers-heading { font-size: 22px; }
-          .lv-offer-pod { grid-template-columns: 1fr; padding: 10px; gap: 10px; }
-          .lv-offer-visual { aspect-ratio: 1 / 1; min-height: 220px; }
-          .lv-offer-copy { height: auto; justify-content: flex-start; gap: 10px; }
-          .lv-offer-title { font-size: 22px; }
-          .lv-offer-list { font-size: 15px; }
-          .lv-offer-price { font-size: 40px; }
-          .lv-offer-pct { font-size: 20px; }
-          .lv-offer-cta { font-size: 18px; }
+          .lv-offer-pod { grid-template-columns: 1fr; padding: 10px; gap: 8px; }
+          .lv-offer-bottles img { max-height: 260px; }
+          .lv-offer-title { font-size: 20px; }
+          .lv-offer-list { font-size: 14px; }
+          .lv-offer-price { font-size: 36px; }
+          .lv-offer-pct { font-size: 18px; }
+          .lv-offer-cta { font-size: 17px; }
         }
       `}</style>
 
