@@ -1,23 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
-
-type DealKey = "sale71" | "sale18" | "sale5" | "single";
-
-const DEALS: Record<DealKey, {
-  label: string;
-  bottles: number;
-  months: string;
-  price: number;
-  retail: number;
-  perUnit: number;
-  badge?: string;
-}> = {
-  sale71: { label: "Compra 4 llévate 3 GRATIS", bottles: 7, months: "7 meses de suministro", price: 599.95, retail: 1839.95, perUnit: 85.7, badge: "MEJOR OFERTA" },
-  sale18: { label: "Compra 3 llévate 2 GRATIS", bottles: 5, months: "5 meses de suministro", price: 449.95, retail: 1299.95, perUnit: 89.99, badge: "MÁS POPULAR" },
-  sale5:  { label: "Compra 2 llévate 1 GRATIS", bottles: 3, months: "3 meses de suministro", price: 299.95, retail: 789.95, perUnit: 99.98 },
-  single: { label: "1 Mes de Suministro", bottles: 1, months: "1 mes de suministro", price: 149.95, retail: 259.95, perUnit: 149.95 },
-};
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { DEAL_KEYS, DEALS, resolveDealKey, type DealKey } from "../lib/deals";
+import { CLONE_HOME } from "../lib/static-hosting";
 
 const GALLERY = [
   "https://www.prostagenix.com/images/product/bottle_box.png",
@@ -25,17 +9,6 @@ const GALLERY = [
   "https://www.prostagenix.com/images/home/dudley-danoff.png",
   "https://www.prostagenix.com/special/special-offer/img/number-one-award.png",
 ];
-
-export const Route = createFileRoute("/product")({
-  validateSearch: (s: Record<string, unknown>) => ({ deal: (s.deal as string) ?? "sale18" }),
-  component: ProductPage,
-  head: () => ({
-    meta: [
-      { title: "ProstaGenix - Preview del Producto" },
-      { name: "description", content: "El suplemento de próstata #1 - Preview del producto con oferta especial." },
-    ],
-  }),
-});
 
 function useCountdown() {
   const [diff, setDiff] = useState(24 * 3_600_000 - 1000);
@@ -54,11 +27,15 @@ function useCountdown() {
   return { h, m, s };
 }
 
-function ProductPage() {
-  const { deal } = Route.useSearch();
+export default function ProductPage() {
+  const [searchParams] = useSearchParams();
+  const deal = searchParams.get("deal");
   const navigate = useNavigate();
-  const initial = (DEALS[deal as DealKey] ? (deal as DealKey) : "sale18") as DealKey;
-  const [selected, setSelected] = useState<DealKey>(initial);
+
+  useEffect(() => {
+    document.title = "ProstaGenix - Preview del Producto";
+  }, []);
+  const [selected, setSelected] = useState<DealKey>(resolveDealKey(deal));
   const [heroIdx, setHeroIdx] = useState(0);
   const { h, m, s } = useCountdown();
   const cur = DEALS[selected];
@@ -77,6 +54,11 @@ function ProductPage() {
         .lv-p-h1 { font-size: 34px; line-height: 1.15; }
         .lv-p-hot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
         .lv-p-benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+        .lv-p-deal-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .lv-p-deal-info { min-width: 0; flex: 1 1 auto; }
+        .lv-p-deal-price { text-align: right; flex: 0 0 auto; }
+        .lv-p-deal-price > div { white-space: nowrap; line-height: 1.2; }
+        .lv-p-deal-btn { padding: 12px 14px !important; margin-top: 4px; }
         @media (max-width: 900px) {
           .lv-p-main { grid-template-columns: 1fr; gap: 24px; padding: 20px 14px; }
           .lv-p-h1 { font-size: 24px; }
@@ -86,6 +68,13 @@ function ProductPage() {
           .lv-p-hero { min-height: 320px !important; padding: 12px !important; }
           .lv-p-hero img { max-height: 300px !important; }
           .lv-p-badge { font-size: 10px !important; padding: 4px 10px !important; }
+          .lv-p-deal-row { flex-wrap: nowrap; gap: 8px; align-items: center; }
+          .lv-p-deal-btn { padding: 10px 12px !important; }
+          .lv-p-deal-info .lv-p-deal-label { font-size: 13px !important; line-height: 1.2; }
+          .lv-p-deal-info .lv-p-deal-sub { font-size: 11px !important; line-height: 1.2; margin-top: 2px; }
+          .lv-p-deal-price > div:nth-child(1) { font-size: 11px !important; }
+          .lv-p-deal-price > div:nth-child(2) { font-size: 16px !important; }
+          .lv-p-deal-price > div:nth-child(3) { font-size: 10px !important; }
         }
         @media (max-width: 480px) {
           .lv-p-benefits { gap: 6px; }
@@ -107,7 +96,7 @@ function ProductPage() {
 
       {/* Header */}
       <header style={{ borderBottom: "1px solid #eee", padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1280, margin: "0 auto" }}>
-        <a href="/" style={{ color: BLUE, fontWeight: 900, fontSize: 26, textDecoration: "none", letterSpacing: -0.5 }}>Prosta<span style={{ color: RED }}>Genix</span></a>
+        <a href={CLONE_HOME} style={{ color: BLUE, fontWeight: 900, fontSize: 26, textDecoration: "none", letterSpacing: -0.5 }}>Prosta<span style={{ color: RED }}>Genix</span></a>
         <span style={{ color: "#555", fontSize: 13 }}>#1 Rated Prostate Pill in the World</span>
       </header>
 
@@ -209,34 +198,34 @@ function ProductPage() {
           </div>
 
           {/* Deal options */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
-            {(Object.keys(DEALS) as DealKey[]).map((k) => {
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
+            {DEAL_KEYS.map((k) => {
               const d = DEALS[k];
               const active = k === selected;
               return (
-                <button key={k} onClick={() => setSelected(k)} style={{
+                <button key={k} className="lv-p-deal-btn" onClick={() => setSelected(k)} style={{
                   textAlign: "left", cursor: "pointer",
                   border: `2px solid ${active ? BLUE : "#e3e6ee"}`,
                   background: active ? "#eef3fb" : "#fff",
-                  borderRadius: 14, padding: "16px 18px", position: "relative",
+                  borderRadius: 12, padding: "12px 14px", position: "relative",
                 }}>
                   {d.badge && (
-                    <span style={{ position: "absolute", top: -12, left: 16, background: BLUE, color: "#fff", padding: "4px 12px", borderRadius: 999, fontSize: 11, fontWeight: 800, letterSpacing: 1 }}>{d.badge}</span>
+                    <span style={{ position: "absolute", top: -10, left: 12, background: BLUE, color: "#fff", padding: "3px 10px", borderRadius: 999, fontSize: 10, fontWeight: 800, letterSpacing: 1 }}>{d.badge}</span>
                   )}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <span style={{ width: 20, height: 20, borderRadius: "50%", border: `2px solid ${active ? BLUE : "#c9cee0"}`, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                        {active && <span style={{ width: 10, height: 10, borderRadius: "50%", background: BLUE }} />}
+                  <div className="lv-p-deal-row">
+                    <div className="lv-p-deal-info" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <span style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${active ? BLUE : "#c9cee0"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        {active && <span style={{ width: 8, height: 8, borderRadius: "50%", background: BLUE }} />}
                       </span>
-                      <div>
-                        <div style={{ fontWeight: 800, fontSize: 15 }}>{d.label}</div>
-                        <div style={{ fontSize: 12, color: "#666" }}>S/ {d.perUnit.toFixed(2)}/botella · {d.months}</div>
+                      <div style={{ minWidth: 0 }}>
+                        <div className="lv-p-deal-label" style={{ fontWeight: 800, fontSize: 14, lineHeight: 1.2 }}>{d.label}</div>
+                        <div className="lv-p-deal-sub" style={{ fontSize: 11, color: "#666", marginTop: 2, lineHeight: 1.2 }}>S/ {d.perUnit.toFixed(2)}/botella · {d.months}</div>
                       </div>
                     </div>
-                    <div style={{ textAlign: "right" }}>
-                      <div style={{ color: "#888", textDecoration: "line-through", fontSize: 13 }}>S/ {d.retail.toFixed(2)}</div>
-                      <div style={{ fontWeight: 900, fontSize: 20, color: "#0b1a3a" }}>S/ {d.price.toFixed(2)}</div>
-                      <div style={{ color: BLUE, fontSize: 11, fontWeight: 700 }}>Ahorras S/ {(d.retail - d.price).toFixed(2)}</div>
+                    <div className="lv-p-deal-price">
+                      <div style={{ color: "#888", textDecoration: "line-through", fontSize: 12 }}>S/ {d.retail.toFixed(2)}</div>
+                      <div style={{ fontWeight: 900, fontSize: 18, color: "#0b1a3a" }}>S/ {d.price.toFixed(2)}</div>
+                      <div style={{ color: BLUE, fontSize: 10, fontWeight: 700 }}>Ahorras S/ {(d.retail - d.price).toFixed(2)}</div>
                     </div>
                   </div>
                 </button>
@@ -248,9 +237,9 @@ function ProductPage() {
             Ordena antes de hoy a medianoche para recibir regalos GRATIS
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-            <span style={{ color: "#666" }}>Total ({cur.bottles} {cur.bottles === 1 ? "botella" : "botellas"})</span>
-            <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
+            <span style={{ color: "#666" }}>Total ({cur.bottles} botellas)</span>
+            <div style={{ whiteSpace: "nowrap" }}>
               <span style={{ color: "#888", textDecoration: "line-through", marginRight: 10 }}>S/ {cur.retail.toFixed(2)}</span>
               <span style={{ fontWeight: 900, fontSize: 28, color: "#0b1a3a" }}>S/ {cur.price.toFixed(2)}</span>
               <span style={{ color: "#666", marginLeft: 6 }}>PEN</span>
@@ -258,7 +247,7 @@ function ProductPage() {
           </div>
           <div style={{ textAlign: "right", color: BLUE, fontWeight: 800, marginBottom: 14 }}>Ahorras S/ {(cur.retail - cur.price).toFixed(2)}</div>
 
-          <button onClick={() => navigate({ to: "/checkout", search: { deal: selected } })} style={{
+          <button onClick={() => navigate(`/checkout?deal=${selected}`)} style={{
             width: "100%", padding: "14px 20px", borderRadius: 12, border: `2px solid ${BLUE}`, cursor: "pointer",
             background: "#fff", color: BLUE, fontWeight: 900, fontSize: 15, letterSpacing: 1,
           }}>
@@ -276,7 +265,7 @@ function ProductPage() {
           </div>
 
           <div style={{ marginTop: 18 }}>
-            <a href="/" style={{ color: BLUE, fontWeight: 700, textDecoration: "none" }}>← Volver a la oferta</a>
+            <a href={CLONE_HOME} style={{ color: BLUE, fontWeight: 700, textDecoration: "none" }}>← Volver a la oferta</a>
           </div>
         </section>
       </main>

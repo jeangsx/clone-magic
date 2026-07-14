@@ -1,28 +1,16 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { CLONE_HOME } from "../lib/static-hosting";
 
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-function Index() {
+export default function IndexPage() {
   useEffect(() => {
-    // Ensure iframe takes full viewport, remove default margins
-    document.body.style.margin = "0";
-    document.documentElement.style.height = "100%";
-    document.body.style.height = "100%";
+    if (!window.location.pathname.endsWith("/clone/index.html")) {
+      window.location.replace(CLONE_HOME);
+    }
   }, []);
+
   return (
-    <iframe
-      src="/clone/index.html"
-      title="ProstaGenix Special Offer"
-      style={{
-        position: "fixed",
-        inset: 0,
-        width: "100vw",
-        height: "100vh",
-        border: 0,
-      }}
-    />
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <p className="text-sm text-muted-foreground">Cargando oferta...</p>
+    </div>
   );
 }

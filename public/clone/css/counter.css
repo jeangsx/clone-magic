@@ -290,7 +290,7 @@ body.play ul section.active .down .shadow {
 
 /* EXTRA STYLING */
 .clock {
-    width: 95%;
+    width: 100%;
     background: rgb(59,59,59);
     background: -moz-linear-gradient(top,  rgba(59,59,59,1) 0%, rgba(33,33,33,1) 100%);
     background: -webkit-linear-gradient(top,  rgba(59,59,59,1) 0%,rgba(33,33,33,1) 100%);
@@ -298,11 +298,12 @@ body.play ul section.active .down .shadow {
     border: #1c1c1c solid 2px;
     border-radius: 10px;
     padding: 0.75em 0.5em;
-    margin-left: 2%;
+    margin-left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    box-sizing: border-box;
 }
 .clock  #ticker {
     display: block;
@@ -313,21 +314,33 @@ body.play ul section.active .down .shadow {
 }
 .clock > .labels {
     width: 100%;
-    font-size: 1.25rem;
-    line-height: 1rem;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    gap: 0.25em;
+    font-size: 1rem;
+    line-height: 1.2;
     text-transform: uppercase;
     text-align: center;
     list-style: none;
     padding: 0;
-    margin: 0;
-    margin-top: 0.25em;
-    opacity: 0.75;
+    margin: 0.4em 0 0;
+    opacity: 0.9;
+    box-sizing: border-box;
 }
 .clock > .labels li {
-    display: inline-block;
-    vertical-align: middle;
-    padding: 0 1em;
-    margin: 0 1.5%;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    box-sizing: border-box;
 }
 .clock > .labels li:first-child {
     margin-left: 0;
@@ -343,18 +356,35 @@ body.play ul section.active .down .shadow {
 
     .clock {
         width: 100%;
-        padding: 0.5em 0.15em;
+        padding: 0.5em 0.35em 0.65em;
         margin-left: 0;
+        box-sizing: border-box;
+    }
+    .clock #ticker {
+        width: 100%;
+        display: flex !important;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.15em;
     }
     ul.flip {
-        width: 70px;
-        height: 60px;
-        font-size: 1.5rem;
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: 78px;
+        height: 54px;
+        font-size: 1.35rem;
         font-weight: bold;
-        line-height: 2.15em;
+        line-height: 2.05em;
+        margin: 0 0.05em !important;
+        box-sizing: border-box;
     }
     .clock > .labels {
-        font-size: 0.9rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.02em;
+        margin-top: 0.5em;
+        gap: 0.15em;
     }
 
 }

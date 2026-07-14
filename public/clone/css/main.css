@@ -72,10 +72,25 @@ body {
 	margin: 0;
 	padding: 0;
 	background-color: #ffffff;
+	width: 100%;
+	max-width: 100%;
+	overflow-x: hidden;
 }
 body, html {
-  height: 100%;
+  height: auto;
+  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: 'Montserrat', sans-serif;
+  transform: none;
+  filter: none;
+  perspective: none;
+}
+html {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
 }
 
 /* COMMON */

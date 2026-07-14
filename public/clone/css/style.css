@@ -57,6 +57,11 @@
 	background: linear-gradient(to bottom,  rgba(0,76,164,1) 0%,rgba(0,81,172,1) 50%,rgba(0,69,154,1) 100%);
 	padding-top: 60px;
 	padding-bottom: 30px;
+	width: 100% !important;
+	max-width: 100% !important;
+	margin: 0 !important;
+	overflow-x: hidden;
+	box-sizing: border-box;
 }
 .banner_special .headings {
 	width: 70%;
@@ -575,9 +580,10 @@
 	text-transform: uppercase;
 	filter: drop-shadow(4px 4px 1px rgba(0, 0, 0, 0.15));
 	display: block;
-	position: absolute;
-	bottom: 5%;
-	left: 0;
+	position: relative;
+	margin: 0 auto 0.15em;
+	text-align: center;
+	line-height: 1.1;
 }
 .pods_special .pod:nth-child(2) .split:first-child .bottles_three:last-child {
 	width: 38%;
@@ -1266,10 +1272,13 @@
 		display: block;
 		margin: 15px auto;
 	}
+	.pods_special .pod .split:last-child > .price span:nth-child(2) {
+		font-size: 4.5em;
+	}
 	.pods_special .pod .split:last-child .price .btn {
 		font-size: 1.25em;
 		padding: 1em 0;
-		margin-top: 50px;
+		margin-top: 0.5em;
 	}
 	.pods_special .pod .split:last-child .price .btn span {
 		color: #ffffff;
@@ -1282,11 +1291,10 @@
 	}
 	.pods_special .pod .split:last-child .savings {
 		width: 100%;
-		font-size: 2em;
-		letter-spacing: 0.1em;
-		bottom: 24%;
-		left: 50%;
-		transform: translateX(-50%);
+		font-size: 1.6em;
+		letter-spacing: 0.05em;
+		margin: 6px auto 10px;
+		text-align: center;
 	}
 	.pods_special .pod:nth-child(3) .split:first-child .bottles_two:last-child {
 		width: 30%;
@@ -1547,18 +1555,24 @@
   font-size: 14px;
   letter-spacing: 0.3px;
   border-bottom: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .lv-announce-track {
-  display: inline-flex;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  width: max-content;
   white-space: nowrap;
-  animation: lv-marquee 28s linear infinite;
-  padding-left: 100%;
+  animation: lv-marquee 35s linear infinite;
+  will-change: transform;
 }
-.lv-announce-item { padding: 0 22px; }
-.lv-announce-sep { opacity: .55; }
+.lv-announce-item { padding: 0 22px; flex-shrink: 0; }
+.lv-announce-sep { opacity: .55; flex-shrink: 0; }
 @keyframes lv-marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ===== Header WhatsApp button (replaces phone) ===== */
@@ -1581,35 +1595,75 @@
 .lv-header-wa:hover { filter: brightness(1.05); }
 
 /* ===== Floating WhatsApp button ===== */
-.lv-wa-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  width: 60px;
-  height: 60px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #25D366;
-  color: #fff !important;
-  text-decoration: none;
-  border-radius: 50%;
-  border: 0;
-  outline: none;
-  padding: 0;
-  box-shadow: 0 8px 24px rgba(37,211,102,0.55);
-  animation: lv-wa-pulse 2s ease-in-out infinite;
+#lvWaHost {
+  position: fixed !important;
+  bottom: 88px !important;
+  right: 16px !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 2147483647 !important;
+  width: 58px !important;
+  height: 58px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  filter: none !important;
+  perspective: none !important;
+  pointer-events: none !important;
 }
-.lv-wa-btn:hover, .lv-wa-btn:focus, .lv-wa-btn:active { background: #1ebe5b; outline: none; }
-.lv-wa-btn svg { width: 32px; height: 32px; display: block; }
-@keyframes lv-wa-pulse {
-  0%,100% { box-shadow: 0 8px 24px rgba(37,211,102,0.45); }
-  50%     { box-shadow: 0 8px 32px rgba(37,211,102,0.85); }
+.lv-wa-btn {
+  position: static !important;
+  width: 58px !important;
+  height: 58px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #25D366 !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  border-radius: 50% !important;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45) !important;
+  box-sizing: border-box !important;
+  pointer-events: auto !important;
+  transform: none !important;
+}
+.lv-wa-btn:hover,
+.lv-wa-btn:focus,
+.lv-wa-btn:active {
+  background: #1ebe57 !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  outline: none !important;
+}
+.lv-wa-btn svg {
+  width: 32px !important;
+  height: 32px !important;
+  display: block !important;
+}
+.lv-wa-btn svg path {
+  fill: #fff !important;
+}
+@media (min-width: 901px) {
+  #lvWaHost {
+    bottom: 24px !important;
+    right: 24px !important;
+    width: 64px !important;
+    height: 64px !important;
+  }
+  .lv-wa-btn {
+    width: 64px !important;
+    height: 64px !important;
+  }
+  .lv-wa-btn svg {
+    width: 36px !important;
+    height: 36px !important;
+  }
 }
 @media (max-width: 600px) {
-  .lv-wa-btn { width: 54px; height: 54px; bottom: 16px; right: 16px; }
-  .lv-wa-btn svg { width: 28px; height: 28px; }
   .lv-header-wa { font-size: 12px; padding: 8px 12px; }
 }
 
@@ -1630,10 +1684,10 @@
   box-shadow: 0 10px 40px rgba(0,0,0,.08);
 }
 @media (max-width: 900px) {
-  .lv-preview-embed { height: 1750px; }
+  .lv-preview-embed { height: 1450px; }
 }
 @media (max-width: 480px) {
-  .lv-preview-embed { height: 1600px; border-radius: 10px; }
+  .lv-preview-embed { height: 1380px; border-radius: 10px; }
   .lv-preview-embed-wrap { padding: 12px 6px; }
 }
 
