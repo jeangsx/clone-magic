@@ -1,0 +1,39 @@
+mutation CreateLandingSettingsDefinition {
+  metaobjectDefinitionCreate(
+    definition: {
+      name: "Ajustes landing"
+      type: "landing_settings"
+      access: { storefront: PUBLIC_READ }
+      displayNameKey: "hero_title"
+      fieldDefinitions: [
+        { key: "hero_title", name: "Titulo hero", type: "single_line_text_field" }
+        { key: "hero_subtitle", name: "Subtitulo hero", type: "single_line_text_field" }
+        { key: "hero_urgency", name: "Urgencia hero", type: "single_line_text_field" }
+        { key: "hot_sale_text", name: "Texto HOT SALE", type: "single_line_text_field" }
+        { key: "benefit_1", name: "Beneficio 1", type: "single_line_text_field" }
+        { key: "benefit_2", name: "Beneficio 2", type: "single_line_text_field" }
+        { key: "benefit_3", name: "Beneficio 3", type: "single_line_text_field" }
+        { key: "doctor_badge_text", name: "Badge recomendado", type: "single_line_text_field" }
+        { key: "guarantee_text", name: "Texto garantia", type: "single_line_text_field" }
+        { key: "offers_heading", name: "Titulo ofertas", type: "single_line_text_field" }
+        {
+          key: "banner_image"
+          name: "Imagen banner"
+          type: "file_reference"
+          validations: [{ name: "file_type_options", value: "[\"Image\"]" }]
+        }
+      ]
+    }
+  ) {
+    metaobjectDefinition {
+      id
+      type
+      name
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}

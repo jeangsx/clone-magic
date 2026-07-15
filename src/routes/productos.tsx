@@ -3,9 +3,12 @@ import { useSearchParams } from "react-router-dom";
 import {
   fetchAllProducts,
   fmtMoney,
+  productBadgeText,
   productOfferSummary,
+  productShortPitch,
   type ShopifyProduct,
 } from "../lib/shopify";
+import { useLandingSettings } from "../lib/use-landing-settings";
 import { useReportEmbedHeight } from "../lib/embed-height";
 import { appHashUrl } from "../lib/static-hosting";
 
@@ -14,14 +17,22 @@ const RED = "#d40000";
 const ORANGE = "#f39200";
 const GREEN = "#2f7a3a";
 
-function OfferCard({ product }: { product: ShopifyProduct }) {
+function OfferCard({
+  product,
+  guaranteeText,
+}: {
+  product: ShopifyProduct;
+  guaranteeText: string;
+}) {
   const offer = productOfferSummary(product);
   const href = appHashUrl(`/product?handle=${encodeURIComponent(product.handle)}`);
+  const pitch = productShortPitch(product);
+  const badge = productBadgeText(product) || "OFERTA";
 
   return (
     <article className="lv-offer-pod">
       <div className="lv-offer-visual">
-        <span className="lv-offer-bonus">OFERTA</span>
+        <span className="lv-offer-bonus">{badge}</span>
         <div className="lv-offer-bottles">
           <img src={offer.image} alt={product.title} />
         </div>
@@ -29,6 +40,7 @@ function OfferCard({ product }: { product: ShopifyProduct }) {
 
       <div className="lv-offer-copy">
         <h3 className="lv-offer-title">{product.title}</h3>
+        {pitch && <p className="lv-offer-pitch">{pitch}</p>}
 
         <ul className="lv-offer-list">
           <li>
@@ -50,7 +62,7 @@ function OfferCard({ product }: { product: ShopifyProduct }) {
           <a href={href} target="_top" className="lv-offer-cta">
             ORDER NOW
           </a>
-          <div className="lv-offer-guarantee">90 DAY MONEY BACK GUARANTEE</div>
+          <div className="lv-offer-guarantee">{guaranteeText}</div>
         </div>
       </div>
     </article>
@@ -62,11 +74,12 @@ export default function ProductosPage() {
   const embed = searchParams.get("embed") === "1";
   const [products, setProducts] = useState<ShopifyProduct[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { settings } = useLandingSettings();
 
   useEffect(() => {
-    document.title = "Ofertas especiales";
+    document.title = settings.offersHeading || "Ofertas especiales";
     fetchAllProducts().then(setProducts).catch((e) => setError(String(e)));
-  }, []);
+  }, [settings.offersHeading]);
 
   useReportEmbedHeight(!!products && !error);
 
@@ -143,6 +156,9 @@ export default function ProductosPage() {
           margin: 0; font-size: 22px; font-weight: 900; color: #0b1a3a;
           line-height: 1.2; letter-spacing: -0.2px;
         }
+        .lv-offer-pitch {
+          margin: 0; font-size: 14px; color: #555; font-weight: 600; line-height: 1.3;
+        }
         .lv-offer-list { list-style: none; margin: 0; padding: 0; font-size: 15px; line-height: 1.3; }
         .lv-offer-list li { margin: 0; }
         .lv-offer-price-block { margin: 0; }
@@ -185,15 +201,11 @@ export default function ProductosPage() {
       `}</style>
 
       <div className="lv-offers-wrap">
-        {!embed && (
-          <h1 className="lv-offers-heading">Special Internet-Only Offer</h1>
-        )}
-        {embed && (
-          <h2 className="lv-offers-heading">Special Internet-Only Offer</h2>
-        )}
+        {!embed && <h1 className="lv-offers-heading">{settings.offersHeading}</h1>}
+        {embed && <h2 className="lv-offers-heading">{settings.offersHeading}</h2>}
         <div className="lv-offers-list">
           {products.map((p) => (
-            <OfferCard key={p.id} product={p} />
+            <OfferCard key={p.id} product={p} guaranteeText={settings.guaranteeText} />
           ))}
         </div>
       </div>

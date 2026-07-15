@@ -1,0 +1,30 @@
+mutation UpsertLandingMain {
+  metaobjectUpsert(
+    handle: { type: "landing_settings", handle: "main" }
+    metaobject: {
+      fields: [
+        { key: "hero_title", value: "One Day Super Sale Stock Up Now!" }
+        { key: "hero_subtitle", value: "GREAT DEAL - Order Now!" }
+        { key: "hero_urgency", value: "HUGE SAVINGS - 70% OFF NOW!" }
+        { key: "hot_sale_text", value: "Ordena hoy para asegurar tu descuento y regalos GRATIS" }
+        { key: "benefit_1", value: "Reduce DHT" }
+        { key: "benefit_2", value: "100% Natural" }
+        { key: "benefit_3", value: "Clinicamente Probado" }
+        { key: "doctor_badge_text", value: "RECOMENDADO POR MEDICOS" }
+        { key: "guarantee_text", value: "90 DAY MONEY BACK GUARANTEE" }
+        { key: "offers_heading", value: "Special Internet-Only Offer" }
+      ]
+    }
+  ) {
+    metaobject {
+      id
+      handle
+      type
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}

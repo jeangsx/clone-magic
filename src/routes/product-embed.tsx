@@ -4,13 +4,17 @@ import {
   fetchAllProducts,
   fetchProductByHandle,
   fmtMoney,
+  productBadgeText,
   productImages,
+  productShortPitch,
   productVariants,
+  resolveBenefits,
   variantCompare,
   variantPrice,
   type ShopifyProduct,
   type ShopifyVariant,
 } from "../lib/shopify";
+import { useLandingSettings } from "../lib/use-landing-settings";
 import { useReportEmbedHeight } from "../lib/embed-height";
 import { goToCheckout } from "../lib/static-hosting";
 
@@ -43,6 +47,7 @@ export default function ProductEmbed() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [heroIdx, setHeroIdx] = useState(0);
   const { h, m, s } = useCountdown();
+  const { settings } = useLandingSettings();
 
   useEffect(() => {
     document.title = "ProstaGenix Preview";
@@ -91,6 +96,9 @@ export default function ProductEmbed() {
   const save = Math.max(0, +(retail - price).toFixed(2));
   const currency = selected.price.currencyCode;
   const pct = retail > price ? Math.round(((retail - price) / retail) * 100) : 0;
+  const benefits = resolveBenefits(product, settings);
+  const pitch = productShortPitch(product);
+  const badgeOverride = productBadgeText(product);
 
   return (
     <div data-embed-root style={{ background: "#fff", color: "#0b1a3a", fontFamily: "'Montserrat', system-ui, sans-serif", minHeight: 0, height: "auto", display: "block" }}>
@@ -107,6 +115,28 @@ export default function ProductEmbed() {
         .lv-pe-deal-price { text-align: right; flex: 0 0 auto; }
         .lv-pe-deal-price > div { white-space: nowrap; line-height: 1.2; }
         .lv-pe-deal-btn { padding: 12px 14px !important; margin-top: 4px; }
+        .lv-pe-hot {
+          border: 1px solid #ffc9c9; border-radius: 16px; padding: 14px 16px; margin-bottom: 22px;
+          background: linear-gradient(135deg, #fff7f7 0%, #ffe8e8 55%, #fff5f0 100%);
+          box-shadow: 0 8px 22px rgba(212,0,0,.08);
+          display: flex; align-items: center; gap: 14px;
+        }
+        .lv-pe-hot-copy { flex: 1 1 auto; min-width: 0; }
+        .lv-pe-hot-timers {
+          display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center;
+          gap: 8px; flex: 0 0 auto;
+        }
+        .lv-pe-hot-box {
+          background: linear-gradient(180deg, #ff4444 0%, ${RED} 55%, #b00000 100%);
+          color: #fff; padding: 8px 10px; border-radius: 12px;
+          text-align: center; min-width: 54px; flex: 0 0 auto;
+          box-shadow: 0 6px 14px rgba(212,0,0,.35), inset 0 1px 0 rgba(255,255,255,.25);
+          border: 1px solid rgba(255,255,255,.18);
+        }
+        .lv-pe-hot-num { font-weight: 900; font-size: 22px; line-height: 1; letter-spacing: 0.5px;
+          text-shadow: 0 1px 2px rgba(0,0,0,.25); font-variant-numeric: tabular-nums; }
+        .lv-pe-hot-lbl { font-size: 10px; letter-spacing: 1.2px; opacity: .92; margin-top: 3px; font-weight: 800; }
+        .lv-pe-hot-sep { color: ${RED}; font-weight: 900; font-size: 18px; opacity: .55; line-height: 1; }
         @media (max-width: 900px) {
           .lv-pe-main { grid-template-columns: 1fr; gap: 24px; padding: 16px; }
           .lv-pe-h1 { font-size: 24px; }
@@ -120,6 +150,11 @@ export default function ProductEmbed() {
           .lv-pe-deal-price > div:nth-child(1) { font-size: 11px !important; }
           .lv-pe-deal-price > div:nth-child(2) { font-size: 16px !important; }
           .lv-pe-deal-price > div:nth-child(3) { font-size: 10px !important; }
+          .lv-pe-hot { flex-direction: column; align-items: stretch; gap: 12px; padding: 12px; }
+          .lv-pe-hot-timers { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 6px; align-items: center; }
+          .lv-pe-hot-box { min-width: 0; width: 100%; padding: 10px 4px; }
+          .lv-pe-hot-num { font-size: 20px; }
+          .lv-pe-hot-sep { text-align: center; }
         }
       `}</style>
 
@@ -203,18 +238,23 @@ export default function ProductEmbed() {
                 letterSpacing: 1,
               }}
             >
-              RECOMENDADO POR MÉDICOS
+              {settings.doctorBadgeText}
             </span>
           </div>
 
-          <h1 className="lv-pe-h1" style={{ fontWeight: 900, margin: "6px 0 18px", color: "#0b1a3a" }}>
+          <h1 className="lv-pe-h1" style={{ fontWeight: 900, margin: "6px 0 8px", color: "#0b1a3a" }}>
             {product.title}
           </h1>
+          {pitch && (
+            <p style={{ margin: "0 0 14px", color: "#555", fontSize: 15, fontWeight: 600 }}>{pitch}</p>
+          )}
 
           <div className="lv-pe-benefits" style={{ marginBottom: 18 }}>
-            {["Reduce DHT", "100% Natural", "Clínicamente Probado"].map((t) => (
+            {benefits.map((t, i) => {
+              const icons = ["✓", "★", "♥"];
+              return (
               <div
-                key={t}
+                key={t + i}
                 style={{
                   textAlign: "center",
                   padding: 12,
@@ -235,54 +275,59 @@ export default function ProductEmbed() {
                     justifyContent: "center",
                     color: BLUE,
                     fontWeight: 900,
+                    fontSize: 18,
                   }}
                 >
-                  ✓
+                  {icons[i % icons.length]}
                 </div>
                 <div style={{ fontSize: 13, fontWeight: 800 }}>{t}</div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
-          <div
-            style={{
-              border: `2px solid ${RED}`,
-              borderRadius: 14,
-              padding: 14,
-              marginBottom: 22,
-              background: "#fff5f5",
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-              flexWrap: "wrap",
-            }}
-          >
-            <div style={{ flex: "1 1 180px", minWidth: 0 }}>
+          {product.description?.trim() && (
+            <div
+              style={{
+                marginBottom: 16,
+                padding: 12,
+                borderRadius: 12,
+                background: "#f7f8fb",
+                border: "1px solid #e3e6ee",
+                fontSize: 13,
+                color: "#333",
+                lineHeight: 1.45,
+                maxHeight: 120,
+                overflow: "auto",
+              }}
+            >
+              {product.description}
+            </div>
+          )}
+
+          <div className="lv-pe-hot">
+            <div className="lv-pe-hot-copy">
               <div style={{ color: RED, fontWeight: 900, letterSpacing: 1 }}>🔥 HOT SALE</div>
               <div style={{ fontSize: 13, color: "#5a1010" }}>
-                Ordena hoy para asegurar tu {pct || 70}% de descuento y regalos GRATIS
+                {settings.hotSaleText}
+                {pct ? ` (${pct}% OFF)` : ""}
               </div>
             </div>
-            {[
-              { v: h, l: "HRS" },
-              { v: m, l: "MIN" },
-              { v: s, l: "SEG" },
-            ].map((x) => (
-              <div
-                key={x.l}
-                style={{
-                  background: RED,
-                  color: "#fff",
-                  padding: "6px 10px",
-                  borderRadius: 8,
-                  textAlign: "center",
-                  minWidth: 46,
-                }}
-              >
-                <div style={{ fontWeight: 900, fontSize: 18, lineHeight: 1 }}>{x.v}</div>
-                <div style={{ fontSize: 10, letterSpacing: 1 }}>{x.l}</div>
-              </div>
-            ))}
+            <div className="lv-pe-hot-timers">
+              {[
+                { v: h, l: "HRS" },
+                { v: m, l: "MIN" },
+                { v: s, l: "SEG" },
+              ].map((x, i, arr) => (
+                <span key={x.l} style={{ display: "contents" }}>
+                  <div className="lv-pe-hot-box">
+                    <div className="lv-pe-hot-num">{x.v}</div>
+                    <div className="lv-pe-hot-lbl">{x.l}</div>
+                  </div>
+                  {i < arr.length - 1 && <span className="lv-pe-hot-sep" aria-hidden>:</span>}
+                </span>
+              ))}
+            </div>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
@@ -307,7 +352,7 @@ export default function ProductEmbed() {
                     position: "relative",
                   }}
                 >
-                  {idx === 0 && variants.length > 1 && (
+                  {idx === 0 && (badgeOverride || variants.length > 1) && (
                     <span
                       style={{
                         position: "absolute",
@@ -322,10 +367,10 @@ export default function ProductEmbed() {
                         letterSpacing: 1,
                       }}
                     >
-                      MEJOR OFERTA
+                      {badgeOverride || "MEJOR OFERTA"}
                     </span>
                   )}
-                  {idx === 1 && (
+                  {idx === 1 && !badgeOverride && (
                     <span
                       style={{
                         position: "absolute",

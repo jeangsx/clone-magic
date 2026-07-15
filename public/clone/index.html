@@ -194,18 +194,19 @@ dataLayer = [
 <div class="headings">
 <!-- SUB-HEADING -->
 
-<span class="heading">GREAT DEAL - Order Now!</span>
+<span class="heading" data-lv-field="hero_subtitle">GREAT DEAL - Order Now!</span>
 
 <!-- HEADING -->
 
-<h1>One Day <strong>Super Sale</strong> <span>Stock Up Now!</span></h1>
+<h1 data-lv-field="hero_title">One Day <strong>Super Sale</strong> <span>Stock Up Now!</span></h1>
 
-<!-- IMAGE (70% badge removed) -->
+<!-- IMAGE editable desde Shopify (banner_image) -->
+<img data-lv-field="banner_image" alt="Banner" style="display:none;max-width:320px;margin:12px auto 0;border-radius:12px" />
 </div>
 
 <!-- BOTTLES -->
 
-<div class="bottles">
+<div class="bottles" data-lv-hide-when-banner>
 <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle" />
 <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle" />
 <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle" />
@@ -248,7 +249,7 @@ dataLayer = [
 
 <!-- SUB-HEADING -->
 
-<span class="heading">HUGE SAVINGS - 70% OFF NOW!</span>
+<span class="heading" data-lv-field="hero_urgency">HUGE SAVINGS - 70% OFF NOW!</span>
 </div>
 </div>
 </div>
@@ -828,5 +829,6 @@ list[index].href = link; // set new link href
   });
 })();
 </script>
+<script src="js/landing-settings.js?v=1" defer></script>
 </body>
 </html>

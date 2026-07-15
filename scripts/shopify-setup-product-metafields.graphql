@@ -1,0 +1,67 @@
+mutation CreateProductEditableMetafields {
+  shortPitch: metafieldDefinitionCreate(
+    definition: {
+      namespace: "custom"
+      key: "short_pitch"
+      name: "Pitch corto"
+      type: "single_line_text_field"
+      ownerType: PRODUCT
+      access: { storefront: PUBLIC_READ }
+    }
+  ) {
+    createdDefinition { id key }
+    userErrors { field message }
+  }
+  benefit1: metafieldDefinitionCreate(
+    definition: {
+      namespace: "custom"
+      key: "benefit_1"
+      name: "Beneficio 1"
+      type: "single_line_text_field"
+      ownerType: PRODUCT
+      access: { storefront: PUBLIC_READ }
+    }
+  ) {
+    createdDefinition { id key }
+    userErrors { field message }
+  }
+  benefit2: metafieldDefinitionCreate(
+    definition: {
+      namespace: "custom"
+      key: "benefit_2"
+      name: "Beneficio 2"
+      type: "single_line_text_field"
+      ownerType: PRODUCT
+      access: { storefront: PUBLIC_READ }
+    }
+  ) {
+    createdDefinition { id key }
+    userErrors { field message }
+  }
+  benefit3: metafieldDefinitionCreate(
+    definition: {
+      namespace: "custom"
+      key: "benefit_3"
+      name: "Beneficio 3"
+      type: "single_line_text_field"
+      ownerType: PRODUCT
+      access: { storefront: PUBLIC_READ }
+    }
+  ) {
+    createdDefinition { id key }
+    userErrors { field message }
+  }
+  badgeText: metafieldDefinitionCreate(
+    definition: {
+      namespace: "custom"
+      key: "badge_text"
+      name: "Badge oferta"
+      type: "single_line_text_field"
+      ownerType: PRODUCT
+      access: { storefront: PUBLIC_READ }
+    }
+  ) {
+    createdDefinition { id key }
+    userErrors { field message }
+  }
+}
