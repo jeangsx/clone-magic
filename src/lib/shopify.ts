@@ -89,6 +89,69 @@ const PRODUCTS_QUERY = `query($cursor:String){products(first:50,after:$cursor){p
 
 const PRODUCT_BY_HANDLE_QUERY = `query($handle:String!){product(handle:$handle){${PRODUCT_FIELDS}}}`;
 
+const COLLECTIONS_QUERY = `
+  query($cursor:String){
+    collections(first: 50, after: $cursor, sortKey: UPDATED_AT) {
+      pageInfo { hasNextPage endCursor }
+      edges { node {
+        id
+        title
+        handle
+        description
+        image { url altText }
+        products(first: 50) {
+          edges { node { ${PRODUCT_FIELDS} } }
+        }
+      } }
+    }
+  }
+`;
+
+export type ShopifyCollection = {
+  id: string;
+  title: string;
+  handle: string;
+  description: string;
+  image: { url: string; altText: string | null } | null;
+  products: ShopifyProduct[];
+};
+
+export async function fetchCollections(): Promise<ShopifyCollection[]> {
+  const all: ShopifyCollection[] = [];
+  let cursor: string | null = null;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const data = await shopifyFetch<{
+      collections: {
+        pageInfo: { hasNextPage: boolean; endCursor: string };
+        edges: {
+          node: {
+            id: string;
+            title: string;
+            handle: string;
+            description: string;
+            image: { url: string; altText: string | null } | null;
+            products: { edges: { node: ShopifyProduct }[] };
+          };
+        }[];
+      };
+    }>(COLLECTIONS_QUERY, { cursor });
+    for (const e of data.collections.edges) {
+      all.push({
+        id: e.node.id,
+        title: e.node.title,
+        handle: e.node.handle,
+        description: e.node.description,
+        image: e.node.image,
+        products: e.node.products.edges.map((p) => p.node),
+      });
+    }
+    if (!data.collections.pageInfo.hasNextPage) break;
+    cursor = data.collections.pageInfo.endCursor;
+  }
+  return all;
+}
+
 const LANDING_SETTINGS_QUERY = `
   query LandingSettings($handle: String!, $type: String!) {
     metaobject(handle: { handle: $handle, type: $type }) {
