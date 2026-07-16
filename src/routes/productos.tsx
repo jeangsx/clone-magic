@@ -34,6 +34,7 @@ function OfferCard({
   const images = productImages(product);
   const [activeImg, setActiveImg] = useState(0);
   const mainImg = images[activeImg] || offer.image;
+  const description = (product.description || "").trim();
 
   return (
     <article className="lv-offer-pod">
@@ -56,6 +57,9 @@ function OfferCard({
               </button>
             ))}
           </div>
+        )}
+        {description && (
+          <p className="lv-offer-desc">{description}</p>
         )}
       </div>
 
@@ -93,8 +97,19 @@ function OfferCard({
 export default function ProductosPage() {
   const [searchParams] = useSearchParams();
   const embed = searchParams.get("embed") === "1";
-  const [collections, setCollections] = useState<ShopifyCollection[] | null>(null);
-  const [orphans, setOrphans] = useState<ShopifyProduct[]>([]);
+  const CACHE_KEY = "lv-shopify-cache-v1";
+  const CACHE_TTL = 5 * 60 * 1000; // 5 min
+  const initial = (() => {
+    try {
+      const raw = sessionStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw) as { t: number; collections: ShopifyCollection[]; orphans: ShopifyProduct[] };
+      if (Date.now() - parsed.t > CACHE_TTL) return null;
+      return parsed;
+    } catch { return null; }
+  })();
+  const [collections, setCollections] = useState<ShopifyCollection[] | null>(initial?.collections ?? null);
+  const [orphans, setOrphans] = useState<ShopifyProduct[]>(initial?.orphans ?? []);
   const [error, setError] = useState<string | null>(null);
   const { settings } = useLandingSettings();
 
@@ -104,8 +119,12 @@ export default function ProductosPage() {
       .then(([cols, all]) => {
         const inCol = new Set<string>();
         cols.forEach((c) => c.products.forEach((p) => inCol.add(p.id)));
-        setOrphans(all.filter((p) => !inCol.has(p.id)));
+        const orph = all.filter((p) => !inCol.has(p.id));
+        setOrphans(orph);
         setCollections(cols);
+        try {
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), collections: cols, orphans: orph }));
+        } catch { /* ignore */ }
       })
       .catch((e) => setError(String(e)));
   }, [settings.offersHeading]);
@@ -198,6 +217,12 @@ export default function ProductosPage() {
         }
         .lv-offer-thumb.is-active { border-color: ${ORANGE}; }
         .lv-offer-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+        .lv-offer-desc {
+          margin: 8px 6px 4px; font-size: 13px; color: #333; line-height: 1.4;
+          white-space: pre-line;
+          display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
         .lv-offer-copy {
           min-width: 0;
           display: flex; flex-direction: column; justify-content: center;
