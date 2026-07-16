@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   fetchAllProducts,
+  fetchCollections,
   fmtMoney,
   productBadgeText,
   productOfferSummary,
   productShortPitch,
+  type ShopifyCollection,
   type ShopifyProduct,
 } from "../lib/shopify";
 import { useLandingSettings } from "../lib/use-landing-settings";
@@ -72,29 +74,40 @@ function OfferCard({
 export default function ProductosPage() {
   const [searchParams] = useSearchParams();
   const embed = searchParams.get("embed") === "1";
-  const [products, setProducts] = useState<ShopifyProduct[] | null>(null);
+  const [collections, setCollections] = useState<ShopifyCollection[] | null>(null);
+  const [orphans, setOrphans] = useState<ShopifyProduct[]>([]);
   const [error, setError] = useState<string | null>(null);
   const { settings } = useLandingSettings();
 
   useEffect(() => {
     document.title = settings.offersHeading || "Ofertas especiales";
-    fetchAllProducts().then(setProducts).catch((e) => setError(String(e)));
+    Promise.all([fetchCollections(), fetchAllProducts()])
+      .then(([cols, all]) => {
+        const inCol = new Set<string>();
+        cols.forEach((c) => c.products.forEach((p) => inCol.add(p.id)));
+        setOrphans(all.filter((p) => !inCol.has(p.id)));
+        setCollections(cols);
+      })
+      .catch((e) => setError(String(e)));
   }, [settings.offersHeading]);
 
-  useReportEmbedHeight(!!products && !error);
+  useReportEmbedHeight(!!collections && !error);
 
   if (error) {
     return (
       <div style={{ padding: 24, fontFamily: "system-ui" }}>Error: {error}</div>
     );
   }
-  if (!products) {
+  if (!collections) {
     return (
       <div style={{ padding: 24, fontFamily: "system-ui", textAlign: "center" }}>
         Cargando ofertas…
       </div>
     );
   }
+
+  const visibleCollections = collections.filter((c) => c.products.length > 0);
+  const hasAnything = visibleCollections.length > 0 || orphans.length > 0;
 
   return (
     <div
@@ -115,6 +128,13 @@ export default function ProductosPage() {
           text-align: center; font-size: 28px; font-weight: 900; color: ${BLUE};
           margin: 0 0 20px; letter-spacing: -0.3px;
         }
+        .lv-collection { margin: 28px 0 8px; }
+        .lv-collection-title {
+          font-size: 22px; font-weight: 900; color: ${BLUE};
+          margin: 0 0 4px; letter-spacing: -0.2px;
+          border-bottom: 3px solid ${ORANGE}; padding-bottom: 6px;
+        }
+        .lv-collection-desc { margin: 0 0 12px; color: #555; font-size: 14px; }
         .lv-offers-list { display: flex; flex-direction: column; gap: 12px; }
         .lv-offer-pod {
           display: grid; grid-template-columns: 1.05fr 0.95fr;
@@ -203,11 +223,33 @@ export default function ProductosPage() {
       <div className="lv-offers-wrap">
         {!embed && <h1 className="lv-offers-heading">{settings.offersHeading}</h1>}
         {embed && <h2 className="lv-offers-heading">{settings.offersHeading}</h2>}
-        <div className="lv-offers-list">
-          {products.map((p) => (
-            <OfferCard key={p.id} product={p} guaranteeText={settings.guaranteeText} />
-          ))}
-        </div>
+
+        {!hasAnything && (
+          <p style={{ textAlign: "center", color: "#555" }}>No hay productos aún.</p>
+        )}
+
+        {visibleCollections.map((col) => (
+          <section key={col.id} className="lv-collection">
+            <h2 className="lv-collection-title">{col.title}</h2>
+            {col.description && <p className="lv-collection-desc">{col.description}</p>}
+            <div className="lv-offers-list">
+              {col.products.map((p) => (
+                <OfferCard key={p.id} product={p} guaranteeText={settings.guaranteeText} />
+              ))}
+            </div>
+          </section>
+        ))}
+
+        {orphans.length > 0 && (
+          <section className="lv-collection">
+            <h2 className="lv-collection-title">Otros productos</h2>
+            <div className="lv-offers-list">
+              {orphans.map((p) => (
+                <OfferCard key={p.id} product={p} guaranteeText={settings.guaranteeText} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
