@@ -205,17 +205,22 @@ export async function fetchLandingSettings(): Promise<LandingSettings> {
   }
 }
 
+type ProductsResponse = {
+  products: {
+    pageInfo: { hasNextPage: boolean; endCursor: string };
+    edges: { node: ShopifyProduct }[];
+  };
+};
+
 export async function fetchAllProducts(): Promise<ShopifyProduct[]> {
   const all: ShopifyProduct[] = [];
   let cursor: string | null = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const data = await shopifyFetch<{
-      products: {
-        pageInfo: { hasNextPage: boolean; endCursor: string };
-        edges: { node: ShopifyProduct }[];
-      };
-    }>(PRODUCTS_QUERY, { cursor });
+    const data: ProductsResponse = await shopifyFetch<ProductsResponse>(
+      PRODUCTS_QUERY,
+      { cursor },
+    );
     all.push(...data.products.edges.map((e) => e.node));
     if (!data.products.pageInfo.hasNextPage) break;
     cursor = data.products.pageInfo.endCursor;
