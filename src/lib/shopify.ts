@@ -116,41 +116,7 @@ export type ShopifyCollection = {
   products: ShopifyProduct[];
 };
 
-export async function fetchCollections(): Promise<ShopifyCollection[]> {
-  const all: ShopifyCollection[] = [];
-  let cursor: string | null = null;
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const data = await shopifyFetch<{
-      collections: {
-        pageInfo: { hasNextPage: boolean; endCursor: string };
-        edges: {
-          node: {
-            id: string;
-            title: string;
-            handle: string;
-            description: string;
-            image: { url: string; altText: string | null } | null;
-            products: { edges: { node: ShopifyProduct }[] };
-          };
-        }[];
-      };
-    }>(COLLECTIONS_QUERY, { cursor });
-    for (const e of data.collections.edges) {
-      all.push({
-        id: e.node.id,
-        title: e.node.title,
-        handle: e.node.handle,
-        description: e.node.description,
-        image: e.node.image,
-        products: e.node.products.edges.map((p) => p.node),
-      });
-    }
-    if (!data.collections.pageInfo.hasNextPage) break;
-    cursor = data.collections.pageInfo.endCursor;
-  }
-  return all;
-}
+// fetchCollections moved below shopifyFetch declaration
 
 const LANDING_SETTINGS_QUERY = `
   query LandingSettings($handle: String!, $type: String!) {
@@ -262,6 +228,47 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
     handle,
   });
   return data.product;
+}
+
+type CollectionsResponse = {
+  collections: {
+    pageInfo: { hasNextPage: boolean; endCursor: string };
+    edges: {
+      node: {
+        id: string;
+        title: string;
+        handle: string;
+        description: string;
+        image: { url: string; altText: string | null } | null;
+        products: { edges: { node: ShopifyProduct }[] };
+      };
+    }[];
+  };
+};
+
+export async function fetchCollections(): Promise<ShopifyCollection[]> {
+  const all: ShopifyCollection[] = [];
+  let cursor: string | null = null;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const data: CollectionsResponse = await shopifyFetch<CollectionsResponse>(
+      COLLECTIONS_QUERY,
+      { cursor },
+    );
+    for (const e of data.collections.edges) {
+      all.push({
+        id: e.node.id,
+        title: e.node.title,
+        handle: e.node.handle,
+        description: e.node.description,
+        image: e.node.image,
+        products: e.node.products.edges.map((p) => p.node),
+      });
+    }
+    if (!data.collections.pageInfo.hasNextPage) break;
+    cursor = data.collections.pageInfo.endCursor;
+  }
+  return all;
 }
 
 export function fmtMoney(amount: string | number, currency = "PEN") {
