@@ -154,6 +154,11 @@ export default function ProductPage() {
         .lv-p-hot-lbl { font-size: 10px; letter-spacing: 1.2px; opacity: .92; margin-top: 3px; font-weight: 800; }
         .lv-p-hot-sep { color: ${RED}; font-weight: 900; font-size: 18px; opacity: .55; line-height: 1; }
         .lv-p-benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+        .lv-p-desc img, .lv-p-desc video, .lv-p-desc iframe { max-width: 100%; height: auto; border-radius: 10px; margin: 8px 0; display: block; }
+        .lv-p-desc p { margin: 0 0 10px; }
+        .lv-p-desc ul, .lv-p-desc ol { margin: 0 0 10px 20px; }
+        .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 12px 0 6px; color: #0b1a3a; }
+        .lv-p-desc a { color: #054497; text-decoration: underline; }
         .lv-p-deal-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         .lv-p-deal-info { min-width: 0; flex: 1 1 auto; }
         .lv-p-deal-price { text-align: right; flex: 0 0 auto; }
@@ -280,10 +285,16 @@ export default function ProductPage() {
             })}
           </div>
 
-          {useShopify && product!.description?.trim() && (
-            <div style={{ marginBottom: 16, padding: 12, borderRadius: 12, background: "#f7f8fb", border: "1px solid #e3e6ee", fontSize: 13, color: "#333", lineHeight: 1.45 }}>
-              {product!.description}
-            </div>
+          {useShopify && (product!.descriptionHtml?.trim() || product!.description?.trim()) && (
+            <div
+              className="lv-p-desc"
+              style={{ marginBottom: 16, padding: 14, borderRadius: 12, background: "#f7f8fb", border: "1px solid #e3e6ee", fontSize: 14, color: "#333", lineHeight: 1.55 }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  product!.descriptionHtml?.trim() ||
+                  (product!.description || "").replace(/\n/g, "<br/>"),
+              }}
+            />
           )}
 
           <div className="lv-p-hot" style={{ padding: 14, marginBottom: 22 }}>

@@ -34,7 +34,6 @@ function OfferCard({
   const images = productImages(product);
   const [activeImg, setActiveImg] = useState(0);
   const mainImg = images[activeImg] || offer.image;
-  const description = (product.description || "").trim();
 
   return (
     <article className="lv-offer-pod">
@@ -57,9 +56,6 @@ function OfferCard({
               </button>
             ))}
           </div>
-        )}
-        {description && (
-          <p className="lv-offer-desc">{description}</p>
         )}
       </div>
 

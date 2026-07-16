@@ -20,6 +20,7 @@ export type ShopifyProduct = {
   title: string;
   handle: string;
   description: string;
+  descriptionHtml: string;
   vendor: string;
   productType: string;
   tags: string[];
@@ -66,7 +67,7 @@ export const DEFAULT_LANDING_SETTINGS: LandingSettings = {
 };
 
 const PRODUCT_FIELDS = `
-  id title handle description vendor productType tags
+  id title handle description descriptionHtml vendor productType tags
   priceRange{minVariantPrice{amount currencyCode}}
   compareAtPriceRange{minVariantPrice{amount currencyCode}}
   images(first:10){edges{node{url altText}}}
