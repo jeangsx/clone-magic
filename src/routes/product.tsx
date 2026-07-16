@@ -280,10 +280,16 @@ export default function ProductPage() {
             })}
           </div>
 
-          {useShopify && product!.description?.trim() && (
-            <div style={{ marginBottom: 16, padding: 12, borderRadius: 12, background: "#f7f8fb", border: "1px solid #e3e6ee", fontSize: 13, color: "#333", lineHeight: 1.45 }}>
-              {product!.description}
-            </div>
+          {useShopify && (product!.descriptionHtml?.trim() || product!.description?.trim()) && (
+            <div
+              className="lv-p-desc"
+              style={{ marginBottom: 16, padding: 14, borderRadius: 12, background: "#f7f8fb", border: "1px solid #e3e6ee", fontSize: 14, color: "#333", lineHeight: 1.55 }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  product!.descriptionHtml?.trim() ||
+                  (product!.description || "").replace(/\n/g, "<br/>"),
+              }}
+            />
           )}
 
           <div className="lv-p-hot" style={{ padding: 14, marginBottom: 22 }}>
