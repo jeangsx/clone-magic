@@ -59,6 +59,7 @@ export default function ProductPage() {
   const [selectedDeal, setSelectedDeal] = useState<DealKey>(resolveDealKey(deal));
   const [heroIdx, setHeroIdx] = useState(0);
   const [loading, setLoading] = useState(!!handle || !deal);
+  const [descOpen, setDescOpen] = useState(false);
 
   useEffect(() => {
     document.title = "ProstaGenix - Preview del Producto";
@@ -185,13 +186,6 @@ export default function ProductPage() {
         GREAT DEAL · Envío GRATIS en pedidos hoy · Garantía 90 Días
       </div>
 
-      <header style={{ borderBottom: "1px solid #eee", padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1280, margin: "0 auto" }}>
-        <a href={CLONE_HOME} style={{ color: BLUE, fontWeight: 900, fontSize: 26, textDecoration: "none", letterSpacing: -0.5 }}>
-          Prosta<span style={{ color: RED }}>Genix</span>
-        </a>
-        <span style={{ color: "#555", fontSize: 13 }}>#1 Rated Prostate Pill in the World</span>
-      </header>
-
       <main className="lv-p-main">
         <section style={{ minWidth: 0 }}>
           <div className="lv-p-gallery">
@@ -253,6 +247,44 @@ export default function ProductPage() {
               />
             </div>
           </div>
+
+          {useShopify && (product!.descriptionHtml?.trim() || product!.description?.trim()) && (
+            <div style={{ marginTop: 20 }}>
+              <h2 style={{ fontSize: 18, fontWeight: 900, color: BLUE, margin: "0 0 10px", letterSpacing: -0.2, borderBottom: `3px solid ${ORANGE}`, paddingBottom: 6, display: "inline-block" }}>
+                Descripción
+              </h2>
+              <div
+                className="lv-p-desc"
+                style={{
+                  padding: 14,
+                  borderRadius: 12,
+                  background: "#f7f8fb",
+                  border: "1px solid #e3e6ee",
+                  fontSize: 14,
+                  color: "#333",
+                  lineHeight: 1.6,
+                  maxHeight: descOpen ? "none" : 320,
+                  overflow: "hidden",
+                  position: "relative",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    product!.descriptionHtml?.trim() ||
+                    (product!.description || "").replace(/\n/g, "<br/>"),
+                }}
+              />
+              {!descOpen && (
+                <div style={{ height: 60, marginTop: -60, position: "relative", background: "linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb)", borderBottomLeftRadius: 12, borderBottomRightRadius: 12, pointerEvents: "none" }} />
+              )}
+              <button
+                type="button"
+                onClick={() => setDescOpen((v) => !v)}
+                style={{ marginTop: 10, background: "transparent", border: `2px solid ${BLUE}`, color: BLUE, fontWeight: 800, padding: "8px 16px", borderRadius: 999, cursor: "pointer", fontSize: 13, letterSpacing: 0.5 }}
+              >
+                {descOpen ? "Ver menos ▲" : "Ver más ▼"}
+              </button>
+            </div>
+          )}
         </section>
 
         <section style={{ minWidth: 0 }}>
@@ -284,18 +316,6 @@ export default function ProductPage() {
               );
             })}
           </div>
-
-          {useShopify && (product!.descriptionHtml?.trim() || product!.description?.trim()) && (
-            <div
-              className="lv-p-desc"
-              style={{ marginBottom: 16, padding: 14, borderRadius: 12, background: "#f7f8fb", border: "1px solid #e3e6ee", fontSize: 14, color: "#333", lineHeight: 1.55 }}
-              dangerouslySetInnerHTML={{
-                __html:
-                  product!.descriptionHtml?.trim() ||
-                  (product!.description || "").replace(/\n/g, "<br/>"),
-              }}
-            />
-          )}
 
           <div className="lv-p-hot" style={{ padding: 14, marginBottom: 22 }}>
             <div className="lv-p-hot-copy">
