@@ -186,6 +186,18 @@ export default function ProductosPage() {
           max-height: 320px;
           object-fit: contain; object-position: center;
         }
+        .lv-offer-thumbs {
+          position: absolute; bottom: 6px; left: 6px; right: 6px;
+          display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;
+          z-index: 2;
+        }
+        .lv-offer-thumb {
+          width: 40px; height: 40px; padding: 0; border-radius: 6px;
+          border: 2px solid #d4dbe8; background: #fff; cursor: pointer;
+          overflow: hidden; flex-shrink: 0;
+        }
+        .lv-offer-thumb.is-active { border-color: ${ORANGE}; }
+        .lv-offer-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
         .lv-offer-copy {
           min-width: 0;
           display: flex; flex-direction: column; justify-content: center;
