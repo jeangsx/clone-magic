@@ -6,6 +6,7 @@ import {
   fmtMoney,
   productBadgeText,
   productOfferSummary,
+  productImages,
   productShortPitch,
   type ShopifyCollection,
   type ShopifyProduct,
@@ -30,14 +31,32 @@ function OfferCard({
   const href = appHashUrl(`/product?handle=${encodeURIComponent(product.handle)}`);
   const pitch = productShortPitch(product);
   const badge = productBadgeText(product) || "OFERTA";
+  const images = productImages(product);
+  const [activeImg, setActiveImg] = useState(0);
+  const mainImg = images[activeImg] || offer.image;
 
   return (
     <article className="lv-offer-pod">
       <div className="lv-offer-visual">
         <span className="lv-offer-bonus">{badge}</span>
         <div className="lv-offer-bottles">
-          <img src={offer.image} alt={product.title} />
+          <img src={mainImg} alt={product.title} />
         </div>
+        {images.length > 1 && (
+          <div className="lv-offer-thumbs">
+            {images.map((src, i) => (
+              <button
+                key={src + i}
+                type="button"
+                className={`lv-offer-thumb${i === activeImg ? " is-active" : ""}`}
+                onClick={() => setActiveImg(i)}
+                aria-label={`Imagen ${i + 1}`}
+              >
+                <img src={src} alt="" />
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="lv-offer-copy">
