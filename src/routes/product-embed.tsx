@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
-  fetchAllProducts,
+  fetchFirstProduct,
   fetchProductByHandle,
   fmtMoney,
+  getCachedFirstProduct,
   productBadgeText,
   productImages,
   productShortPitch,
   productVariants,
   resolveBenefits,
+  shopifyCheckoutUrl,
   variantCompare,
   variantPrice,
   type ShopifyProduct,
@@ -16,7 +18,6 @@ import {
 } from "../lib/shopify";
 import { useLandingSettings } from "../lib/use-landing-settings";
 import { useReportEmbedHeight } from "../lib/embed-height";
-import { goToCheckout } from "../lib/static-hosting";
 
 function useCountdown() {
   const [diff, setDiff] = useState(24 * 3_600_000 - 1000);
@@ -42,9 +43,14 @@ const ORANGE = "#f39200";
 export default function ProductEmbed() {
   const [searchParams] = useSearchParams();
   const handle = searchParams.get("handle");
-  const [product, setProduct] = useState<ShopifyProduct | null>(null);
+  const [product, setProduct] = useState<ShopifyProduct | null>(() =>
+    handle ? null : getCachedFirstProduct(),
+  );
   const [error, setError] = useState<string | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(() => {
+    const cached = handle ? null : getCachedFirstProduct();
+    return cached ? productVariants(cached)[0]?.id ?? null : null;
+  });
   const [heroIdx, setHeroIdx] = useState(0);
   const { h, m, s } = useCountdown();
   const { settings } = useLandingSettings();
@@ -56,14 +62,17 @@ export default function ProductEmbed() {
       try {
         let p: ShopifyProduct | null = null;
         if (handle) p = await fetchProductByHandle(handle);
-        if (!p) {
-          const all = await fetchAllProducts();
-          p = all[0] ?? null;
-        }
+        if (!p) p = await fetchFirstProduct();
         if (cancelled) return;
         if (!p) throw new Error("No hay productos en Shopify");
         setProduct(p);
-        setSelectedId(productVariants(p)[0]?.id ?? null);
+        setSelectedId((prev) => prev ?? productVariants(p!)[0]?.id ?? null);
+        const firstImg = productImages(p)[0];
+        if (firstImg) {
+          const img = new Image();
+          img.decoding = "async";
+          img.src = firstImg;
+        }
       } catch (e) {
         if (!cancelled) setError(String(e));
       }
@@ -197,6 +206,8 @@ export default function ProductEmbed() {
               <img
                 src={gallery[heroIdx] || gallery[0]}
                 alt={product.title}
+                fetchPriority="high"
+                decoding="async"
                 style={{ maxWidth: "100%", maxHeight: 460, objectFit: "contain" }}
               />
             </div>
@@ -474,14 +485,14 @@ export default function ProductEmbed() {
             Ahorras {fmtMoney(save, currency)}
           </div>
 
-          <button
-            onClick={() =>
-              goToCheckout(
-                `shopify:${product.handle}:${encodeURIComponent(selected.id)}`,
-              )
-            }
+          <a
+            href={shopifyCheckoutUrl(selected.id, 1)}
+            target="_top"
+            rel="noopener noreferrer"
             style={{
+              display: "block",
               width: "100%",
+              boxSizing: "border-box",
               padding: "14px 20px",
               borderRadius: 12,
               border: `2px solid ${BLUE}`,
@@ -491,10 +502,12 @@ export default function ProductEmbed() {
               fontWeight: 900,
               fontSize: 15,
               letterSpacing: 1,
+              textAlign: "center",
+              textDecoration: "none",
             }}
           >
             IR A PAGAR AHORA →
-          </button>
+          </a>
         </section>
       </main>
     </div>

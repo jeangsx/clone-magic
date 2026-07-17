@@ -1677,11 +1677,11 @@
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
-  height: 80px; /* crece vía postMessage según contenido real */
-  min-height: 0;
+  height: 720px; /* placeholder mientras llega el tamaño real vía postMessage */
+  min-height: 480px;
   border: 0;
   border-radius: 16px;
-  background: #fff;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='18' fill='none' stroke='%23054497' stroke-width='4' stroke-linecap='round' stroke-dasharray='80 40'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 60 60' to='360 60 60' dur='0.8s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E") center 40% / 48px no-repeat;
   box-shadow: 0 10px 40px rgba(0,0,0,.08);
   overflow: hidden;
 }

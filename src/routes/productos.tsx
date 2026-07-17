@@ -13,7 +13,13 @@ import {
 } from "../lib/shopify";
 import { useLandingSettings } from "../lib/use-landing-settings";
 import { useReportEmbedHeight } from "../lib/embed-height";
-import { appHashUrl } from "../lib/static-hosting";
+
+/** Preview del producto — URL absoluta para salir del iframe del catálogo. */
+function productPreviewHref(handle: string) {
+  const hash = `#/product?handle=${encodeURIComponent(handle)}`;
+  if (typeof window === "undefined") return `./index.html${hash}`;
+  return `${window.location.origin}/index.html${hash}`;
+}
 
 const BLUE = "#054497";
 const RED = "#d40000";
@@ -28,7 +34,7 @@ function OfferCard({
   guaranteeText: string;
 }) {
   const offer = productOfferSummary(product);
-  const href = appHashUrl(`/product?handle=${encodeURIComponent(product.handle)}`);
+  const href = productPreviewHref(product.handle);
   const pitch = productShortPitch(product);
   const badge = productBadgeText(product) || "OFERTA";
   const images = productImages(product);
@@ -80,6 +86,7 @@ function OfferCard({
         </div>
 
         <div className="lv-offer-actions">
+          {/* Sin onClick/preventDefault: target=_top debe navegar el frame padre */}
           <a href={href} target="_top" className="lv-offer-cta">
             ORDER NOW
           </a>

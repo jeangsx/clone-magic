@@ -1,29 +1,70 @@
+import { goToShopifyCheckout, fetchFirstProduct, productVariants } from "./shopify";
+
 /** Ruta al landing estático (clone) — funciona con base relativa en subcarpetas del bucket. */
 export const CLONE_HOME = `${import.meta.env.BASE_URL}clone/index.html`;
 
-/** URL de la SPA con ruta hash, p. ej. `#/product?deal=sale18`. */
+/** URL absoluta al preview del producto (SPA), segura desde iframes en /clone/. */
 export function appHashUrl(route: string) {
   const normalized = route.startsWith("/") ? route : `/${route}`;
-  return `${import.meta.env.BASE_URL}index.html#${normalized}`;
+  const hash = `#${normalized}`;
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}/index.html${hash}`;
+  }
+  return `./index.html${hash}`;
 }
 
-/** Navega al checkout desde la SPA o desde el iframe del preview en clone/. */
-export function goToCheckout(query: string) {
-  const q = query.includes("=") || query.startsWith("shopify:")
-    ? query.startsWith("shopify:")
-      ? (() => {
-          const [, handle = "", variant = ""] = query.split(":");
-          return `handle=${encodeURIComponent(handle)}&variant=${encodeURIComponent(variant)}`;
-        })()
-      : query
-    : `deal=${query}`;
-  const hash = `#/checkout?${q}`;
-  const top = window.top ?? window;
+/** Navega el frame superior al preview (nunca al checkout). */
+export function goToProductPreview(handle: string) {
+  const url = appHashUrl(`/product?handle=${encodeURIComponent(handle)}`);
+  try {
+    (window.top ?? window).location.assign(url);
+  } catch {
+    window.location.assign(url);
+  }
+}
 
-  if (top.location.pathname.includes("/clone/")) {
-    top.location.href = new URL(`../index.html${hash}`, top.location.href).href;
-    return;
+/**
+ * Siempre lleva al checkout nativo de Shopify (nunca al formulario falso).
+ */
+export function goToCheckout(query: string) {
+  // shopify:handle:gid://shopify/ProductVariant/123
+  if (query.startsWith("shopify:")) {
+    const parts = query.split(":");
+    const variantRaw = parts.slice(2).join(":");
+    if (variantRaw) {
+      goToShopifyCheckout(decodeURIComponent(variantRaw), 1);
+      return;
+    }
   }
 
-  top.location.href = new URL(`${import.meta.env.BASE_URL}index.html${hash}`, window.location.href).href;
+  if (query.includes("variant=")) {
+    const params = new URLSearchParams(query.includes("?") ? query.split("?").pop()! : query);
+    const variant = params.get("variant");
+    if (variant) {
+      goToShopifyCheckout(variant, 1);
+      return;
+    }
+  }
+
+  // Deal estático u otro → primer producto de Shopify
+  void (async () => {
+    try {
+      const product = await fetchFirstProduct();
+      const variant = product ? productVariants(product)[0] : null;
+      if (variant) {
+        goToShopifyCheckout(variant.id, 1);
+        return;
+      }
+    } catch {
+      // fall through
+    }
+    // Último recurso: página de redirección
+    const hash = `#/checkout`;
+    const top = window.top ?? window;
+    if (top.location.pathname.includes("/clone/")) {
+      top.location.href = new URL(`../index.html${hash}`, top.location.href).href;
+      return;
+    }
+    top.location.href = new URL(`${import.meta.env.BASE_URL}index.html${hash}`, window.location.href).href;
+  })();
 }

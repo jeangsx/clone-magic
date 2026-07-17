@@ -34,6 +34,57 @@
 
 <!-- Start VWO Async SmartCode -->
 <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com" />
+<link rel="preconnect" href="https://k3btq8-6r.myshopify.com" crossorigin />
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin />
+<link rel="dns-prefetch" href="https://k3btq8-6r.myshopify.com" />
+<link rel="prefetch" href="../index.html" as="document" />
+<script>
+/* Precarga el producto de Shopify apenas entra a la página (antes del iframe) */
+(function () {
+  var KEY = "lv_shopify_first_product_v1";
+  var TTL = 5 * 60 * 1000;
+  try {
+    var raw = sessionStorage.getItem(KEY);
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      if (parsed && parsed.ts && Date.now() - parsed.ts < TTL && parsed.product) return;
+    }
+  } catch (e) {}
+
+  var q =
+    'query{products(first:1){edges{node{id title handle description descriptionHtml vendor productType tags priceRange{minVariantPrice{amount currencyCode}} compareAtPriceRange{minVariantPrice{amount currencyCode}} images(first:10){edges{node{url altText}}} options{name values} variants(first:50){edges{node{id title availableForSale sku price{amount currencyCode} compareAtPrice{amount currencyCode} selectedOptions{name value} image{url altText}}}} shortPitch: metafield(namespace:"custom", key:"short_pitch"){value} benefit1: metafield(namespace:"custom", key:"benefit_1"){value} benefit2: metafield(namespace:"custom", key:"benefit_2"){value} benefit3: metafield(namespace:"custom", key:"benefit_3"){value} badgeText: metafield(namespace:"custom", key:"badge_text"){value}}}}}';
+
+  fetch("https://k3btq8-6r.myshopify.com/api/2025-07/graphql.json", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Shopify-Storefront-Access-Token": "e703eaa742c1c9a73964e3d646ec51fd",
+    },
+    body: JSON.stringify({ query: q }),
+  })
+    .then(function (r) {
+      return r.json();
+    })
+    .then(function (j) {
+      var p =
+        j &&
+        j.data &&
+        j.data.products &&
+        j.data.products.edges &&
+        j.data.products.edges[0] &&
+        j.data.products.edges[0].node;
+      if (!p) return;
+      try {
+        sessionStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), product: p }));
+      } catch (e) {}
+      if (p.images && p.images.edges && p.images.edges[0] && p.images.edges[0].node) {
+        var img = new Image();
+        img.src = p.images.edges[0].node.url;
+      }
+    })
+    .catch(function () {});
+})();
+</script>
 
 <!-- prettier-ignore-->
 <script type='text/javascript' id='vwoCode'>
@@ -257,7 +308,15 @@ dataLayer = [
 
 <!-- PRODUCT PREVIEW CARD -->
 <section class="lv-preview-embed-wrap">
-  <iframe id="lv-preview-iframe" src="../index.html#/product-embed" class="lv-preview-embed" title="ProstaGenix Preview" loading="lazy" scrolling="no"></iframe>
+  <iframe
+    id="lv-preview-iframe"
+    src="../index.html#/product-embed"
+    class="lv-preview-embed"
+    title="ProstaGenix Preview"
+    loading="eager"
+    fetchpriority="high"
+    scrolling="no"
+  ></iframe>
 </section>
 
 <!-- BANNER - CONSUMERLAB -->
@@ -393,7 +452,7 @@ dataLayer = [
 
 <!-- PODS - SPECIAL (Shopify offers en plantilla) -->
 <section class="lv-catalog-embed-wrap pods_special body_full_nomar">
-  <iframe id="lv-catalog-iframe" src="../index.html#/productos?embed=1" class="lv-catalog-embed" title="Special Internet-Only Offer" loading="lazy" scrolling="no"></iframe>
+  <iframe id="lv-catalog-iframe" src="../index.html?v=preview4#/productos?embed=1" class="lv-catalog-embed" title="Special Internet-Only Offer" loading="eager" scrolling="no"></iframe>
 </section>
 
 <!-- GUARANTEE -->

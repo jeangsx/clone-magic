@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { DEAL_KEYS, DEALS, resolveDealKey, type DealKey } from "../lib/deals";
 import {
-  fetchAllProducts,
+  fetchFirstProduct,
   fetchProductByHandle,
   fmtMoney,
   productBadgeText,
@@ -10,12 +10,12 @@ import {
   productShortPitch,
   productVariants,
   resolveBenefits,
+  shopifyCheckoutUrl,
   variantCompare,
   variantPrice,
   type ShopifyProduct,
   type ShopifyVariant,
 } from "../lib/shopify";
-import { SHOPIFY_DOMAIN, SHOPIFY_TOKEN } from "../lib/shopify";
 import { useLandingSettings } from "../lib/use-landing-settings";
 import { CLONE_HOME } from "../lib/static-hosting";
 
@@ -51,7 +51,6 @@ export default function ProductPage() {
   const [searchParams] = useSearchParams();
   const deal = searchParams.get("deal");
   const handle = searchParams.get("handle");
-  const navigate = useNavigate();
   const { h, m, s } = useCountdown();
   const { settings } = useLandingSettings();
 
@@ -59,16 +58,8 @@ export default function ProductPage() {
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const [selectedDeal, setSelectedDeal] = useState<DealKey>(resolveDealKey(deal));
   const [heroIdx, setHeroIdx] = useState(0);
-  const [loading, setLoading] = useState(!!handle || !deal);
+  const [loading, setLoading] = useState(true);
   const [descOpen, setDescOpen] = useState(false);
-
-  function goToShopifyCheckout(variantId: string, quantity = 1) {
-    // Extract numeric variant id from GID: gid://shopify/ProductVariant/12345
-    const numeric = variantId.split("/").pop();
-    // Direct Shopify cart permalink — instant redirect, no API round trip
-    const url = `https://${SHOPIFY_DOMAIN}/cart/${numeric}:${quantity}?channel=online_store`;
-    window.location.href = url;
-  }
 
   useEffect(() => {
     document.title = "ProstaGenix - Preview del Producto";
@@ -77,18 +68,11 @@ export default function ProductPage() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      // Si hay handle (o no hay deal), cargar Shopify y usar plantilla PDP con ese producto
-      if (!handle && deal) {
-        setLoading(false);
-        return;
-      }
+      // Siempre cargar producto de Shopify (también con ?deal=)
       try {
         let p: ShopifyProduct | null = null;
         if (handle) p = await fetchProductByHandle(handle);
-        if (!p) {
-          const all = await fetchAllProducts();
-          p = all[0] ?? null;
-        }
+        if (!p) p = await fetchFirstProduct();
         if (cancelled) return;
         setProduct(p);
         setSelectedVariantId(p ? productVariants(p)[0]?.id ?? null : null);
@@ -132,6 +116,23 @@ export default function ProductPage() {
     const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
     const root = doc.body.firstElementChild;
     if (!root) return [{ type: "text" as const, content: html }];
+
+    // Quitar anchos/altos fijos de Shopify para que las imágenes sean fluidas
+    root.querySelectorAll("img, video, iframe").forEach((el) => {
+      el.removeAttribute("width");
+      el.removeAttribute("height");
+      el.removeAttribute("style");
+      el.setAttribute("style", "width:100%;max-width:100%;height:auto;display:block;");
+    });
+    root.querySelectorAll("div, span, p, figure, section, table, tbody, tr, td").forEach((el) => {
+      const style = el.getAttribute("style") || "";
+      if (/width|float|max-width|min-width/i.test(style)) {
+        el.removeAttribute("style");
+      }
+      el.removeAttribute("width");
+      el.removeAttribute("align");
+    });
+
     const blocks: Array<{ type: "image" | "text"; content: string }> = [];
     let textBuf = "";
     const flush = () => {
@@ -205,15 +206,86 @@ export default function ProductPage() {
         .lv-p-hot-lbl { font-size: 10px; letter-spacing: 1.2px; opacity: .92; margin-top: 3px; font-weight: 800; }
         .lv-p-hot-sep { color: ${RED}; font-weight: 900; font-size: 18px; opacity: .55; line-height: 1; }
         .lv-p-benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-        .lv-p-desc-panel { margin-top: 18px; }
-        .lv-p-desc { padding: 14px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee; color: #333; line-height: 1.5; }
-        .lv-p-desc img, .lv-p-desc video, .lv-p-desc iframe { width: 100%; max-width: 100%; max-height: 110px; height: auto; object-fit: contain; border-radius: 8px; margin: 4px 0; display: block; }
-        .lv-p-desc p { margin: 0 0 8px; font-size: 13.5px; }
-        .lv-p-desc ul, .lv-p-desc ol { margin: 0 0 8px 18px; font-size: 13.5px; }
-        .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 2px 0 4px; color: #0b1a3a; font-size: 14px; font-weight: 800; }
+        .lv-p-desc-panel {
+          max-width: 1280px;
+          margin: 8px auto 32px;
+          padding: 0 24px;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .lv-p-desc {
+          padding: 16px;
+          border-radius: 14px;
+          background: #f7f8fb;
+          border: 1px solid #e3e6ee;
+          color: #333;
+          line-height: 1.5;
+          overflow: hidden;
+        }
+        .lv-p-desc-body {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          width: 100%;
+        }
+        .lv-p-desc *,
+        .lv-p-desc-text * {
+          max-width: 100% !important;
+          box-sizing: border-box;
+        }
+        .lv-p-desc table,
+        .lv-p-desc-text table {
+          width: 100% !important;
+          table-layout: fixed !important;
+        }
+        .lv-p-desc td,
+        .lv-p-desc th,
+        .lv-p-desc-text td,
+        .lv-p-desc-text th {
+          width: auto !important;
+          display: block !important;
+        }
+        .lv-p-desc img,
+        .lv-p-desc video,
+        .lv-p-desc iframe,
+        .lv-p-desc-text img,
+        .lv-p-desc-text video,
+        .lv-p-desc-text iframe,
+        .lv-p-desc-img {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+          max-height: none !important;
+          object-fit: contain;
+          border-radius: 12px;
+          margin: 0;
+          display: block;
+        }
+        .lv-p-desc p { margin: 0 0 8px; font-size: 14px; }
+        .lv-p-desc ul, .lv-p-desc ol { margin: 0 0 8px 18px; font-size: 14px; }
+        .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 2px 0 4px; color: #0b1a3a; font-size: 15px; font-weight: 800; }
         .lv-p-desc a { color: #054497; text-decoration: underline; }
-        .lv-p-desc-text { color: #1a2540; font-size: 13.5px; }
-        .lv-p-desc-title { font-size: 15px; font-weight: 900; color: ${BLUE}; margin: 0 0 8px; letter-spacing: -0.2px; border-bottom: 2px solid ${ORANGE}; padding-bottom: 4px; display: inline-block; }
+        .lv-p-desc-text { color: #1a2540; font-size: 14px; width: 100%; }
+        .lv-p-desc-title {
+          font-size: 18px;
+          font-weight: 900;
+          color: ${BLUE};
+          margin: 0 0 12px;
+          letter-spacing: -0.2px;
+          border-bottom: 2px solid ${ORANGE};
+          padding-bottom: 4px;
+          display: inline-block;
+        }
+        @media (max-width: 900px) {
+          .lv-p-desc-panel { padding: 0 14px; margin-bottom: 24px; }
+          .lv-p-desc { padding: 12px; }
+          .lv-p-desc-body { gap: 10px; }
+          .lv-p-desc img, .lv-p-desc video, .lv-p-desc iframe,
+          .lv-p-desc-text img, .lv-p-desc-text video, .lv-p-desc-text iframe,
+          .lv-p-desc-img {
+            border-radius: 10px;
+          }
+        }
         .lv-p-deal-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         .lv-p-deal-info { min-width: 0; flex: 1 1 auto; }
         .lv-p-deal-price { text-align: right; flex: 0 0 auto; }
@@ -301,42 +373,6 @@ export default function ProductPage() {
               />
             </div>
           </div>
-
-          {useShopify && descBlocks.length > 0 && (
-            <div className="lv-p-desc-panel">
-              <div className="lv-p-desc-title">Descripción</div>
-              <div
-                className="lv-p-desc"
-                style={{ maxHeight: descOpen ? "none" : 220, overflow: "hidden", position: "relative" }}
-              >
-                <div>
-                  {descBlocks.map((b, i) =>
-                    b.type === "image" ? (
-                      <img key={i} src={b.content} alt="" loading="lazy" />
-                    ) : (
-                      <div
-                        key={i}
-                        className="lv-p-desc-text"
-                        dangerouslySetInnerHTML={{ __html: b.content }}
-                      />
-                    ),
-                  )}
-                </div>
-                {!descOpen && (
-                  <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 60, background: "linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb 85%)", pointerEvents: "none" }} />
-                )}
-              </div>
-              <div style={{ textAlign: "center", marginTop: 10 }}>
-                <button
-                  type="button"
-                  onClick={() => setDescOpen((v) => !v)}
-                  style={{ background: "transparent", border: `2px solid ${BLUE}`, color: BLUE, fontWeight: 800, padding: "8px 18px", borderRadius: 999, cursor: "pointer", fontSize: 12, letterSpacing: 0.5 }}
-                >
-                  {descOpen ? "Ver menos ▲" : "Ver más ▼"}
-                </button>
-              </div>
-            </div>
-          )}
         </section>
 
         <section style={{ minWidth: 0 }}>
@@ -501,29 +537,33 @@ export default function ProductPage() {
             Ahorras {fmtMoney(save, currency)}
           </div>
 
-          <button
-            onClick={() => {
-              if (useShopify) {
-                goToShopifyCheckout(selectedVariant!.id, 1);
-              } else {
-                navigate(`/checkout?deal=${selectedDeal}`);
-              }
+          <a
+            href={selectedVariant ? shopifyCheckoutUrl(selectedVariant.id, 1) : "#"}
+            target="_top"
+            rel="noopener noreferrer"
+            onClick={(e) => {
+              if (!selectedVariant) e.preventDefault();
             }}
             style={{
+              display: "block",
               width: "100%",
+              boxSizing: "border-box",
               padding: "14px 20px",
               borderRadius: 12,
               border: `2px solid ${BLUE}`,
-              cursor: "pointer",
+              cursor: selectedVariant ? "pointer" : "not-allowed",
               background: "#fff",
               color: BLUE,
               fontWeight: 900,
               fontSize: 15,
               letterSpacing: 1,
+              textAlign: "center",
+              textDecoration: "none",
+              opacity: selectedVariant ? 1 : 0.5,
             }}
           >
             IR A PAGAR →
-          </button>
+          </a>
 
           <div style={{ marginTop: 18 }}>
             <a href={CLONE_HOME} style={{ color: BLUE, fontWeight: 700, textDecoration: "none" }}>
@@ -533,6 +573,68 @@ export default function ProductPage() {
         </section>
       </main>
 
+      {useShopify && descBlocks.length > 0 && (
+        <div className="lv-p-desc-panel">
+          <div className="lv-p-desc-title">Descripción</div>
+          <div
+            className="lv-p-desc"
+            style={{ maxHeight: descOpen ? "none" : 420, overflow: "hidden", position: "relative" }}
+          >
+            <div className="lv-p-desc-body">
+              {descBlocks.map((b, i) =>
+                b.type === "image" ? (
+                  <img
+                    key={i}
+                    className="lv-p-desc-img"
+                    src={b.content}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div
+                    key={i}
+                    className="lv-p-desc-text"
+                    dangerouslySetInnerHTML={{ __html: b.content }}
+                  />
+                ),
+              )}
+            </div>
+            {!descOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: 80,
+                  background: "linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb 85%)",
+                  pointerEvents: "none",
+                }}
+              />
+            )}
+          </div>
+          <div style={{ textAlign: "center", marginTop: 12 }}>
+            <button
+              type="button"
+              onClick={() => setDescOpen((v) => !v)}
+              style={{
+                background: "transparent",
+                border: `2px solid ${BLUE}`,
+                color: BLUE,
+                fontWeight: 800,
+                padding: "8px 18px",
+                borderRadius: 999,
+                cursor: "pointer",
+                fontSize: 12,
+                letterSpacing: 0.5,
+              }}
+            >
+              {descOpen ? "Ver menos ▲" : "Ver más ▼"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

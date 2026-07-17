@@ -151,6 +151,72 @@ async function shopifyFetch<T>(query: string, variables: Record<string, unknown>
   return json.data;
 }
 
+const PRODUCT_CACHE_KEY = "lv_shopify_first_product_v1";
+const PRODUCT_CACHE_TTL_MS = 5 * 60 * 1000;
+const memoryProductCache = new Map<string, { ts: number; product: ShopifyProduct }>();
+
+function readSessionProduct(key: string): ShopifyProduct | null {
+  try {
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { ts?: number; product?: ShopifyProduct };
+    if (!parsed?.product || !parsed.ts) return null;
+    if (Date.now() - parsed.ts > PRODUCT_CACHE_TTL_MS) return null;
+    return parsed.product;
+  } catch {
+    return null;
+  }
+}
+
+function writeSessionProduct(key: string, product: ShopifyProduct) {
+  try {
+    sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), product }));
+  } catch {
+    // ignore quota / private mode
+  }
+}
+
+/** Lee producto precacheado (p. ej. por el landing) sin esperar red. */
+export function getCachedFirstProduct(): ShopifyProduct | null {
+  const mem = memoryProductCache.get("first");
+  if (mem && Date.now() - mem.ts < PRODUCT_CACHE_TTL_MS) return mem.product;
+  const sess = readSessionProduct(PRODUCT_CACHE_KEY);
+  if (sess) {
+    memoryProductCache.set("first", { ts: Date.now(), product: sess });
+    return sess;
+  }
+  return null;
+}
+
+export function cacheFirstProduct(product: ShopifyProduct) {
+  memoryProductCache.set("first", { ts: Date.now(), product });
+  writeSessionProduct(PRODUCT_CACHE_KEY, product);
+}
+
+const FIRST_PRODUCT_QUERY = `query{products(first:1){edges{node{${PRODUCT_FIELDS}}}}}`;
+
+/** Solo el primer producto — mucho más rápido que listar todo el catálogo. */
+export async function fetchFirstProduct(): Promise<ShopifyProduct | null> {
+  const cached = getCachedFirstProduct();
+  if (cached) {
+    // Refrescar en background sin bloquear UI
+    void shopifyFetch<{ products: { edges: { node: ShopifyProduct }[] } }>(FIRST_PRODUCT_QUERY)
+      .then((data) => {
+        const p = data.products.edges[0]?.node ?? null;
+        if (p) cacheFirstProduct(p);
+      })
+      .catch(() => undefined);
+    return cached;
+  }
+
+  const data = await shopifyFetch<{ products: { edges: { node: ShopifyProduct }[] } }>(
+    FIRST_PRODUCT_QUERY,
+  );
+  const product = data.products.edges[0]?.node ?? null;
+  if (product) cacheFirstProduct(product);
+  return product;
+}
+
 function fieldMap(
   fields: { key: string; value: string | null; reference?: { image?: { url: string } | null } | null }[],
 ): Record<string, { value: string | null; imageUrl: string | null }> {
@@ -230,9 +296,16 @@ export async function fetchAllProducts(): Promise<ShopifyProduct[]> {
 }
 
 export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | null> {
+  const cacheKey = `handle:${handle}`;
+  const mem = memoryProductCache.get(cacheKey);
+  if (mem && Date.now() - mem.ts < PRODUCT_CACHE_TTL_MS) return mem.product;
+
   const data = await shopifyFetch<{ product: ShopifyProduct | null }>(PRODUCT_BY_HANDLE_QUERY, {
     handle,
   });
+  if (data.product) {
+    memoryProductCache.set(cacheKey, { ts: Date.now(), product: data.product });
+  }
   return data.product;
 }
 
@@ -352,4 +425,22 @@ export function productShortPitch(product: ShopifyProduct): string | null {
 export function productBadgeText(product: ShopifyProduct): string | null {
   const v = product.badgeText?.value?.trim();
   return v || null;
+}
+
+/** Permalink al checkout nativo de Shopify (cart → checkout). */
+export function shopifyCheckoutUrl(variantId: string, quantity = 1): string {
+  const numeric = decodeURIComponent(variantId).split("/").pop() || variantId;
+  // Dominio primario de la tienda (myshopify redirige aquí)
+  return `https://nova-shop.online/cart/${numeric}:${quantity}`;
+}
+
+/** Abre el checkout de Shopify (sale de iframes al top). */
+export function goToShopifyCheckout(variantId: string, quantity = 1) {
+  const url = shopifyCheckoutUrl(variantId, quantity);
+  try {
+    const top = window.top ?? window;
+    top.location.assign(url);
+  } catch {
+    window.location.assign(url);
+  }
 }
