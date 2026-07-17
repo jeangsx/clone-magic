@@ -207,7 +207,7 @@ export default function ProductPage() {
         .lv-p-benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
         .lv-p-desc-panel { margin-top: 18px; }
         .lv-p-desc { padding: 14px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee; color: #333; line-height: 1.5; }
-        .lv-p-desc img, .lv-p-desc video, .lv-p-desc iframe { width: 100%; max-height: 140px; height: auto; object-fit: contain; border-radius: 8px; margin: 6px 0; display: block; }
+        .lv-p-desc img, .lv-p-desc video, .lv-p-desc iframe { width: 100%; max-width: 100%; max-height: 110px; height: auto; object-fit: contain; border-radius: 8px; margin: 4px 0; display: block; }
         .lv-p-desc p { margin: 0 0 8px; font-size: 13.5px; }
         .lv-p-desc ul, .lv-p-desc ol { margin: 0 0 8px 18px; font-size: 13.5px; }
         .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 2px 0 4px; color: #0b1a3a; font-size: 14px; font-weight: 800; }
