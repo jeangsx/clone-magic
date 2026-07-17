@@ -430,22 +430,20 @@ export default function ProductPage() {
                 navigate(`/checkout?deal=${selectedDeal}`);
               }
             }}
-            disabled={checkoutLoading}
             style={{
               width: "100%",
               padding: "14px 20px",
               borderRadius: 12,
               border: `2px solid ${BLUE}`,
-              cursor: checkoutLoading ? "wait" : "pointer",
+              cursor: "pointer",
               background: "#fff",
               color: BLUE,
               fontWeight: 900,
               fontSize: 15,
               letterSpacing: 1,
-              opacity: checkoutLoading ? 0.7 : 1,
             }}
           >
-            {checkoutLoading ? "Conectando con Shopify…" : "IR A PAGAR AHORA →"}
+            IR A PAGAR AHORA →
           </button>
 
           <div style={{ marginTop: 18 }}>
