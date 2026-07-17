@@ -205,16 +205,15 @@ export default function ProductPage() {
         .lv-p-hot-lbl { font-size: 10px; letter-spacing: 1.2px; opacity: .92; margin-top: 3px; font-weight: 800; }
         .lv-p-hot-sep { color: ${RED}; font-weight: 900; font-size: 18px; opacity: .55; line-height: 1; }
         .lv-p-benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-        .lv-p-desc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
-        .lv-p-desc-grid > * { break-inside: avoid; }
-        .lv-p-desc img, .lv-p-desc video, .lv-p-desc iframe { width: 100%; max-height: 260px; height: auto; object-fit: cover; border-radius: 12px; margin: 0; display: block; box-shadow: 0 4px 14px rgba(11,26,58,.08); }
-        .lv-p-desc p { margin: 0 0 10px; font-size: 14.5px; }
-        .lv-p-desc ul, .lv-p-desc ol { margin: 0 0 10px 20px; font-size: 14.5px; }
-        .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 4px 0 6px; color: #0b1a3a; font-size: 16px; font-weight: 800; }
+        .lv-p-desc-panel { margin-top: 18px; }
+        .lv-p-desc { padding: 14px; border-radius: 12px; background: #f7f8fb; border: 1px solid #e3e6ee; color: #333; line-height: 1.5; }
+        .lv-p-desc img, .lv-p-desc video, .lv-p-desc iframe { width: 100%; max-height: 140px; height: auto; object-fit: contain; border-radius: 8px; margin: 6px 0; display: block; }
+        .lv-p-desc p { margin: 0 0 8px; font-size: 13.5px; }
+        .lv-p-desc ul, .lv-p-desc ol { margin: 0 0 8px 18px; font-size: 13.5px; }
+        .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 2px 0 4px; color: #0b1a3a; font-size: 14px; font-weight: 800; }
         .lv-p-desc a { color: #054497; text-decoration: underline; }
-        .lv-p-desc-text { grid-column: 1 / -1; text-align: center; color: #1a2540; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-        @media (max-width: 900px) { .lv-p-desc-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 560px) { .lv-p-desc-grid { grid-template-columns: 1fr; } }
+        .lv-p-desc-text { color: #1a2540; font-size: 13.5px; }
+        .lv-p-desc-title { font-size: 15px; font-weight: 900; color: ${BLUE}; margin: 0 0 8px; letter-spacing: -0.2px; border-bottom: 2px solid ${ORANGE}; padding-bottom: 4px; display: inline-block; }
         .lv-p-deal-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         .lv-p-deal-info { min-width: 0; flex: 1 1 auto; }
         .lv-p-deal-price { text-align: right; flex: 0 0 auto; }
@@ -302,6 +301,42 @@ export default function ProductPage() {
               />
             </div>
           </div>
+
+          {useShopify && descBlocks.length > 0 && (
+            <div className="lv-p-desc-panel">
+              <div className="lv-p-desc-title">Descripción</div>
+              <div
+                className="lv-p-desc"
+                style={{ maxHeight: descOpen ? "none" : 220, overflow: "hidden", position: "relative" }}
+              >
+                <div>
+                  {descBlocks.map((b, i) =>
+                    b.type === "image" ? (
+                      <img key={i} src={b.content} alt="" loading="lazy" />
+                    ) : (
+                      <div
+                        key={i}
+                        className="lv-p-desc-text"
+                        dangerouslySetInnerHTML={{ __html: b.content }}
+                      />
+                    ),
+                  )}
+                </div>
+                {!descOpen && (
+                  <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 60, background: "linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb 85%)", pointerEvents: "none" }} />
+                )}
+              </div>
+              <div style={{ textAlign: "center", marginTop: 10 }}>
+                <button
+                  type="button"
+                  onClick={() => setDescOpen((v) => !v)}
+                  style={{ background: "transparent", border: `2px solid ${BLUE}`, color: BLUE, fontWeight: 800, padding: "8px 18px", borderRadius: 999, cursor: "pointer", fontSize: 12, letterSpacing: 0.5 }}
+                >
+                  {descOpen ? "Ver menos ▲" : "Ver más ▼"}
+                </button>
+              </div>
+            </div>
+          )}
         </section>
 
         <section style={{ minWidth: 0 }}>
@@ -498,53 +533,6 @@ export default function ProductPage() {
         </section>
       </main>
 
-      {useShopify && descBlocks.length > 0 && (
-        <section style={{ maxWidth: 1280, margin: "0 auto", padding: "8px 24px 40px" }}>
-          <h2 style={{ fontSize: 20, fontWeight: 900, color: BLUE, margin: "0 0 12px", letterSpacing: -0.2, borderBottom: `3px solid ${ORANGE}`, paddingBottom: 6, display: "inline-block" }}>
-            Descripción
-          </h2>
-          <div
-            className="lv-p-desc"
-            style={{
-              padding: 20,
-              borderRadius: 14,
-              background: "#f7f8fb",
-              border: "1px solid #e3e6ee",
-              color: "#333",
-              lineHeight: 1.6,
-              maxHeight: descOpen ? "none" : 520,
-              overflow: "hidden",
-              position: "relative",
-            }}
-          >
-            <div className="lv-p-desc-grid">
-              {descBlocks.map((b, i) =>
-                b.type === "image" ? (
-                  <img key={i} src={b.content} alt="" loading="lazy" />
-                ) : (
-                  <div
-                    key={i}
-                    className="lv-p-desc-text"
-                    dangerouslySetInnerHTML={{ __html: b.content }}
-                  />
-                ),
-              )}
-            </div>
-            {!descOpen && (
-              <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 90, background: "linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb 85%)", pointerEvents: "none" }} />
-            )}
-          </div>
-          <div style={{ textAlign: "center", marginTop: 12 }}>
-            <button
-              type="button"
-              onClick={() => setDescOpen((v) => !v)}
-              style={{ background: "transparent", border: `2px solid ${BLUE}`, color: BLUE, fontWeight: 800, padding: "10px 22px", borderRadius: 999, cursor: "pointer", fontSize: 13, letterSpacing: 0.5 }}
-            >
-              {descOpen ? "Ver menos ▲" : "Ver más ▼"}
-            </button>
-          </div>
-        </section>
-      )}
     </div>
   );
 }
