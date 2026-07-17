@@ -1,0 +1,63 @@
+<section class="pg-simple pg-cart">
+  <h1 style="color:var(--pg-blue,#054497);font-weight:900;">Carrito</h1>
+
+  {% if cart.item_count == 0 %}
+    <p>Tu carrito está vacío.</p>
+    <p><a href="{{ routes.all_products_collection_url }}">Ver productos</a></p>
+  {% else %}
+    <form action="{{ routes.cart_url }}" method="post" novalidate>
+      <table style="width:100%;border-collapse:collapse;margin:24px 0;">
+        <thead>
+          <tr style="text-align:left;border-bottom:2px solid var(--pg-blue,#054497);">
+            <th style="padding:8px;">Producto</th>
+            <th style="padding:8px;">Precio</th>
+            <th style="padding:8px;">Cant.</th>
+            <th style="padding:8px;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart.items %}
+            <tr style="border-bottom:1px solid #e3e6ee;">
+              <td style="padding:12px 8px;">
+                <a href="{{ item.url }}" style="color:var(--pg-blue,#054497);font-weight:700;">{{ item.product.title }}</a>
+                {% unless item.variant.title == 'Default Title' %}
+                  <div style="font-size:13px;color:#666;">{{ item.variant.title }}</div>
+                {% endunless %}
+                <div style="margin-top:6px;">
+                  <a href="{{ item.url_to_remove }}" style="font-size:12px;color:#888;">Quitar</a>
+                </div>
+              </td>
+              <td style="padding:12px 8px;">{{ item.final_price | money }}</td>
+              <td style="padding:12px 8px;">
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" style="width:64px;padding:6px;">
+              </td>
+              <td style="padding:12px 8px;font-weight:800;">{{ item.final_line_price | money }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+        <button type="submit" name="update" style="padding:10px 18px;border:2px solid var(--pg-blue,#054497);background:#fff;color:var(--pg-blue,#054497);font-weight:800;border-radius:10px;cursor:pointer;">
+          Actualizar
+        </button>
+        <div style="text-align:right;">
+          <div style="font-size:20px;font-weight:900;margin-bottom:10px;">
+            Total: {{ cart.total_price | money }}
+          </div>
+          <button type="submit" name="checkout" style="padding:14px 28px;border:0;background:var(--pg-orange,#f39200);color:#fff;font-weight:900;border-radius:999px;cursor:pointer;letter-spacing:1px;">
+            IR A PAGAR
+          </button>
+        </div>
+      </div>
+    </form>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "ProstaGenix Cart",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

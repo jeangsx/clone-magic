@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.prostagenix.com/">
+<meta charset="utf-8" />
+
+<link rel="preload" href="styles/fonts/Montserrat-Light.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="styles/fonts/Montserrat-Bold.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="styles/fonts/Montserrat-Black.woff" as="font" type="font/woff" crossorigin>
+
+<link rel="canonical" href="https://www.prostagenix.com/" />
+<link rel="alternate" hreflang="en" href="https://www.prostagenix.com" />
+
+<meta property="og:description" content="ProstaGenix® Multiphase Prostate Supplement is rated World's Best Prostate Supplement by the National Health Federation.">
+<meta name="description" content="ProstaGenix® Multiphase Prostate Supplement is rated World's Best Prostate Supplement by the National Health Federation.">
+
+<meta property="og:image" content="https://www.prostagenix.com/190109/img/hero.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="1200">
+
+<link rel="shortcut icon" href="190109/img/favicon.png" type="image/x-icon" />
+
+<meta name="og:site_name" content="ProstaGenix">
+<meta property="og:title" content="ProstaGenix - Top Rated Prostate Supplement For 2021">
+<title>ProstaGenix - This Page Could Not Be Found</title>
+
+
+<link href="styles/styles-combined6.css?v=1.004" rel="stylesheet">
+<style type="text/css">
+
+        /* VARIABLES */
+        :root {
+
+            /* COLORS */
+            --col-brand: #0b5d8d;
+            --col-txt-default: #343330;
+            --col-grey-light: #f0f0f0;
+            --col-grey-dark: #777777;
+
+            /* ANIMATIONS */
+            --hover-speed: 0.3s;
+
+            /* MISC */
+            --bor-rad: 1em;
+
+        }
+
+        /* SETUP */
+        body {
+            font-size: 1.3125rem;
+            color: var(--col-txt-default);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 3rem;
+        }
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        .svgs {
+            display: none;
+            visibility: hidden;
+        }
+
+        /* HEADER */
+        header {
+            z-index: 2;
+            padding: 2rem 0;
+            background-color: var(--col-grey-light);
+            box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        header > a img {
+            z-index: 3;
+            width: 80%;
+            display: block;
+            margin-inline: auto;
+            position: relative;
+        }
+
+        /* BODY */
+        .body {
+            max-width: 70rem;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin: 0 auto;
+            position: relative;
+        }
+        .body > svg {
+            width: 12rem;
+            height: 12rem;
+            display: inline-block;
+        }
+        .body > h1 {
+            font-size: 6rem;
+            color: var(--col-grey-dark);
+            text-shadow: 0.03em 0.03em 0 rgba(0, 0, 0, 0.15);
+            line-height: 1em;
+            margin: 0;
+        }
+        .body > h2 {
+            font-size: 2rem;
+            color: var(--col-grey-dark);
+            line-height: 1em;
+            margin: 1rem auto;
+            opacity: 0.75;
+        }
+        .body > p {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .body > p:nth-child(4) {
+            margin: 3rem auto;
+            margin-bottom: 0;
+        }
+        .body > p:nth-child(5) {
+            margin-top: 0.5em;
+        }
+
+        /* MENU */
+        .menu {
+            width: 100%;
+            max-width: 50rem;
+            font-size: 1rem;
+            padding: 0 1em;
+            margin: 0 auto;
+            position: relative;
+        }
+        .menu > h2 {
+            margin-bottom: 0.5em;
+        }
+        .menu ul {
+            width: 100%;
+            font-size: 1.25em;
+            font-weight: bold;
+            color: var(--col-txt-default);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+        .menu ul li {
+            padding: 0.5em 0.25em;
+            padding-left: 1.15em;
+            position: relative;
+            cursor: pointer;
+            transition: color var(--hover-speed) ease-out;
+        }
+        .menu ul li svg {
+            width: 0.75em;
+            height: 0.75em;
+            fill: var(--col-txt-default);
+            position: absolute;
+            top: 0.9em;
+            left: 0;
+            transition: fill var(--hover-speed) ease-out;
+        }
+        .menu ul li::before, .menu ul li::after {
+            width: 100%;
+            height: 1px;
+            content: "";
+            background-color: var(--col-txt-default);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .menu ul li::before {
+            opacity: 0.15;
+        }
+        .menu ul li::after {
+            height: 3px;
+            background-color: var(--col-brand);
+            bottom: -1px;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform var(--hover-speed) ease-out;
+        }
+        .menu ul li:hover::after, .menu ul li:focus::after {
+            transform: scaleX(1);
+        }
+        .menu ul li:hover, .menu ul li:focus {
+            color: var(--col-brand);
+        }
+        .menu ul li:hover svg, .menu ul li:focus svg {
+            fill: var(--col-brand);
+        }
+
+        /* FOOTER */
+        footer {
+            font-size: 0.75rem;
+            color: var(--col-grey-dark);
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        /* --------------- DESKTOP --------------- */
+        @media screen and (min-width: 83rem) {
+
+            /* HEADER */
+            header > a img {
+                width: 20rem;
+            }
+            header > svg {
+                width: 4rem;
+                height: 3rem;
+                top: 0.4rem;
+            }
+
+            /* BODY */
+            .body {
+                max-width: 70rem;
+                text-align: center;
+                padding: 4rem 2rem;
+                margin: 0 auto;
+                position: relative;
+            }
+            .body > svg {
+                width: 15rem;
+                height: 15rem;
+                display: inline-block;
+            }
+            .body > h1 {
+                font-size: 7rem;
+                color: var(--col-grey-dark);
+                text-shadow: 0.03em 0.03em 0 rgba(0, 0, 0, 0.15);
+                line-height: 1em;
+                margin: 0;
+            }
+            .body > h2 {
+                font-size: 2.5rem;
+                color: var(--col-grey-dark);
+                line-height: 1em;
+                margin: 1rem auto;
+                opacity: 0.75;
+            }
+
+            /* REVIEWS */
+            .menu {
+                margin-bottom: 5rem;
+            }
+            .menu ul li {
+                width: 32.5%;
+                display: inline-block;
+                vertical-align: top;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+<script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+
+            //Get all testimonial placeholders
+            var tesimonals = document.querySelectorAll('.testimonial-placeholder');
+
+            //Setup the click event handler on testimonial placholders
+            tesimonals.forEach(function (testimonial) {
+                testimonial.addEventListener('click', function () {
+                    //console.log("Testimonial Clicked! " + testimonial.dataset.video);
+
+                    //Use pure JS to get the parent (div) element that matches the target class; in this case vid
+                    var el = document.body.querySelector(".vid[data-video='" + testimonial.dataset.video + "']");
+
+                    //Clear the contents to remove the placeholder image and code so we can reconstruct properly
+                    el.innerHTML = "";
+
+                    //Now start building the replacement code -- create script element
+                    var s = document.createElement('script');
+                    s.setAttribute('type', 'text/javascript');
+                    s.setAttribute('src', 'https://fast.wistia.com/embed/medias/' + testimonial.dataset.video + ".jsonp");
+                    el.appendChild(s);
+
+                    //Create outer wrapper div
+                    var d1 = document.createElement('div');
+                    d1.setAttribute('class', 'wistia_responsive_padding');
+                    d1.setAttribute('style', 'padding:110.63% 0 0 0;position:relative;');
+                    el.appendChild(d1);
+
+                    //Create innerHTML for the Div we added
+
+
+                    var h = "<div class=\"wistia_responsive_wrapper\" style=\"height:100%;left:0;position:absolute;top:0;width:100%;\"><div class=\"wistia_embed wistia_async_" + testimonial.dataset.video + " videoFoam=true autoPlay=true\" style=\"height:100%;position:relative;width:100%\"><div class=\"wistia_swatch\" style=\"height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;\"><img loading=\"lazy\" src=\"https://fast.wistia.com/embed/medias/" + testimonial.dataset.video + "/swatch\" style=\"filter:blur(5px);height:100%;object-fit:contain;width:100%;\" alt=\"\" aria-hidden=\"true\" onload=\"this.parentNode.style.opacity=1;\" /></div></div></div>";
+
+
+                    //Set the inner HTML on the div element
+                    d1.innerHTML = h;
+
+
+                });
+            });
+
+
+
+            //Get large video placholders
+            var largeVids = document.querySelectorAll('.large-vid-placeholder');
+
+            //Setup the click event handler on testimonial placholders
+            largeVids.forEach(function (largeVid) {
+                largeVid.addEventListener('click', function () {
+
+
+
+                    //Use pure JS to get the parent (div) element that matches the target class; in this case vid
+                    var el = document.body.querySelector(".video[data-video='" + largeVid.dataset.video + "']");
+
+                    //console.log(largeVid.dataset.video);
+
+                    //Clear the contents to remove the placeholder image and code so we can reconstruct properly
+                    el.innerHTML = "";
+
+                    //Now start building the replacement code -- create script element
+                    var s = document.createElement('script');
+                    s.setAttribute('type', 'text/javascript');
+                    s.setAttribute('src', 'https://fast.wistia.com/embed/medias/' + largeVid.dataset.video + ".jsonp");
+                    el.appendChild(s);
+
+                    //Create outer wrapper div
+                    var d1 = document.createElement('div');
+                    d1.setAttribute('class', 'wistia_responsive_padding');
+                    d1.setAttribute('style', 'padding:56.25% 0 0 0;position:relative;');
+                    el.appendChild(d1);
+
+                    //Create innerHTML for the Div we added
+
+                    var h = "<div class=\"wistia_responsive_wrapper\" style=\"height:100%;left:0;position:absolute;top:0;width:100%;\"><div class=\"wistia_embed wistia_async_" + largeVid.dataset.video + " videoFoam=true autoPlay=true\" style=\"height:100%;position:relative;width:100%\"><div class=\"wistia_swatch\" style=\"height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;\"><img loading=\"lazy\" src=\"https://fast.wistia.com/embed/medias/" + largeVid.dataset.video + "/swatch\" style=\"filter:blur(5px);height:100%;object-fit:contain;width:100%;\" alt=\"\" aria-hidden=\"true\" onload=\"this.parentNode.style.opacity=1;\" /></div></div></div>";
+
+
+                    //Set the inner HTML on the div element
+                    d1.innerHTML = h;
+
+
+                });
+            });
+
+        });
+
+
+
+    </script>
+
+<script>
+        dataLayer = [{
+            'dyna-ga-acct': 'UA-50601119-25',
+        }];
+    </script>
+
+
+<noscript><iframe src="https://assets.prostagenix.com/ns.html?id=GTM-TDDVR6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://assets.prostagenix.com/esfucclbo.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','1j=aWQ9R1RNLVRERFZSNg%3D%3D&page=3');</script>
+
+
+<header>
+
+<a href="/"><img id="logo" src="images/logo.png" alt="ProstaGenix logo" /></a>
+</header>
+
+<section class="body">
+
+<svg class="animate-plane"><use href="#icon_face"></use></svg>
+
+<h1>404</h1>
+
+<h2>Page Not Found</h2>
+
+<p>The page you are looking for does not exist or an error has occurred.</p>
+<p>Go back or try one of these other pages...</p>
+</section>
+
+<nav class="menu">
+<ul>
+<li onclick="location.href='/'"><svg><use href="#icon_arrow"></use></svg>Homepage</li>
+<li onclick="location.href='/why.html'"><svg><use href="#icon_arrow"></use></svg>Why ProstaGenix</li>
+<li onclick="location.href='/testimonials.html'"><svg><use href="#icon_arrow"></use></svg>Testimonials</li>
+<li onclick="location.href='/guarantee.html'"><svg><use href="#icon_arrow"></use></svg>100% Guarantee</li>
+<li onclick="location.href='/faq.html'"><svg><use href="#icon_arrow"></use></svg>FAQ</li>
+<li onclick="location.href='/stories.html'"><svg><use href="#icon_arrow"></use></svg>Our Story</li>
+</ul>
+</nav>
+
+<footer>
+
+<p>©Copyright <span class="currentYear"></span> ProstaGenix, LLC. All rights reserved.</p>
+
+<script type="text/javascript">
+
+            var d = new Date();
+            var y = d.getFullYear();
+            var tar = document.getElementsByClassName("currentYear");
+
+            for (i = 0; i < tar.length; i++) {
+
+                tar[i].innerHTML = y;
+
+            }
+
+        </script>
+</footer>
+
+<div class="svgs">
+
+<svg xmlns="http://www.w3.org/2000/svg">
+<symbol id="icon_arrow" viewBox="0 0 24 24">
+<path d="M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z" />
+</symbol>
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg">
+<symbol id="icon_face" viewBox="0 0 21 21">
+<g fill="none" fill-rule="evenodd" transform="translate(2 2)"><path d="M8.5 16.5a8 8 0 1 0 0-16a8 8 0 0 0 0 16z" stroke="var(--col-grey-dark)" stroke-linecap="round" stroke-linejoin="round" />
+<circle cx="6" cy="6" fill="var(--col-grey-dark)" r="1" />
+<circle cx="11" cy="6" fill="var(--col-grey-dark)" r="1" />
+<path d="M5.5 11.5c.603-1.333 1.603-2 3-2s2.397.667 3 2" stroke="var(--col-grey-dark)" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+</symbol>
+</svg>
+</div>
+</body>
+</html>

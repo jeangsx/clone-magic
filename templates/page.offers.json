@@ -1,26 +1,13 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
-      "type": "offers-catalog",
+      "type": "pg-offers-page",
       "settings": {
         "heading": "Ofertas especiales",
-        "products_limit": 12,
-        "cta_label": "ORDER NOW",
-        "guarantee_text": "Garantia NOVASHOP – 30 Dias",
-        "accent_color": "#6d388b"
+        "subheading": "Elige tu paquete y ahorra hoy",
+        "guarantee_text": "Garantía 90 Días · Devolución Total"
       }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }

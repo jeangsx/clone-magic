@@ -1,0 +1,35 @@
+<section class="pg-simple">
+  <h1 style="color:var(--pg-blue,#054497);font-weight:900;">Colecciones</h1>
+  <ul style="list-style:none;padding:0;margin:24px 0;display:grid;gap:16px;">
+    {% for collection in collections %}
+      {% unless collection.handle == 'all' %}
+        <li style="border:1px solid #e3e6ee;border-radius:12px;overflow:hidden;">
+          <a href="{{ collection.url }}" style="display:flex;align-items:center;gap:16px;padding:16px;text-decoration:none;color:inherit;">
+            {% if collection.featured_image %}
+              <img
+                src="{{ collection.featured_image | image_url: width: 160 }}"
+                alt="{{ collection.title | escape }}"
+                width="80"
+                height="80"
+                style="object-fit:cover;border-radius:8px;"
+                loading="lazy"
+              >
+            {% endif %}
+            <div>
+              <div style="font-weight:900;color:var(--pg-blue,#054497);">{{ collection.title }}</div>
+              <div style="font-size:13px;color:#666;">{{ collection.products_count }} productos</div>
+            </div>
+          </a>
+        </li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "ProstaGenix Collections",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}
