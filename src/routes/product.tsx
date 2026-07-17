@@ -61,7 +61,6 @@ export default function ProductPage() {
   const [heroIdx, setHeroIdx] = useState(0);
   const [loading, setLoading] = useState(!!handle || !deal);
   const [descOpen, setDescOpen] = useState(false);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   function goToShopifyCheckout(variantId: string, quantity = 1) {
     // Extract numeric variant id from GID: gid://shopify/ProductVariant/12345
@@ -165,10 +164,10 @@ export default function ProductPage() {
         .lv-p-hot-lbl { font-size: 10px; letter-spacing: 1.2px; opacity: .92; margin-top: 3px; font-weight: 800; }
         .lv-p-hot-sep { color: ${RED}; font-weight: 900; font-size: 18px; opacity: .55; line-height: 1; }
         .lv-p-benefits { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-        .lv-p-desc img, .lv-p-desc video, .lv-p-desc iframe { max-width: 100%; height: auto; border-radius: 10px; margin: 8px 0; display: block; }
+        .lv-p-desc img, .lv-p-desc video, .lv-p-desc iframe { max-width: 100%; max-height: 220px; width: auto; height: auto; object-fit: contain; border-radius: 10px; margin: 8px auto; display: block; }
         .lv-p-desc p { margin: 0 0 10px; }
         .lv-p-desc ul, .lv-p-desc ol { margin: 0 0 10px 20px; }
-        .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 12px 0 6px; color: #0b1a3a; }
+        .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 12px 0 6px; color: #0b1a3a; font-size: 16px; }
         .lv-p-desc a { color: #054497; text-decoration: underline; }
         @media (max-width: 780px) { .lv-p-desc { column-count: 1 !important; } }
         .lv-p-deal-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
