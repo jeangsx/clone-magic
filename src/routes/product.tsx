@@ -487,7 +487,7 @@ export default function ProductPage() {
               letterSpacing: 1,
             }}
           >
-            IR A PAGAR AHORA →
+            IR A PAGAR →
           </button>
 
           <div style={{ marginTop: 18 }}>
