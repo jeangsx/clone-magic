@@ -124,6 +124,47 @@ export default function ProductPage() {
   const pitch = useShopify ? productShortPitch(product!) : null;
   const badgeOverride = useShopify ? productBadgeText(product!) : null;
 
+  const descBlocks = useMemo(() => {
+    if (!product) return [] as Array<{ type: "image" | "text"; content: string }>;
+    const html = product.descriptionHtml?.trim() || (product.description || "").replace(/\n/g, "<br/>");
+    if (!html) return [];
+    if (typeof window === "undefined") return [{ type: "text" as const, content: html }];
+    const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
+    const root = doc.body.firstElementChild;
+    if (!root) return [{ type: "text" as const, content: html }];
+    const blocks: Array<{ type: "image" | "text"; content: string }> = [];
+    let textBuf = "";
+    const flush = () => {
+      const trimmed = textBuf.replace(/^(?:\s|&nbsp;|<br\s*\/?\s*>)+|(?:\s|&nbsp;|<br\s*\/?\s*>)+$/gi, "").trim();
+      if (trimmed) blocks.push({ type: "text", content: trimmed });
+      textBuf = "";
+    };
+    root.childNodes.forEach((node) => {
+      if (node.nodeType === 1) {
+        const el = node as HTMLElement;
+        const imgs = el.tagName === "IMG" ? [el as HTMLImageElement] : Array.from(el.querySelectorAll("img"));
+        if (imgs.length && el.textContent!.trim() === "") {
+          flush();
+          imgs.forEach((img) => blocks.push({ type: "image", content: img.getAttribute("src") || "" }));
+          return;
+        }
+        if (imgs.length) {
+          flush();
+          imgs.forEach((img) => blocks.push({ type: "image", content: img.getAttribute("src") || "" }));
+          imgs.forEach((img) => img.remove());
+          const remaining = el.innerHTML.trim();
+          if (remaining) blocks.push({ type: "text", content: `<${el.tagName.toLowerCase()}>${remaining}</${el.tagName.toLowerCase()}>` });
+          return;
+        }
+        textBuf += el.outerHTML;
+      } else if (node.nodeType === 3) {
+        textBuf += node.textContent || "";
+      }
+    });
+    flush();
+    return blocks.filter((b) => b.content);
+  }, [product]);
+
   if (loading) {
     return (
       <div style={{ padding: 40, textAlign: "center", fontFamily: "system-ui" }}>
@@ -457,7 +498,7 @@ export default function ProductPage() {
         </section>
       </main>
 
-      {useShopify && (product!.descriptionHtml?.trim() || product!.description?.trim()) && (
+      {useShopify && descBlocks.length > 0 && (
         <section style={{ maxWidth: 1280, margin: "0 auto", padding: "8px 24px 40px" }}>
           <h2 style={{ fontSize: 20, fontWeight: 900, color: BLUE, margin: "0 0 12px", letterSpacing: -0.2, borderBottom: `3px solid ${ORANGE}`, paddingBottom: 6, display: "inline-block" }}>
             Descripción
@@ -469,25 +510,30 @@ export default function ProductPage() {
               borderRadius: 14,
               background: "#f7f8fb",
               border: "1px solid #e3e6ee",
-              fontSize: 15,
               color: "#333",
-              lineHeight: 1.7,
-              maxHeight: descOpen ? "none" : 260,
+              lineHeight: 1.6,
+              maxHeight: descOpen ? "none" : 520,
               overflow: "hidden",
               position: "relative",
-              columnCount: descOpen ? 1 : 2,
-              columnGap: 32,
-              columnRule: "1px solid #e3e6ee",
             }}
-            dangerouslySetInnerHTML={{
-              __html:
-                product!.descriptionHtml?.trim() ||
-                (product!.description || "").replace(/\n/g, "<br/>"),
-            }}
-          />
-          {!descOpen && (
-            <div style={{ height: 80, marginTop: -80, position: "relative", background: "linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb)", pointerEvents: "none" }} />
-          )}
+          >
+            <div className="lv-p-desc-grid">
+              {descBlocks.map((b, i) =>
+                b.type === "image" ? (
+                  <img key={i} src={b.content} alt="" loading="lazy" />
+                ) : (
+                  <div
+                    key={i}
+                    className="lv-p-desc-text"
+                    dangerouslySetInnerHTML={{ __html: b.content }}
+                  />
+                ),
+              )}
+            </div>
+            {!descOpen && (
+              <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 90, background: "linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb 85%)", pointerEvents: "none" }} />
+            )}
+          </div>
           <div style={{ textAlign: "center", marginTop: 12 }}>
             <button
               type="button"
