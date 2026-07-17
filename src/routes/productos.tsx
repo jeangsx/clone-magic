@@ -93,11 +93,11 @@ function OfferCard({
 export default function ProductosPage() {
   const [searchParams] = useSearchParams();
   const embed = searchParams.get("embed") === "1";
-  const CACHE_KEY = "lv-shopify-cache-v1";
-  const CACHE_TTL = 5 * 60 * 1000; // 5 min
+  const CACHE_KEY = "lv-shopify-cache-v2";
+  const CACHE_TTL = 30 * 60 * 1000; // 30 min
   const initial = (() => {
     try {
-      const raw = sessionStorage.getItem(CACHE_KEY);
+      const raw = localStorage.getItem(CACHE_KEY);
       if (!raw) return null;
       const parsed = JSON.parse(raw) as { t: number; collections: ShopifyCollection[]; orphans: ShopifyProduct[] };
       if (Date.now() - parsed.t > CACHE_TTL) return null;
@@ -119,7 +119,7 @@ export default function ProductosPage() {
         setOrphans(orph);
         setCollections(cols);
         try {
-          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), collections: cols, orphans: orph }));
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), collections: cols, orphans: orph }));
         } catch { /* ignore */ }
       })
       .catch((e) => setError(String(e)));
