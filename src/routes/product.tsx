@@ -468,7 +468,7 @@ export default function ProductPage() {
               fontSize: 15,
               color: "#333",
               lineHeight: 1.7,
-              maxHeight: descOpen ? "none" : 380,
+              maxHeight: descOpen ? "none" : 260,
               overflow: "hidden",
               position: "relative",
               columnCount: descOpen ? 1 : 2,
