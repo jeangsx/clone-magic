@@ -63,35 +63,12 @@ export default function ProductPage() {
   const [descOpen, setDescOpen] = useState(false);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
 
-  async function goToShopifyCheckout(variantId: string, quantity = 1) {
-    setCheckoutLoading(true);
-    try {
-      const res = await fetch(`https://${SHOPIFY_DOMAIN}/api/2025-07/graphql.json`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Shopify-Storefront-Access-Token": SHOPIFY_TOKEN,
-        },
-        body: JSON.stringify({
-          query: `mutation($input: CartInput!){cartCreate(input:$input){cart{checkoutUrl} userErrors{message}}}`,
-          variables: { input: { lines: [{ quantity, merchandiseId: variantId }] } },
-        }),
-      });
-      const json = await res.json();
-      const url: string | undefined = json?.data?.cartCreate?.cart?.checkoutUrl;
-      if (url) {
-        const u = new URL(url);
-        u.searchParams.set("channel", "online_store");
-        window.location.href = u.toString();
-        return;
-      }
-      alert("No se pudo iniciar el checkout de Shopify.");
-    } catch (e) {
-      console.error(e);
-      alert("Error al conectar con Shopify.");
-    } finally {
-      setCheckoutLoading(false);
-    }
+  function goToShopifyCheckout(variantId: string, quantity = 1) {
+    // Extract numeric variant id from GID: gid://shopify/ProductVariant/12345
+    const numeric = variantId.split("/").pop();
+    // Direct Shopify cart permalink — instant redirect, no API round trip
+    const url = `https://${SHOPIFY_DOMAIN}/cart/${numeric}:${quantity}?channel=online_store`;
+    window.location.href = url;
   }
 
   useEffect(() => {
