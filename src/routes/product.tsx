@@ -15,6 +15,7 @@ import {
   type ShopifyProduct,
   type ShopifyVariant,
 } from "../lib/shopify";
+import { SHOPIFY_DOMAIN, SHOPIFY_TOKEN } from "../lib/shopify";
 import { useLandingSettings } from "../lib/use-landing-settings";
 import { CLONE_HOME } from "../lib/static-hosting";
 
@@ -60,6 +61,38 @@ export default function ProductPage() {
   const [heroIdx, setHeroIdx] = useState(0);
   const [loading, setLoading] = useState(!!handle || !deal);
   const [descOpen, setDescOpen] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  async function goToShopifyCheckout(variantId: string, quantity = 1) {
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch(`https://${SHOPIFY_DOMAIN}/api/2025-07/graphql.json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Shopify-Storefront-Access-Token": SHOPIFY_TOKEN,
+        },
+        body: JSON.stringify({
+          query: `mutation($input: CartInput!){cartCreate(input:$input){cart{checkoutUrl} userErrors{message}}}`,
+          variables: { input: { lines: [{ quantity, merchandiseId: variantId }] } },
+        }),
+      });
+      const json = await res.json();
+      const url: string | undefined = json?.data?.cartCreate?.cart?.checkoutUrl;
+      if (url) {
+        const u = new URL(url);
+        u.searchParams.set("channel", "online_store");
+        window.location.href = u.toString();
+        return;
+      }
+      alert("No se pudo iniciar el checkout de Shopify.");
+    } catch (e) {
+      console.error(e);
+      alert("Error al conectar con Shopify.");
+    } finally {
+      setCheckoutLoading(false);
+    }
+  }
 
   useEffect(() => {
     document.title = "ProstaGenix - Preview del Producto";
@@ -160,6 +193,7 @@ export default function ProductPage() {
         .lv-p-desc ul, .lv-p-desc ol { margin: 0 0 10px 20px; }
         .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 12px 0 6px; color: #0b1a3a; }
         .lv-p-desc a { color: #054497; text-decoration: underline; }
+        @media (max-width: 780px) { .lv-p-desc { column-count: 1 !important; } }
         .lv-p-deal-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         .lv-p-deal-info { min-width: 0; flex: 1 1 auto; }
         .lv-p-deal-price { text-align: right; flex: 0 0 auto; }
@@ -247,44 +281,6 @@ export default function ProductPage() {
               />
             </div>
           </div>
-
-          {useShopify && (product!.descriptionHtml?.trim() || product!.description?.trim()) && (
-            <div style={{ marginTop: 20 }}>
-              <h2 style={{ fontSize: 18, fontWeight: 900, color: BLUE, margin: "0 0 10px", letterSpacing: -0.2, borderBottom: `3px solid ${ORANGE}`, paddingBottom: 6, display: "inline-block" }}>
-                Descripción
-              </h2>
-              <div
-                className="lv-p-desc"
-                style={{
-                  padding: 14,
-                  borderRadius: 12,
-                  background: "#f7f8fb",
-                  border: "1px solid #e3e6ee",
-                  fontSize: 14,
-                  color: "#333",
-                  lineHeight: 1.6,
-                  maxHeight: descOpen ? "none" : 320,
-                  overflow: "hidden",
-                  position: "relative",
-                }}
-                dangerouslySetInnerHTML={{
-                  __html:
-                    product!.descriptionHtml?.trim() ||
-                    (product!.description || "").replace(/\n/g, "<br/>"),
-                }}
-              />
-              {!descOpen && (
-                <div style={{ height: 60, marginTop: -60, position: "relative", background: "linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb)", borderBottomLeftRadius: 12, borderBottomRightRadius: 12, pointerEvents: "none" }} />
-              )}
-              <button
-                type="button"
-                onClick={() => setDescOpen((v) => !v)}
-                style={{ marginTop: 10, background: "transparent", border: `2px solid ${BLUE}`, color: BLUE, fontWeight: 800, padding: "8px 16px", borderRadius: 999, cursor: "pointer", fontSize: 13, letterSpacing: 0.5 }}
-              >
-                {descOpen ? "Ver menos ▲" : "Ver más ▼"}
-              </button>
-            </div>
-          )}
         </section>
 
         <section style={{ minWidth: 0 }}>
@@ -452,27 +448,27 @@ export default function ProductPage() {
           <button
             onClick={() => {
               if (useShopify) {
-                navigate(
-                  `/checkout?handle=${encodeURIComponent(product!.handle)}&variant=${encodeURIComponent(selectedVariant!.id)}`,
-                );
+                goToShopifyCheckout(selectedVariant!.id, 1);
               } else {
                 navigate(`/checkout?deal=${selectedDeal}`);
               }
             }}
+            disabled={checkoutLoading}
             style={{
               width: "100%",
               padding: "14px 20px",
               borderRadius: 12,
               border: `2px solid ${BLUE}`,
-              cursor: "pointer",
+              cursor: checkoutLoading ? "wait" : "pointer",
               background: "#fff",
               color: BLUE,
               fontWeight: 900,
               fontSize: 15,
               letterSpacing: 1,
+              opacity: checkoutLoading ? 0.7 : 1,
             }}
           >
-            IR A PAGAR AHORA →
+            {checkoutLoading ? "Conectando con Shopify…" : "IR A PAGAR AHORA →"}
           </button>
 
           <div style={{ marginTop: 18 }}>
@@ -482,6 +478,49 @@ export default function ProductPage() {
           </div>
         </section>
       </main>
+
+      {useShopify && (product!.descriptionHtml?.trim() || product!.description?.trim()) && (
+        <section style={{ maxWidth: 1280, margin: "0 auto", padding: "8px 24px 40px" }}>
+          <h2 style={{ fontSize: 20, fontWeight: 900, color: BLUE, margin: "0 0 12px", letterSpacing: -0.2, borderBottom: `3px solid ${ORANGE}`, paddingBottom: 6, display: "inline-block" }}>
+            Descripción
+          </h2>
+          <div
+            className="lv-p-desc"
+            style={{
+              padding: 20,
+              borderRadius: 14,
+              background: "#f7f8fb",
+              border: "1px solid #e3e6ee",
+              fontSize: 15,
+              color: "#333",
+              lineHeight: 1.7,
+              maxHeight: descOpen ? "none" : 380,
+              overflow: "hidden",
+              position: "relative",
+              columnCount: descOpen ? 1 : 2,
+              columnGap: 32,
+              columnRule: "1px solid #e3e6ee",
+            }}
+            dangerouslySetInnerHTML={{
+              __html:
+                product!.descriptionHtml?.trim() ||
+                (product!.description || "").replace(/\n/g, "<br/>"),
+            }}
+          />
+          {!descOpen && (
+            <div style={{ height: 80, marginTop: -80, position: "relative", background: "linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb)", pointerEvents: "none" }} />
+          )}
+          <div style={{ textAlign: "center", marginTop: 12 }}>
+            <button
+              type="button"
+              onClick={() => setDescOpen((v) => !v)}
+              style={{ background: "transparent", border: `2px solid ${BLUE}`, color: BLUE, fontWeight: 800, padding: "10px 22px", borderRadius: 999, cursor: "pointer", fontSize: 13, letterSpacing: 0.5 }}
+            >
+              {descOpen ? "Ver menos ▲" : "Ver más ▼"}
+            </button>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
