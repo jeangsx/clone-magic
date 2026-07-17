@@ -193,6 +193,7 @@ export default function ProductPage() {
         .lv-p-desc ul, .lv-p-desc ol { margin: 0 0 10px 20px; }
         .lv-p-desc h1, .lv-p-desc h2, .lv-p-desc h3 { margin: 12px 0 6px; color: #0b1a3a; }
         .lv-p-desc a { color: #054497; text-decoration: underline; }
+        @media (max-width: 780px) { .lv-p-desc { column-count: 1 !important; } }
         .lv-p-deal-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         .lv-p-deal-info { min-width: 0; flex: 1 1 auto; }
         .lv-p-deal-price { text-align: right; flex: 0 0 auto; }
