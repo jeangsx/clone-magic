@@ -22,39 +22,163 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple" style="text-align:center;max-width:420px;">
-  <img
-    src="https://www.prostagenix.com/190109/img/logo.png"
-    alt="{{ shop.name }}"
-    width="200"
-    height="60"
-    style="max-width:200px;height:auto;margin:0 auto 24px;display:block;"
-  >
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;margin-bottom:8px;">Próximamente</h1>
-  <p style="color:#555;margin-bottom:24px;">Ingresa la contraseña para ver la tienda.</p>
-
-  {% form 'storefront_password' %}
-    {{ form.errors | default_errors }}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        style="padding:12px 14px;border:2px solid #e3e6ee;border-radius:10px;text-align:center;"
-      >
-      <button type="submit" style="padding:14px;background:var(--pg-orange,#f39200);color:#fff;border:0;border-radius:999px;font-weight:900;cursor:pointer;">
-        Entrar
-      </button>
+<div class="banner_special body_full_nomar">
+  <div class="body_full" style="max-width:{{ section.settings.hero_content_max_width }}px;">
+    <div class="headings">
+      {% if section.settings.hero_subtitle != blank %}
+        <span class="heading">{{ section.settings.hero_subtitle }}</span>
+      {% endif %}
+      {% if section.settings.hero_title != blank %}
+        <div class="pg-hero-title">{{ section.settings.hero_title }}</div>
+      {% endif %}
+      {% if section.settings.banner_image != blank %}
+        <img
+          src="{{ section.settings.banner_image | image_url: width: 640 }}"
+          alt="{{ section.settings.banner_image.alt | escape }}"
+          width="{{ section.settings.banner_image.width }}"
+          height="{{ section.settings.banner_image.height }}"
+          style="width:{{ section.settings.banner_width }}px;max-width:100%;margin:12px auto 0;border-radius:{{ section.settings.banner_radius }}px;height:auto;display:block;"
+          loading="lazy"
+        >
+      {% endif %}
     </div>
-  {% endform %}
-</section>
+
+    {% if section.settings.show_bottles %}
+      <div class="bottles">
+        {% assign bottle = section.settings.bottle_image %}
+        {% for i in (1..3) %}
+          {% if bottle != blank %}
+            <img src="{{ bottle | image_url: width: 400 }}" alt="ProstaGenix" width="400" height="400" loading="lazy" style="width:{{ section.settings.bottle_width }}px;max-width:100%;height:auto;">
+          {% else %}
+            <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle" width="400" height="400" loading="lazy" style="width:{{ section.settings.bottle_width }}px;max-width:100%;height:auto;">
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="bottom">
+      {% if section.settings.show_countdown %}
+        <div class="counter">
+          <div class="clock">
+            <div id="ticker"></div>
+            <ul class="labels">
+              <li>Días</li>
+              <li>Horas</li>
+              <li>Min</li>
+              <li>Seg</li>
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+      <div class="copy">
+        {% if section.settings.countdown_label != blank %}
+          <span class="heading">{{ section.settings.countdown_label }}</span>
+        {% endif %}
+        {% if section.settings.hero_urgency != blank %}
+          <span class="heading">{{ section.settings.hero_urgency }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 {% schema %}
 {
-  "name": "ProstaGenix Password",
+  "name": "PG Hero / Sale",
   "tag": "section",
+  "class": "pg-section-hero",
   "settings": [
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Subtítulo",
+      "default": "GREAT DEAL - Order Now!"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_title",
+      "label": "Título",
+      "default": "<p>One Day <strong>Super Sale</strong> <span>Stock Up Now!</span></p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_urgency",
+      "label": "Urgencia",
+      "default": "HUGE SAVINGS - 70% OFF NOW!"
+    },
+    {
+      "type": "text",
+      "id": "countdown_label",
+      "label": "Texto del contador",
+      "default": "Hurry Up! Time is Ticking..."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "label": "Mostrar contador",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottles",
+      "label": "Mostrar botellas",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "bottle_image",
+      "label": "Imagen botella (opcional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner editable (opcional)"
+    },
+    {
+      "type": "header",
+      "content": "Tamanos del banner"
+    },
+    {
+      "type": "range",
+      "id": "hero_content_max_width",
+      "min": 600,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho del contenido Hero",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "banner_width",
+      "min": 100,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho de imagen banner",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "banner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Radio de imagen banner",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "bottle_width",
+      "min": 80,
+      "max": 500,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho de cada botella",
+      "default": 400
+    },
     {
       "type": "header",
       "content": "Estilos de seccion"
@@ -249,6 +373,11 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG Hero / Sale"
     }
   ]
 }

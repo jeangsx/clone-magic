@@ -22,39 +22,70 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple" style="text-align:center;max-width:420px;">
-  <img
-    src="https://www.prostagenix.com/190109/img/logo.png"
-    alt="{{ shop.name }}"
-    width="200"
-    height="60"
-    style="max-width:200px;height:auto;margin:0 auto 24px;display:block;"
-  >
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;margin-bottom:8px;">Próximamente</h1>
-  <p style="color:#555;margin-bottom:24px;">Ingresa la contraseña para ver la tienda.</p>
-
-  {% form 'storefront_password' %}
-    {{ form.errors | default_errors }}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        style="padding:12px 14px;border:2px solid #e3e6ee;border-radius:10px;text-align:center;"
-      >
-      <button type="submit" style="padding:14px;background:var(--pg-orange,#f39200);color:#fff;border:0;border-radius:999px;font-weight:900;cursor:pointer;">
-        Entrar
-      </button>
+<div class="banner_consumerlab body_full_nomar">
+  <div class="body_full wrapper">
+    <div class="split">
+      {% if section.settings.logo != blank %}
+        <img class="logo" src="{{ section.settings.logo | image_url: width: 400 }}" alt="" width="400" height="400" loading="lazy">
+      {% else %}
+        <img class="logo" src="https://www.prostagenix.com/images/home/consumerlab-logo.png" alt="" width="400" height="400" loading="lazy">
+      {% endif %}
+      {% if section.settings.award != blank %}
+        <img class="award" src="{{ section.settings.award | image_url: width: 400 }}" alt="#1 award" width="400" height="400" loading="lazy">
+      {% else %}
+        <img class="award" src="https://www.prostagenix.com/special/special-offer/img/number-one-award.png" alt="#1 award badge" width="400" height="400" loading="lazy">
+      {% endif %}
+      {% if section.settings.trophy != blank %}
+        <img class="trophie" src="{{ section.settings.trophy | image_url: width: 400 }}" alt="trophy" width="400" height="400" loading="lazy">
+      {% else %}
+        <img class="trophie" src="https://www.prostagenix.com/special/special-offer/img/trophie.png" alt="trophie" width="400" height="400" loading="lazy">
+      {% endif %}
     </div>
-  {% endform %}
-</section>
+    <div class="split">
+      {% if section.settings.text_1 != blank %}
+        <div>{{ section.settings.text_1 }}</div>
+      {% endif %}
+      {% if section.settings.text_2 != blank %}
+        <div>{{ section.settings.text_2 }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
 </div>
 
 {% schema %}
 {
-  "name": "ProstaGenix Password",
+  "name": "PG ConsumerLab",
   "tag": "section",
+  "class": "pg-section-consumerlab",
   "settings": [
+    {
+      "type": "richtext",
+      "id": "text_1",
+      "label": "Texto 1",
+      "default": "<p>To Celebrate Our <strong>HUGE VICTORY</strong> Being Crowned The <span>#1 Rated Prostate Pill In The World...</span></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_2",
+      "label": "Texto 2",
+      "default": "<p>In The Famous ConsumerLab.com Competition, We Are <strong><u>Slashing Prices</u> Across The Board - TODAY ONLY!</strong></p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo ConsumerLab"
+    },
+    {
+      "type": "image_picker",
+      "id": "award",
+      "label": "Badge #1"
+    },
+    {
+      "type": "image_picker",
+      "id": "trophy",
+      "label": "Trofeo"
+    },
     {
       "type": "header",
       "content": "Estilos de seccion"
@@ -249,6 +280,11 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG ConsumerLab"
     }
   ]
 }

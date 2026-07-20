@@ -22,39 +22,57 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple" style="text-align:center;max-width:420px;">
-  <img
-    src="https://www.prostagenix.com/190109/img/logo.png"
-    alt="{{ shop.name }}"
-    width="200"
-    height="60"
-    style="max-width:200px;height:auto;margin:0 auto 24px;display:block;"
-  >
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;margin-bottom:8px;">Próximamente</h1>
-  <p style="color:#555;margin-bottom:24px;">Ingresa la contraseña para ver la tienda.</p>
-
-  {% form 'storefront_password' %}
-    {{ form.errors | default_errors }}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        style="padding:12px 14px;border:2px solid #e3e6ee;border-radius:10px;text-align:center;"
-      >
-      <button type="submit" style="padding:14px;background:var(--pg-orange,#f39200);color:#fff;border:0;border-radius:999px;font-weight:900;cursor:pointer;">
-        Entrar
-      </button>
+<div class="guarantee body_full_nomar">
+  <div class="body_full wrapper">
+    {% if section.settings.badge != blank %}
+      <img class="badge" src="{{ section.settings.badge | image_url: width: 400 }}" alt="Guarantee" width="400" height="400" loading="lazy">
+    {% else %}
+      <img class="badge" src="https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png" alt="90 day money-back guarantee badge" width="400" height="400" loading="lazy">
+    {% endif %}
+    <div class="title">
+      {% if section.settings.heading_1 != blank %}
+        <span class="heading">{{ section.settings.heading_1 }}</span>
+      {% endif %}
+      {% if section.settings.heading_2 != blank %}
+        <span class="heading">{{ section.settings.heading_2 }}</span>
+      {% endif %}
     </div>
-  {% endform %}
-</section>
+    {% if section.settings.body != blank %}
+      <div>{{ section.settings.body }}</div>
+    {% endif %}
+  </div>
+</div>
 </div>
 
 {% schema %}
 {
-  "name": "ProstaGenix Password",
+  "name": "PG Garantía",
   "tag": "section",
+  "class": "pg-section-guarantee",
   "settings": [
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "Título línea 1",
+      "default": "100% Iron-Clad"
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "Título línea 2",
+      "default": "Guarantee"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Texto",
+      "default": "<p>We don't just offer a <strong>money-back guarantee</strong> — if you are not 100% thrilled with ProstaGenix you can get a <strong>complete 100% refund</strong> within 90 days of purchase.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge",
+      "label": "Badge garantía"
+    },
     {
       "type": "header",
       "content": "Estilos de seccion"
@@ -249,6 +267,11 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG Garantía"
     }
   ]
 }

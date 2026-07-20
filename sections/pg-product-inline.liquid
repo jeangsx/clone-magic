@@ -22,17 +22,22 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<div class="pg-pdp-wrap">
-  {% render 'pg-buybox-from-section', product: product %}
-</div>
+<section class="lv-preview-embed-wrap">
+  {% render 'pg-buybox-from-section', product: section.settings.featured_product %}
+</section>
 </div>
 
 {% schema %}
 {
-  "name": "PG Producto PDP",
+  "name": "PG Producto (preview)",
   "tag": "section",
-  "class": "pg-main-product",
+  "class": "pg-section-product",
   "settings": [
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Producto"
+    },
     {
       "type": "header",
       "content": "Visibilidad"
@@ -41,7 +46,7 @@
       "type": "checkbox",
       "id": "show_bar",
       "label": "Barra superior azul",
-      "default": true
+      "default": false
     },
     {
       "type": "checkbox",
@@ -71,7 +76,7 @@
       "type": "checkbox",
       "id": "show_back",
       "label": "Mostrar enlace volver",
-      "default": true
+      "default": false
     },
     {
       "type": "header",
@@ -629,7 +634,7 @@
   ],
   "presets": [
     {
-      "name": "PG Producto PDP"
+      "name": "PG Producto (preview)"
     }
   ]
 }

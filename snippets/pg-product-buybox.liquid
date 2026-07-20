@@ -1,11 +1,78 @@
 {% doc %}
-  ProstaGenix product buy box (PDP / landing embed).
-  @param {product} product - Product to sell
-  @param {boolean} [show_bar] - Show top deal bar
-  @param {boolean} [show_back] - Show back-to-offer link
-  @example
-  {% render 'pg-product-buybox', product: product, show_bar: true, show_back: true %}
+  ProstaGenix product buy box — textos + estilos (tamaño, color, posición descripción).
 {% enddoc %}
+
+{% liquid
+  assign show_bar = show_bar | default: false
+  assign show_back = show_back | default: false
+  assign show_description = show_description
+  if show_description == nil
+    assign show_description = true
+  endif
+  assign show_rating = show_rating
+  if show_rating == nil
+    assign show_rating = true
+  endif
+  assign show_benefits = show_benefits
+  if show_benefits == nil
+    assign show_benefits = true
+  endif
+  assign show_hot_sale = show_hot_sale
+  if show_hot_sale == nil
+    assign show_hot_sale = true
+  endif
+
+  assign bar_text = bar_text | default: 'GREAT DEAL · Envío GRATIS en pedidos hoy · Garantía 90 Días'
+  assign rating_text = rating_text | default: '4.8 (13,167)'
+  assign doctor_badge = doctor_badge | default: 'RECOMENDADO POR MÉDICOS'
+  assign hot_sale_label = hot_sale_label | default: '🔥 HOT SALE'
+  assign hot_sale_text = hot_sale_text | default: 'Ordena hoy para asegurar tu descuento y regalos GRATIS'
+  assign offer_badge = offer_badge | default: 'MEJOR OFERTA'
+  assign in_stock_label = in_stock_label | default: 'En stock'
+  assign sold_out_label = sold_out_label | default: 'Agotado'
+  assign total_label = total_label | default: 'Total'
+  assign save_label = save_label | default: 'Ahorras'
+  assign cta_label = cta_label | default: 'IR A PAGAR →'
+  assign back_label = back_label | default: '← Volver a la oferta'
+  assign description_title = description_title | default: 'Descripción'
+  assign off_prefix = off_prefix | default: 'UP TO'
+  assign off_suffix = off_suffix | default: '% OFF'
+
+  assign description_placement = description_placement | default: 'below'
+  assign gallery_position = gallery_position | default: 'left'
+  assign title_size = title_size | default: 34
+  assign cta_font_size = cta_font_size | default: 15
+  assign cta_pad_y = cta_pad_y | default: 14
+  assign cta_pad_x = cta_pad_x | default: 20
+  assign cta_radius = cta_radius | default: 12
+  assign desc_font_size = desc_font_size | default: 14
+  assign desc_max_width = desc_max_width | default: 1280
+  assign desc_pad = desc_pad | default: 16
+  assign desc_radius = desc_radius | default: 14
+  assign desc_margin_top = desc_margin_top | default: 8
+  assign section_max_width = section_max_width | default: 1280
+  assign section_pad_y = section_pad_y | default: 32
+  assign section_pad_x = section_pad_x | default: 24
+  assign gallery_min_height = gallery_min_height | default: 480
+  assign color_bar = color_bar | default: '#054497'
+  assign color_cta_bg = color_cta_bg | default: '#ffffff'
+  assign color_cta_text = color_cta_text | default: '#054497'
+  assign color_cta_border = color_cta_border | default: '#054497'
+  assign color_desc_bg = color_desc_bg | default: '#f7f8fb'
+  assign color_desc_title = color_desc_title | default: '#054497'
+  assign color_title = color_title | default: '#0b1a3a'
+  assign color_badge = color_badge | default: '#054497'
+  assign color_off = color_off | default: '#d40000'
+%}
+
+{% capture description_panel %}
+  {% if show_description and product != blank and product.description != blank and description_placement != 'none' %}
+    <div class="pg-p-desc-panel" data-pg-desc>
+      <div class="pg-p-desc-title">{{ description_title }}</div>
+      <div class="pg-p-desc">{{ product.description }}</div>
+    </div>
+  {% endif %}
+{% endcapture %}
 
 {% if product == blank %}
   <div class="pg-simple" style="text-align:center;padding:48px 16px;">
@@ -14,10 +81,12 @@
 {% else %}
   {% liquid
     assign pitch = product.metafields.custom.short_pitch.value
-    assign benefit_1 = product.metafields.custom.benefit_1.value | default: 'Reduce DHT'
-    assign benefit_2 = product.metafields.custom.benefit_2.value | default: '100% Natural'
-    assign benefit_3 = product.metafields.custom.benefit_3.value | default: 'Clínicamente Probado'
-    assign badge_text = product.metafields.custom.badge_text.value | default: 'MEJOR OFERTA'
+    assign benefit_1 = benefit_1 | default: product.metafields.custom.benefit_1.value | default: 'Reduce DHT'
+    assign benefit_2 = benefit_2 | default: product.metafields.custom.benefit_2.value | default: '100% Natural'
+    assign benefit_3 = benefit_3 | default: product.metafields.custom.benefit_3.value | default: 'Clínicamente Probado'
+    if product.metafields.custom.badge_text.value != blank and offer_badge == 'MEJOR OFERTA'
+      assign offer_badge = product.metafields.custom.badge_text.value
+    endif
     assign first_variant = product.selected_or_first_available_variant
     assign first_price = first_variant.price
     assign first_compare = first_variant.compare_at_price
@@ -42,17 +111,43 @@
   %}
 
   <div
+    class="pg-buybox pg-buybox--gallery-{{ gallery_position }} pg-buybox--desc-{{ description_placement }}"
     data-pg-product
     data-currency="{{ cart.currency.iso_code }}"
     data-shop="{{ shop.permanent_domain }}"
     data-checkout-host="https://{{ shop.permanent_domain }}"
+    style="
+      --pg-title-size: {{ title_size }}px;
+      --pg-title-color: {{ color_title }};
+      --pg-cta-fs: {{ cta_font_size }}px;
+      --pg-cta-py: {{ cta_pad_y }}px;
+      --pg-cta-px: {{ cta_pad_x }}px;
+      --pg-cta-radius: {{ cta_radius }}px;
+      --pg-cta-bg: {{ color_cta_bg }};
+      --pg-cta-color: {{ color_cta_text }};
+      --pg-cta-border: {{ color_cta_border }};
+      --pg-desc-fs: {{ desc_font_size }}px;
+      --pg-desc-max: {{ desc_max_width }}px;
+      --pg-desc-pad: {{ desc_pad }}px;
+      --pg-desc-radius: {{ desc_radius }}px;
+      --pg-desc-mt: {{ desc_margin_top }}px;
+      --pg-desc-bg: {{ color_desc_bg }};
+      --pg-desc-title: {{ color_desc_title }};
+      --pg-max: {{ section_max_width }}px;
+      --pg-pad-y: {{ section_pad_y }}px;
+      --pg-pad-x: {{ section_pad_x }}px;
+      --pg-gallery-h: {{ gallery_min_height }}px;
+      --pg-bar-bg: {{ color_bar }};
+      --pg-badge-bg: {{ color_badge }};
+      --pg-off-bg: {{ color_off }};
+    "
   >
     {% if show_bar %}
-      <div class="pg-p-bar">GREAT DEAL · Envío GRATIS en pedidos hoy · Garantía 90 Días</div>
+      <div class="pg-p-bar">{{ bar_text }}</div>
     {% endif %}
 
     <main class="pg-p-main">
-      <section style="min-width:0">
+      <section class="pg-p-col-gallery" style="min-width:0">
         <div class="pg-p-gallery" data-pg-gallery>
           {% if product.images.size > 1 %}
             <div class="pg-p-thumbs">
@@ -72,7 +167,7 @@
 
           <div class="pg-p-hero">
             {% if max_pct > 0 %}
-              <span class="pg-p-off-badge">UP TO {{ max_pct }}% OFF</span>
+              <span class="pg-p-off-badge">{{ off_prefix }} {{ max_pct }}{{ off_suffix }}</span>
             {% endif %}
             {% if product.featured_image %}
               <img
@@ -85,59 +180,70 @@
             {% endif %}
           </div>
         </div>
+        {% if description_placement == 'under_gallery' %}
+          {{ description_panel }}
+        {% endif %}
       </section>
 
-      <section style="min-width:0">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
-          <span class="pg-p-stars">★★★★★</span>
-          <span style="color:#555;font-weight:600;">4.8 (13,167)</span>
-          <span class="pg-p-badge">Doctor Recommended</span>
-        </div>
+      <section class="pg-p-col-buy" style="min-width:0">
+        {% if show_rating %}
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
+            <span class="pg-p-stars">★★★★★</span>
+            <span style="color:#555;font-weight:600;">{{ rating_text }}</span>
+            {% if doctor_badge != blank %}
+              <span class="pg-p-badge">{{ doctor_badge }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
 
         <h1 class="pg-p-h1">{{ product.title }}</h1>
         {% if pitch != blank %}
           <p style="margin:0 0 14px;color:#555;font-size:15px;font-weight:600;">{{ pitch }}</p>
         {% endif %}
 
-        <div class="pg-p-benefits">
-          <div class="pg-p-benefit">
-            <div class="pg-p-benefit-icon">✓</div>
-            <div style="font-size:13px;font-weight:800;">{{ benefit_1 }}</div>
+        {% if show_benefits %}
+          <div class="pg-p-benefits">
+            <div class="pg-p-benefit">
+              <div class="pg-p-benefit-icon">✓</div>
+              <div style="font-size:13px;font-weight:800;">{{ benefit_1 }}</div>
+            </div>
+            <div class="pg-p-benefit">
+              <div class="pg-p-benefit-icon">★</div>
+              <div style="font-size:13px;font-weight:800;">{{ benefit_2 }}</div>
+            </div>
+            <div class="pg-p-benefit">
+              <div class="pg-p-benefit-icon">♥</div>
+              <div style="font-size:13px;font-weight:800;">{{ benefit_3 }}</div>
+            </div>
           </div>
-          <div class="pg-p-benefit">
-            <div class="pg-p-benefit-icon">★</div>
-            <div style="font-size:13px;font-weight:800;">{{ benefit_2 }}</div>
-          </div>
-          <div class="pg-p-benefit">
-            <div class="pg-p-benefit-icon">♥</div>
-            <div style="font-size:13px;font-weight:800;">{{ benefit_3 }}</div>
-          </div>
-        </div>
+        {% endif %}
 
-        <div class="pg-p-hot" data-pg-countdown>
-          <div>
-            <div style="color:var(--pg-red,#d40000);font-weight:900;letter-spacing:1px;">🔥 HOT SALE</div>
-            <div style="font-size:13px;color:#5a1010;">
-              Oferta termina hoy{% if max_pct > 0 %} ({{ max_pct }}% OFF){% endif %}
+        {% if show_hot_sale %}
+          <div class="pg-p-hot" data-pg-countdown>
+            <div>
+              <div style="color:var(--pg-red,#d40000);font-weight:900;letter-spacing:1px;">{{ hot_sale_label }}</div>
+              <div style="font-size:13px;color:#5a1010;">
+                {{ hot_sale_text }}{% if max_pct > 0 %} ({{ max_pct }}% OFF){% endif %}
+              </div>
+            </div>
+            <div class="pg-p-hot-timers">
+              <div class="pg-p-hot-box">
+                <div class="pg-p-hot-num" data-h>00</div>
+                <div class="pg-p-hot-lbl">HRS</div>
+              </div>
+              <span class="pg-p-hot-sep" aria-hidden="true">:</span>
+              <div class="pg-p-hot-box">
+                <div class="pg-p-hot-num" data-m>00</div>
+                <div class="pg-p-hot-lbl">MIN</div>
+              </div>
+              <span class="pg-p-hot-sep" aria-hidden="true">:</span>
+              <div class="pg-p-hot-box">
+                <div class="pg-p-hot-num" data-s>00</div>
+                <div class="pg-p-hot-lbl">SEG</div>
+              </div>
             </div>
           </div>
-          <div class="pg-p-hot-timers">
-            <div class="pg-p-hot-box">
-              <div class="pg-p-hot-num" data-h>00</div>
-              <div class="pg-p-hot-lbl">HRS</div>
-            </div>
-            <span class="pg-p-hot-sep" aria-hidden="true">:</span>
-            <div class="pg-p-hot-box">
-              <div class="pg-p-hot-num" data-m>00</div>
-              <div class="pg-p-hot-lbl">MIN</div>
-            </div>
-            <span class="pg-p-hot-sep" aria-hidden="true">:</span>
-            <div class="pg-p-hot-box">
-              <div class="pg-p-hot-num" data-s>00</div>
-              <div class="pg-p-hot-lbl">SEG</div>
-            </div>
-          </div>
-        </div>
+        {% endif %}
 
         <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
           {% for variant in product.variants %}
@@ -163,7 +269,7 @@
               data-compare="{{ v_compare }}"
             >
               {% if forloop.first %}
-                <span class="pg-p-deal-badge">{{ badge_text }}</span>
+                <span class="pg-p-deal-badge">{{ offer_badge }}</span>
               {% endif %}
               <div class="pg-p-deal-row">
                 <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
@@ -171,7 +277,7 @@
                   <div style="min-width:0;">
                     <div style="font-weight:800;font-size:14px;">{{ v_label }}</div>
                     <div style="font-size:11px;color:#666;margin-top:2px;">
-                      {% if variant.available %}En stock{% else %}Agotado{% endif %}
+                      {% if variant.available %}{{ in_stock_label }}{% else %}{{ sold_out_label }}{% endif %}
                     </div>
                   </div>
                 </div>
@@ -179,7 +285,7 @@
                   <div style="color:#888;text-decoration:line-through;font-size:12px;">{{ v_compare | money }}</div>
                   <div style="font-weight:900;font-size:18px;">{{ v_price | money }}</div>
                   <div style="color:var(--pg-blue,#054497);font-size:10px;font-weight:700;">
-                    Ahorras {{ v_save | money }}
+                    {{ save_label }} {{ v_save | money }}
                   </div>
                 </div>
               </div>
@@ -188,44 +294,39 @@
         </div>
 
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
-          <span style="color:#666;">Total</span>
+          <span style="color:#666;">{{ total_label }}</span>
           <div style="white-space:nowrap;">
             <span data-pg-total-compare style="color:#888;text-decoration:line-through;margin-right:10px;">{{ first_compare | money }}</span>
             <span data-pg-total-price style="font-weight:900;font-size:28px;">{{ first_price | money }}</span>
           </div>
         </div>
         <div style="text-align:right;color:var(--pg-blue,#054497);font-weight:800;margin-bottom:14px;">
-          Ahorras <span data-pg-total-save>{{ first_compare | minus: first_price | money }}</span>
+          {{ save_label }} <span data-pg-total-save>{{ first_compare | minus: first_price | money }}</span>
         </div>
 
         {% form 'product', product %}
           <input type="hidden" name="id" value="{{ first_variant.id }}">
-          <a
-            class="pg-p-cta"
-            href="{{ routes.cart_url }}/{{ first_variant.id }}:1"
-            data-pg-checkout
-          >
-            IR A PAGAR →
+          <a class="pg-p-cta" href="/cart/{{ first_variant.id }}:1" data-pg-checkout>
+            {{ cta_label }}
           </a>
         {% endform %}
 
         {% if show_back %}
           <div style="margin-top:18px;">
             <a href="{{ routes.root_url }}" style="color:var(--pg-blue,#054497);font-weight:700;text-decoration:none;">
-              ← Volver a la oferta
+              {{ back_label }}
             </a>
           </div>
+        {% endif %}
+
+        {% if description_placement == 'under_buybox' %}
+          {{ description_panel }}
         {% endif %}
       </section>
     </main>
 
-    {% if product.description != blank %}
-      <div class="pg-p-desc-panel">
-        <div class="pg-p-desc-title">Descripción</div>
-        <div class="pg-p-desc">
-          {{ product.description }}
-        </div>
-      </div>
+    {% if description_placement == 'below' %}
+      {{ description_panel }}
     {% endif %}
   </div>
 {% endif %}

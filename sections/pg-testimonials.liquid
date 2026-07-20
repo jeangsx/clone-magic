@@ -22,38 +22,43 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple" style="text-align:center;max-width:420px;">
-  <img
-    src="https://www.prostagenix.com/190109/img/logo.png"
-    alt="{{ shop.name }}"
-    width="200"
-    height="60"
-    style="max-width:200px;height:auto;margin:0 auto 24px;display:block;"
-  >
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;margin-bottom:8px;">Próximamente</h1>
-  <p style="color:#555;margin-bottom:24px;">Ingresa la contraseña para ver la tienda.</p>
-
-  {% form 'storefront_password' %}
-    {{ form.errors | default_errors }}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        style="padding:12px 14px;border:2px solid #e3e6ee;border-radius:10px;text-align:center;"
-      >
-      <button type="submit" style="padding:14px;background:var(--pg-orange,#f39200);color:#fff;border:0;border-radius:999px;font-weight:900;cursor:pointer;">
-        Entrar
-      </button>
-    </div>
-  {% endform %}
-</section>
+<div class="larry_dudley body_full_nomar">
+  <div class="body_full wrapper">
+    {% for block in section.blocks %}
+      <div class="split" {{ block.shopify_attributes }}>
+        {% if block.settings.image != blank %}
+          <img
+            src="{{ block.settings.image | image_url: width: 600 }}"
+            alt="{{ block.settings.name | escape }}"
+            width="400"
+            height="400"
+            loading="lazy"
+          >
+        {% elsif block.settings.image_url != blank %}
+          <img src="{{ block.settings.image_url }}" alt="{{ block.settings.name | escape }}" width="400" height="400" loading="lazy">
+        {% endif %}
+        <div class="copy">
+          {% if block.settings.quote != blank %}
+            <span>&ldquo;{{ block.settings.quote }}&rdquo;</span>
+          {% endif %}
+          {% if block.settings.name != blank %}
+            <p><strong>- {{ block.settings.name }}</strong></p>
+          {% endif %}
+          {% if block.settings.line_1 != blank %}<p>{{ block.settings.line_1 }}</p>{% endif %}
+          {% if block.settings.line_2 != blank %}<p>{{ block.settings.line_2 }}</p>{% endif %}
+          {% if block.settings.line_3 != blank %}<p>{{ block.settings.line_3 }}</p>{% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
 </div>
 
 {% schema %}
 {
-  "name": "ProstaGenix Password",
+  "name": "PG Testimonios",
   "tag": "section",
+  "class": "pg-section-testimonials",
   "settings": [
     {
       "type": "header",
@@ -249,6 +254,84 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonio",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Foto"
+        },
+        {
+          "type": "text",
+          "id": "image_url",
+          "label": "URL imagen (si no subes foto)",
+          "default": "https://www.prostagenix.com/images/home/dudley-danoff.png"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Cita",
+          "default": "I highly recommend ProstaGenix to all men with prostate concerns."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre",
+          "default": "Dudley Danoff, M.D., F.A.C.S."
+        },
+        {
+          "type": "text",
+          "id": "line_1",
+          "label": "Línea 1",
+          "default": "Cedars-Sinai Medical Center"
+        },
+        {
+          "type": "text",
+          "id": "line_2",
+          "label": "Línea 2",
+          "default": "Tower Urology"
+        },
+        {
+          "type": "text",
+          "id": "line_3",
+          "label": "Línea 3",
+          "default": "Yale School of Medicine"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG Testimonios",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "image_url": "https://www.prostagenix.com/images/home/dudley-danoff.png",
+            "quote": "I highly recommend ProstaGenix to all men with prostate concerns. It is a natural alpha-blocker which is what you want. It is very effective, a truly remarkable product.",
+            "name": "Dudley Danoff, M.D., F.A.C.S.",
+            "line_1": "Cedars-Sinai Medical Center",
+            "line_2": "Tower Urology",
+            "line_3": "Yale School of Medicine"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "image_url": "https://www.prostagenix.com/special/special-offer/img/neil-diamond.png",
+            "quote": "I have battled nagging prostate issues for years and I tried many of the products on the market and nothing worked. But then I discovered ProstaGenix and it was a game changer!",
+            "name": "Neil Diamond",
+            "line_1": "Legendary American",
+            "line_2": "Singer-Songwriter",
+            "line_3": ""
+          }
+        }
+      ]
     }
   ]
 }

@@ -22,39 +22,54 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple" style="text-align:center;max-width:420px;">
-  <img
-    src="https://www.prostagenix.com/190109/img/logo.png"
-    alt="{{ shop.name }}"
-    width="200"
-    height="60"
-    style="max-width:200px;height:auto;margin:0 auto 24px;display:block;"
-  >
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;margin-bottom:8px;">Próximamente</h1>
-  <p style="color:#555;margin-bottom:24px;">Ingresa la contraseña para ver la tienda.</p>
-
-  {% form 'storefront_password' %}
-    {{ form.errors | default_errors }}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        style="padding:12px 14px;border:2px solid #e3e6ee;border-radius:10px;text-align:center;"
-      >
-      <button type="submit" style="padding:14px;background:var(--pg-orange,#f39200);color:#fff;border:0;border-radius:999px;font-weight:900;cursor:pointer;">
-        Entrar
-      </button>
+<div class="benefits body_full_nomar">
+  <div class="title">
+    <div class="body_full wrapper">
+      {% if section.settings.heading != blank %}
+        <span class="heading">{{ section.settings.heading }}</span>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <span class="heading">{{ section.settings.subheading }}</span>
+      {% endif %}
     </div>
-  {% endform %}
-</section>
+  </div>
+  <div class="body_full wrapper borders">
+    <ul>
+      {% for block in section.blocks %}
+        {% if block.type == 'left' %}
+          <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    <ul>
+      {% for block in section.blocks %}
+        {% if block.type == 'right' %}
+          <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 </div>
 
 {% schema %}
 {
-  "name": "ProstaGenix Password",
+  "name": "PG Beneficios",
   "tag": "section",
+  "class": "pg-section-benefits",
   "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "With ProstaGenix You Will Have A Lot To Look Forward To!"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Here Are Some Of The Benefits Our Customers Report:"
+    },
     {
       "type": "header",
       "content": "Estilos de seccion"
@@ -249,6 +264,93 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "left",
+      "name": "Beneficio (columna izq.)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "End Nighttime Bathroom Trips"
+        }
+      ]
+    },
+    {
+      "type": "right",
+      "name": "Beneficio (columna der.)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Empty Your bladder fully when you go"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG Beneficios",
+      "blocks": [
+        {
+          "type": "left",
+          "settings": {
+            "text": "End Nighttime Bathroom Trips Get a full night's sleep"
+          }
+        },
+        {
+          "type": "left",
+          "settings": {
+            "text": "Wake up with Energy"
+          }
+        },
+        {
+          "type": "left",
+          "settings": {
+            "text": "Reduce your Constant daytime Bathrooms Trips"
+          }
+        },
+        {
+          "type": "left",
+          "settings": {
+            "text": "Halt the embarrassing Dribbling or Hesitancy"
+          }
+        },
+        {
+          "type": "left",
+          "settings": {
+            "text": "Stop the Burning and Urgency"
+          }
+        },
+        {
+          "type": "right",
+          "settings": {
+            "text": "Empty Your bladder fully when you go"
+          }
+        },
+        {
+          "type": "right",
+          "settings": {
+            "text": "Protect your prostate health"
+          }
+        },
+        {
+          "type": "right",
+          "settings": {
+            "text": "Bedroom Boost - Enjoy The Return To Better Erections Our Customers RAVE About!"
+          }
+        },
+        {
+          "type": "right",
+          "settings": {
+            "text": "Enjoy Sex Again!"
+          }
+        }
+      ]
     }
   ]
 }

@@ -22,38 +22,27 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple" style="text-align:center;max-width:420px;">
-  <img
-    src="https://www.prostagenix.com/190109/img/logo.png"
-    alt="{{ shop.name }}"
-    width="200"
-    height="60"
-    style="max-width:200px;height:auto;margin:0 auto 24px;display:block;"
-  >
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;margin-bottom:8px;">Próximamente</h1>
-  <p style="color:#555;margin-bottom:24px;">Ingresa la contraseña para ver la tienda.</p>
-
-  {% form 'storefront_password' %}
-    {{ form.errors | default_errors }}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        style="padding:12px 14px;border:2px solid #e3e6ee;border-radius:10px;text-align:center;"
-      >
-      <button type="submit" style="padding:14px;background:var(--pg-orange,#f39200);color:#fff;border:0;border-radius:999px;font-weight:900;cursor:pointer;">
-        Entrar
-      </button>
-    </div>
-  {% endform %}
-</section>
+{% comment %} Barra de anuncios rotativa — editable por bloques {% endcomment %}
+<div class="lv-announce">
+  <div class="lv-announce-track" aria-hidden="false">
+    {% for block in section.blocks %}
+      <span class="lv-announce-item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+      {% unless forloop.last %}<span class="lv-announce-sep">•</span>{% endunless %}
+    {% endfor %}
+    {% comment %} Duplicar para loop visual {% endcomment %}
+    {% for block in section.blocks %}
+      <span class="lv-announce-sep">•</span>
+      <span class="lv-announce-item">{{ block.settings.text }}</span>
+    {% endfor %}
+  </div>
+</div>
 </div>
 
 {% schema %}
 {
-  "name": "ProstaGenix Password",
+  "name": "PG Anuncios",
   "tag": "section",
+  "class": "pg-section-announce",
   "settings": [
     {
       "type": "header",
@@ -249,6 +238,51 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Mensaje",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "✨ ¡Bienvenido(a) a ProstaGenix! ✨"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG Anuncios",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "text": "✨ ¡Bienvenido(a) a ProstaGenix! ✨"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "💎 Garantía de 90 Días · Devolución Total"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "🔥 ¡Envíos a TODO el Perú! 🇵🇪"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "⚡ Hasta 70% OFF · ¡Solo hoy!"
+          }
+        }
+      ]
     }
   ]
 }

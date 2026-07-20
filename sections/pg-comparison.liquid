@@ -22,39 +22,93 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple" style="text-align:center;max-width:420px;">
-  <img
-    src="https://www.prostagenix.com/190109/img/logo.png"
-    alt="{{ shop.name }}"
-    width="200"
-    height="60"
-    style="max-width:200px;height:auto;margin:0 auto 24px;display:block;"
-  >
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;margin-bottom:8px;">Próximamente</h1>
-  <p style="color:#555;margin-bottom:24px;">Ingresa la contraseña para ver la tienda.</p>
+<div id="chart" class="body_full comparison borders">
+  {% if section.settings.chart_desktop != blank %}
+    <img
+      class="hideFromMobile"
+      src="{{ section.settings.chart_desktop | image_url: width: 1400 }}"
+      alt="{{ section.settings.alt | escape }}"
+      width="1400"
+      height="800"
+      loading="lazy"
+    >
+  {% else %}
+    <img
+      class="hideFromMobile"
+      src="{{ section.settings.desktop_url }}"
+      alt="{{ section.settings.alt | escape }}"
+      width="1400"
+      height="800"
+      loading="lazy"
+    >
+  {% endif %}
 
-  {% form 'storefront_password' %}
-    {{ form.errors | default_errors }}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        style="padding:12px 14px;border:2px solid #e3e6ee;border-radius:10px;text-align:center;"
-      >
-      <button type="submit" style="padding:14px;background:var(--pg-orange,#f39200);color:#fff;border:0;border-radius:999px;font-weight:900;cursor:pointer;">
-        Entrar
-      </button>
-    </div>
-  {% endform %}
-</section>
+  {% if section.settings.chart_mobile != blank %}
+    <img
+      class="hideFromDesktop"
+      src="{{ section.settings.chart_mobile | image_url: width: 800 }}"
+      alt="{{ section.settings.alt | escape }}"
+      width="800"
+      height="1000"
+      loading="lazy"
+    >
+  {% else %}
+    <img
+      class="hideFromDesktop"
+      src="{{ section.settings.mobile_url }}"
+      alt="{{ section.settings.alt | escape }}"
+      width="800"
+      height="1000"
+      loading="lazy"
+    >
+  {% endif %}
+
+  {% if section.settings.caption != blank %}
+    <div style="padding-bottom:40px;">{{ section.settings.caption }}</div>
+  {% endif %}
+</div>
 </div>
 
 {% schema %}
 {
-  "name": "ProstaGenix Password",
+  "name": "PG Comparación",
   "tag": "section",
+  "class": "pg-section-comparison",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "chart_desktop",
+      "label": "Gráfico desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "chart_mobile",
+      "label": "Gráfico mobile"
+    },
+    {
+      "type": "text",
+      "id": "desktop_url",
+      "label": "URL desktop (fallback)",
+      "default": "https://www.prostagenix.com/images/home/prostagenix-comparison-chart-desktop.jpg"
+    },
+    {
+      "type": "text",
+      "id": "mobile_url",
+      "label": "URL mobile (fallback)",
+      "default": "https://www.prostagenix.com/images/home/prostagenix-comparison-chart-mobile.jpg"
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Texto alt",
+      "default": "Comparison chart"
+    },
+    {
+      "type": "richtext",
+      "id": "caption",
+      "label": "Pie de gráfico",
+      "default": "<p><strong>This chart shows how we compare to the leading prostate supplements.</strong></p>"
+    },
     {
       "type": "header",
       "content": "Estilos de seccion"
@@ -249,6 +303,11 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG Comparación"
     }
   ]
 }

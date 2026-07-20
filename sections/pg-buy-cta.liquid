@@ -22,39 +22,103 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple" style="text-align:center;max-width:420px;">
-  <img
-    src="https://www.prostagenix.com/190109/img/logo.png"
-    alt="{{ shop.name }}"
-    width="200"
-    height="60"
-    style="max-width:200px;height:auto;margin:0 auto 24px;display:block;"
-  >
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;margin-bottom:8px;">Próximamente</h1>
-  <p style="color:#555;margin-bottom:24px;">Ingresa la contraseña para ver la tienda.</p>
+{% liquid
+  assign cta_url = section.settings.button_link
+  if cta_url == blank and section.settings.product != blank
+    assign cta_url = section.settings.product.url
+  endif
+  if cta_url == blank
+    assign cta_url = routes.all_products_collection_url
+  endif
+%}
 
-  {% form 'storefront_password' %}
-    {{ form.errors | default_errors }}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        style="padding:12px 14px;border:2px solid #e3e6ee;border-radius:10px;text-align:center;"
-      >
-      <button type="submit" style="padding:14px;background:var(--pg-orange,#f39200);color:#fff;border:0;border-radius:999px;font-weight:900;cursor:pointer;">
-        Entrar
-      </button>
+<div class="buy body_full">
+  <div class="body_full wrapper borders">
+    <div class="split">
+      {% if section.settings.product_image != blank %}
+        <img class="prod" src="{{ section.settings.product_image | image_url: width: 600 }}" alt="Product" width="400" height="400" loading="lazy">
+      {% else %}
+        <img class="prod" src="{{ section.settings.product_image_url }}" alt="ProstaGenix - Bottle & Box" width="400" height="400" loading="lazy">
+      {% endif %}
+      {% if section.settings.badge != blank %}
+        <img class="badge" src="{{ section.settings.badge | image_url: width: 300 }}" alt="Guarantee" width="300" height="300" loading="lazy">
+      {% else %}
+        <img class="badge" src="{{ section.settings.badge_url }}" alt="90 day money-back guarantee" width="300" height="300" loading="lazy">
+      {% endif %}
+      <a href="{{ cta_url }}" class="knd-ic-btn qcd-link">
+        <div class="btn btn_orange knd-ic-btn">
+          <span class="knd-ic-btn">{{ section.settings.button_label }}</span>
+        </div>
+      </a>
     </div>
-  {% endform %}
-</section>
+    <div class="split">
+      {% if section.settings.heading != blank %}
+        <div class="heading">{{ section.settings.heading }}</div>
+      {% endif %}
+      {% if section.settings.body != blank %}
+        <div>{{ section.settings.body }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
 </div>
 
 {% schema %}
 {
-  "name": "ProstaGenix Password",
+  "name": "PG Buy CTA",
   "tag": "section",
+  "class": "pg-section-buy",
   "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "<p><strong>Buy ProstaGenix</strong> today and save!</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Texto",
+      "default": "<p>No stone has been left unturned in our quest to produce the finest prostate health product in the world.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Buy Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto (si no pones enlace)"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Imagen producto"
+    },
+    {
+      "type": "text",
+      "id": "product_image_url",
+      "label": "URL imagen (fallback)",
+      "default": "https://www.prostagenix.com/images/product/bottle_box.png"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge",
+      "label": "Badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_url",
+      "label": "URL badge (fallback)",
+      "default": "https://www.prostagenix.com/images/home/90-day-money-back-guarantee.png"
+    },
     {
       "type": "header",
       "content": "Estilos de seccion"
@@ -249,6 +313,11 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG Buy CTA"
     }
   ]
 }

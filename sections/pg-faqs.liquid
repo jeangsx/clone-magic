@@ -22,39 +22,52 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple" style="text-align:center;max-width:420px;">
-  <img
-    src="https://www.prostagenix.com/190109/img/logo.png"
-    alt="{{ shop.name }}"
-    width="200"
-    height="60"
-    style="max-width:200px;height:auto;margin:0 auto 24px;display:block;"
-  >
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;margin-bottom:8px;">Próximamente</h1>
-  <p style="color:#555;margin-bottom:24px;">Ingresa la contraseña para ver la tienda.</p>
-
-  {% form 'storefront_password' %}
-    {{ form.errors | default_errors }}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        style="padding:12px 14px;border:2px solid #e3e6ee;border-radius:10px;text-align:center;"
-      >
-      <button type="submit" style="padding:14px;background:var(--pg-orange,#f39200);color:#fff;border:0;border-radius:999px;font-weight:900;cursor:pointer;">
-        Entrar
-      </button>
-    </div>
-  {% endform %}
-</section>
+<div class="faqs body_full">
+  <div class="body_full wrapper borders">
+    {% if section.settings.title != blank %}
+      <span class="heading title">{{ section.settings.title }}</span>
+    {% endif %}
+    {% for block in section.blocks %}
+      <div {{ block.shopify_attributes }}>
+        {% if block.settings.question != blank %}
+          <span class="heading q">{{ block.settings.question }}</span>
+        {% endif %}
+        {% if block.type == 'answer' %}
+          {% if block.settings.answer != blank %}
+            <div class="a">{{ block.settings.answer }}</div>
+          {% endif %}
+        {% elsif block.type == 'ingredients' %}
+          <div class="ing">
+            {% if block.settings.facts_image != blank %}
+              <img src="{{ block.settings.facts_image | image_url: width: 600 }}" alt="Supplement facts" width="400" height="400" loading="lazy">
+            {% elsif block.settings.facts_url != blank %}
+              <img src="{{ block.settings.facts_url }}" alt="supplement facts" width="400" height="400" loading="lazy">
+            {% endif %}
+            {% if block.settings.bottle_image != blank %}
+              <img src="{{ block.settings.bottle_image | image_url: width: 600 }}" alt="Bottle back" width="400" height="400" loading="lazy">
+            {% elsif block.settings.bottle_url != blank %}
+              <img src="{{ block.settings.bottle_url }}" alt="ProstaGenix - back of bottle" width="400" height="400" loading="lazy">
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
 </div>
 
 {% schema %}
 {
-  "name": "ProstaGenix Password",
+  "name": "PG FAQs",
   "tag": "section",
+  "class": "pg-section-faqs",
   "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "FAQs"
+    },
     {
       "type": "header",
       "content": "Estilos de seccion"
@@ -249,6 +262,91 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "answer",
+      "name": "Pregunta + respuesta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "How many bottles should I order?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "<p>The most popular order for new customers is the 3 bottle package.</p>"
+        }
+      ]
+    },
+    {
+      "type": "ingredients",
+      "name": "Ingredientes (imágenes)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "What are the ingredients in ProstaGenix?"
+        },
+        {
+          "type": "image_picker",
+          "id": "facts_image",
+          "label": "Supplement facts"
+        },
+        {
+          "type": "text",
+          "id": "facts_url",
+          "label": "URL facts (fallback)",
+          "default": "https://www.prostagenix.com/special/special-offer/img/supplement-facts.jpg"
+        },
+        {
+          "type": "image_picker",
+          "id": "bottle_image",
+          "label": "Botella reverso"
+        },
+        {
+          "type": "text",
+          "id": "bottle_url",
+          "label": "URL botella (fallback)",
+          "default": "https://www.prostagenix.com/special/special-offer/img/prostagenix-bottle-back.png"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG FAQs",
+      "blocks": [
+        {
+          "type": "answer",
+          "settings": {
+            "question": "How many bottles should I order?",
+            "answer": "<p>The most popular order for new customers is the 3 bottle package, and that's what I recommend to start with.</p>"
+          }
+        },
+        {
+          "type": "answer",
+          "settings": {
+            "question": "How long does a bottle last and how do I use ProstaGenix?",
+            "answer": "<p>Each bottle is a full 30-day supply. Simply take three capsules every day.</p>"
+          }
+        },
+        {
+          "type": "ingredients"
+        },
+        {
+          "type": "answer",
+          "settings": {
+            "question": "How safe is ProstaGenix?",
+            "answer": "<p>ProstaGenix is completely safe. It contains only 100% safe and natural ingredients.</p>"
+          }
+        }
+      ]
     }
   ]
 }

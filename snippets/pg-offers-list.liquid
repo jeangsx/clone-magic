@@ -61,22 +61,22 @@
 
               <ul class="pg-offer__meta">
                 <li>
-                  Precio retail:
+                  {{ retail_label | default: 'Precio retail' }}:
                   <s style="color:var(--pg-red,#d40000);">{{ compare | money }}</s>
                 </li>
                 <li class="pg-offer__save">
-                  Ahorras: <strong>{{ save_amount | money }}</strong>
+                  {{ save_label | default: 'Ahorras' }}: <strong>{{ save_amount | money }}</strong>
                 </li>
               </ul>
 
               <div style="margin-bottom:8px;font-size:12px;font-weight:800;letter-spacing:1px;color:#666;">
-                INSTANT SAVINGS
+                {{ savings_eyebrow | default: 'INSTANT SAVINGS' }}
               </div>
               <div style="font-size:32px;font-weight:900;margin-bottom:8px;">{{ price | money }}</div>
-              <span class="pg-offer__pct">{{ save_pct }}% SAVINGS</span>
+              <span class="pg-offer__pct">{{ save_pct }}% {{ savings_badge | default: 'SAVINGS' }}</span>
 
               <div>
-                <a class="pg-offer__cta" href="{{ product.url }}">ORDER NOW</a>
+                <a class="pg-offer__cta" href="{{ product.url }}">{{ cta_label | default: 'ORDER NOW' }}</a>
                 {% if guarantee != blank %}
                   <p class="pg-offer__guarantee">{{ guarantee }}</p>
                 {% endif %}
