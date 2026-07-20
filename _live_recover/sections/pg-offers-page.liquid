@@ -1,0 +1,243 @@
+{% comment %} Estilos editables (toda la seccion) {% endcomment %}
+<div
+  class="pg-sec-style"
+  style="
+    --pg-sec-pad-y: {{ section.settings.style_pad_y }}px;
+    --pg-sec-pad-x: {{ section.settings.style_pad_x }}px;
+    --pg-sec-max: {% if section.settings.style_max_width > 0 %}{{ section.settings.style_max_width }}px{% else %}none{% endif %};
+    --pg-sec-h-size: {{ section.settings.style_heading_size }}px;
+    --pg-sec-t-size: {{ section.settings.style_text_size }}px;
+    --pg-sec-bg: {{ section.settings.style_bg | default: 'transparent' }};
+    --pg-sec-h-color: {{ section.settings.style_heading_color }};
+    --pg-sec-t-color: {{ section.settings.style_text_color }};
+    --pg-sec-btn-fs: {{ section.settings.style_btn_font }}px;
+    --pg-sec-btn-py: {{ section.settings.style_btn_pad_y }}px;
+    --pg-sec-btn-px: {{ section.settings.style_btn_pad_x }}px;
+    --pg-sec-btn-radius: {{ section.settings.style_btn_radius }}px;
+    --pg-sec-btn-bg: {{ section.settings.style_btn_bg }};
+    --pg-sec-btn-color: {{ section.settings.style_btn_text }};
+  "
+>
+{% liquid
+  assign offers_collection = section.settings.collection
+  if offers_collection == blank and collection != blank
+    assign offers_collection = collection
+  endif
+  assign heading = section.settings.heading
+  if heading == blank and collection != blank
+    assign heading = collection.title
+  endif
+%}
+
+{% if section.settings.subheading != blank %}
+  <div class="pg-simple" style="text-align:center;padding-bottom:0;margin-bottom:0;">
+    <p style="color:#555;font-weight:600;">{{ section.settings.subheading }}</p>
+  </div>
+{% endif %}
+
+{% render 'pg-offers-list',
+  collection: offers_collection,
+  heading: heading,
+  guarantee: section.settings.guarantee_text,
+  cta_label: section.settings.cta_label,
+  retail_label: section.settings.retail_label,
+  save_label: section.settings.save_label,
+  savings_eyebrow: section.settings.savings_eyebrow,
+  savings_badge: section.settings.savings_badge
+%}
+</div>
+
+{% schema %}
+{
+  "name": "PG Ofertas",
+  "tag": "section",
+  "class": "pg-offers-page",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Special Internet-Only Offer"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Elige tu paquete y ahorra hoy"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Texto garantía bajo el botón",
+      "default": "Garantía 90 Días · Devolución Total"
+    },
+    {
+      "type": "header",
+      "content": "Textos de la card"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto botón (ORDER NOW)",
+      "default": "ORDER NOW"
+    },
+    {
+      "type": "text",
+      "id": "retail_label",
+      "label": "Etiqueta precio retail",
+      "default": "Precio retail"
+    },
+    {
+      "type": "text",
+      "id": "save_label",
+      "label": "Etiqueta ahorras",
+      "default": "Ahorras"
+    },
+    {
+      "type": "text",
+      "id": "savings_eyebrow",
+      "label": "Texto encima del precio",
+      "default": "INSTANT SAVINGS"
+    },
+    {
+      "type": "text",
+      "id": "savings_badge",
+      "label": "Texto badge %",
+      "default": "SAVINGS"
+    },
+    {
+      "type": "header",
+      "content": "Estilos de seccion"
+    },
+    {
+      "type": "range",
+      "id": "style_pad_y",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "style_pad_x",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "style_max_width",
+      "min": 0,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho maximo (0 = auto)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "style_heading_size",
+      "min": 14,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano titulos",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "style_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano texto",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "style_bg",
+      "label": "Fondo seccion"
+    },
+    {
+      "type": "color",
+      "id": "style_heading_color",
+      "label": "Color titulos",
+      "default": "#0b1a3a"
+    },
+    {
+      "type": "color",
+      "id": "style_text_color",
+      "label": "Color texto",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "style_btn_font",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano botones",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "style_btn_pad_y",
+      "min": 6,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding vertical boton",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "style_btn_pad_x",
+      "min": 10,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal boton",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "style_btn_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Radio botones",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "style_btn_bg",
+      "label": "Boton fondo",
+      "default": "#e65600"
+    },
+    {
+      "type": "color",
+      "id": "style_btn_text",
+      "label": "Boton texto",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG Ofertas"
+    }
+  ]
+}
+{% endschema %}

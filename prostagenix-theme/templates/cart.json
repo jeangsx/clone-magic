@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "pg-cart",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

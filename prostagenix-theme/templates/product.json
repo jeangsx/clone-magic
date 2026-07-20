@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "announce": {
+      "type": "pg-announce",
+      "blocks": {
+        "a1": { "type": "item", "settings": { "text": "✨ ¡Bienvenido(a) a ProstaGenix! ✨" } },
+        "a2": { "type": "item", "settings": { "text": "💎 Garantía de 90 Días · Devolución Total" } },
+        "a3": { "type": "item", "settings": { "text": "⚡ Hasta 70% OFF · ¡Solo hoy!" } }
+      },
+      "block_order": ["a1", "a2", "a3"],
+      "settings": {}
+    },
+    "main": {
+      "type": "pg-main-product",
+      "settings": {
+        "show_bar": true,
+        "show_rating": true,
+        "show_benefits": true,
+        "show_hot_sale": true,
+        "show_description": true,
+        "show_back": true,
+        "cta_label": "IR A PAGAR →"
+      }
+    },
+    "guarantee": {
+      "type": "pg-guarantee",
+      "settings": {}
+    },
+    "faqs": {
+      "type": "pg-faqs",
+      "blocks": {
+        "f1": {
+          "type": "answer",
+          "settings": {
+            "question": "How many bottles should I order?",
+            "answer": "<p>The most popular order for new customers is the 3 bottle package.</p>"
+          }
+        },
+        "f2": {
+          "type": "answer",
+          "settings": {
+            "question": "How safe is ProstaGenix?",
+            "answer": "<p>ProstaGenix is completely safe with 100% natural ingredients.</p>"
+          }
+        }
+      },
+      "block_order": ["f1", "f2"],
+      "settings": { "title": "FAQs" }
+    },
+    "buy": {
+      "type": "pg-buy-cta",
+      "settings": {}
+    },
+    "footer": {
+      "type": "pg-footer",
+      "blocks": {
+        "s1": {
+          "type": "social",
+          "settings": {
+            "label": "Facebook",
+            "url": "https://www.facebook.com/prostagenix/",
+            "icon_url": "https://www.prostagenix.com/images/footer_social_facebook.png"
+          }
+        }
+      },
+      "block_order": ["s1"],
+      "settings": {}
+    }
+  },
+  "order": ["announce", "main", "guarantee", "faqs", "buy", "footer"]
+}

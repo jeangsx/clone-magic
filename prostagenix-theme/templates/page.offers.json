@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "pg-offers-page",
+      "settings": {
+        "heading": "Ofertas especiales",
+        "subheading": "Elige tu paquete y ahorra hoy",
+        "guarantee_text": "Garantía 90 Días · Devolución Total"
+      }
+    }
+  },
+  "order": ["main"]
+}

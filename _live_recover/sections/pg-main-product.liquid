@@ -1,0 +1,560 @@
+{% comment %} Estilos editables (toda la seccion) {% endcomment %}
+<div
+  class="pg-sec-style"
+  style="
+    --pg-sec-pad-y: {{ section.settings.style_pad_y }}px;
+    --pg-sec-pad-x: {{ section.settings.style_pad_x }}px;
+    --pg-sec-max: {% if section.settings.style_max_width > 0 %}{{ section.settings.style_max_width }}px{% else %}none{% endif %};
+    --pg-sec-h-size: {{ section.settings.style_heading_size }}px;
+    --pg-sec-t-size: {{ section.settings.style_text_size }}px;
+    --pg-sec-bg: {{ section.settings.style_bg | default: 'transparent' }};
+    --pg-sec-h-color: {{ section.settings.style_heading_color }};
+    --pg-sec-t-color: {{ section.settings.style_text_color }};
+    --pg-sec-btn-fs: {{ section.settings.style_btn_font }}px;
+    --pg-sec-btn-py: {{ section.settings.style_btn_pad_y }}px;
+    --pg-sec-btn-px: {{ section.settings.style_btn_pad_x }}px;
+    --pg-sec-btn-radius: {{ section.settings.style_btn_radius }}px;
+    --pg-sec-btn-bg: {{ section.settings.style_btn_bg }};
+    --pg-sec-btn-color: {{ section.settings.style_btn_text }};
+  "
+>
+<div class="pg-pdp-wrap">
+  {% render 'pg-buybox-from-section', product: product %}
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "PG Producto PDP",
+  "tag": "section",
+  "class": "pg-main-product",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibilidad"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bar",
+      "label": "Barra superior azul",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Mostrar rating / badge medico",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_benefits",
+      "label": "Mostrar 3 beneficios",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hot_sale",
+      "label": "Mostrar HOT SALE + countdown",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Mostrar descripcion",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_back",
+      "label": "Mostrar enlace volver",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Textos / botones"
+    },
+    {
+      "type": "text",
+      "id": "bar_text",
+      "label": "Texto barra superior",
+      "default": "GREAT DEAL · Envio GRATIS en pedidos hoy · Garantia 90 Dias"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Texto rating",
+      "default": "4.8 (13,167)"
+    },
+    {
+      "type": "text",
+      "id": "doctor_badge",
+      "label": "Badge medico",
+      "default": "RECOMENDADO POR MEDICOS"
+    },
+    {
+      "type": "text",
+      "id": "benefit_1",
+      "label": "Beneficio 1",
+      "default": "Reduce DHT"
+    },
+    {
+      "type": "text",
+      "id": "benefit_2",
+      "label": "Beneficio 2",
+      "default": "100% Natural"
+    },
+    {
+      "type": "text",
+      "id": "benefit_3",
+      "label": "Beneficio 3",
+      "default": "Clinicamente Probado"
+    },
+    {
+      "type": "text",
+      "id": "hot_sale_label",
+      "label": "Titulo HOT SALE",
+      "default": "HOT SALE"
+    },
+    {
+      "type": "text",
+      "id": "hot_sale_text",
+      "label": "Texto HOT SALE",
+      "default": "Ordena hoy para asegurar tu descuento y regalos GRATIS"
+    },
+    {
+      "type": "text",
+      "id": "offer_badge",
+      "label": "Badge variante",
+      "default": "MEJOR OFERTA"
+    },
+    {
+      "type": "text",
+      "id": "off_prefix",
+      "label": "Prefijo % OFF",
+      "default": "UP TO"
+    },
+    {
+      "type": "text",
+      "id": "off_suffix",
+      "label": "Sufijo % OFF",
+      "default": "% OFF"
+    },
+    {
+      "type": "text",
+      "id": "in_stock_label",
+      "label": "Texto en stock",
+      "default": "En stock"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_label",
+      "label": "Texto agotado",
+      "default": "Agotado"
+    },
+    {
+      "type": "text",
+      "id": "total_label",
+      "label": "Etiqueta Total",
+      "default": "Total"
+    },
+    {
+      "type": "text",
+      "id": "save_label",
+      "label": "Etiqueta Ahorras",
+      "default": "Ahorras"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto boton pagar",
+      "default": "IR A PAGAR"
+    },
+    {
+      "type": "text",
+      "id": "back_label",
+      "label": "Texto volver",
+      "default": "Volver a la oferta"
+    },
+    {
+      "type": "text",
+      "id": "description_title",
+      "label": "Titulo descripcion",
+      "default": "Descripcion"
+    },
+    {
+      "type": "header",
+      "content": "Layout / posicion"
+    },
+    {
+      "type": "select",
+      "id": "gallery_position",
+      "label": "Posicion galeria",
+      "options": [
+        {
+          "value": "left",
+          "label": "Izquierda"
+        },
+        {
+          "value": "right",
+          "label": "Derecha"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "description_placement",
+      "label": "Posicion panel descripcion",
+      "options": [
+        {
+          "value": "below",
+          "label": "Debajo de todo (ancho completo)"
+        },
+        {
+          "value": "under_buybox",
+          "label": "Debajo del buybox (columna derecha)"
+        },
+        {
+          "value": "under_gallery",
+          "label": "Debajo de la galeria"
+        },
+        {
+          "value": "none",
+          "label": "Ocultar"
+        }
+      ],
+      "default": "below"
+    },
+    {
+      "type": "header",
+      "content": "Tamanos"
+    },
+    {
+      "type": "range",
+      "id": "section_max_width",
+      "min": 800,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho maximo seccion",
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "section_pad_y",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "section_pad_x",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano titulo",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "gallery_min_height",
+      "min": 240,
+      "max": 640,
+      "step": 20,
+      "unit": "px",
+      "label": "Alto minimo galeria",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "cta_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano texto boton",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "cta_pad_y",
+      "min": 8,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding vertical boton",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "cta_pad_x",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal boton",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "cta_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Radio boton",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano texto descripcion",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "desc_max_width",
+      "min": 480,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho max. descripcion",
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "desc_pad",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding descripcion",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desc_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Radio descripcion",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "desc_margin_top",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen superior descripcion",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "color_bar",
+      "label": "Barra superior",
+      "default": "#054497"
+    },
+    {
+      "type": "color",
+      "id": "color_title",
+      "label": "Titulo",
+      "default": "#0b1a3a"
+    },
+    {
+      "type": "color",
+      "id": "color_badge",
+      "label": "Badge medico",
+      "default": "#054497"
+    },
+    {
+      "type": "color",
+      "id": "color_off",
+      "label": "Badge % OFF",
+      "default": "#d40000"
+    },
+    {
+      "type": "color",
+      "id": "color_cta_bg",
+      "label": "Boton fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_cta_text",
+      "label": "Boton texto",
+      "default": "#054497"
+    },
+    {
+      "type": "color",
+      "id": "color_cta_border",
+      "label": "Boton borde",
+      "default": "#054497"
+    },
+    {
+      "type": "color",
+      "id": "color_desc_bg",
+      "label": "Descripcion fondo",
+      "default": "#f7f8fb"
+    },
+    {
+      "type": "color",
+      "id": "color_desc_title",
+      "label": "Descripcion titulo",
+      "default": "#054497"
+    },
+    {
+      "type": "header",
+      "content": "Estilos de seccion"
+    },
+    {
+      "type": "range",
+      "id": "style_pad_y",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding vertical",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "style_pad_x",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "style_max_width",
+      "min": 0,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho maximo (0 = auto)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "style_heading_size",
+      "min": 14,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano titulos",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "style_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano texto",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "style_bg",
+      "label": "Fondo seccion"
+    },
+    {
+      "type": "color",
+      "id": "style_heading_color",
+      "label": "Color titulos",
+      "default": "#0b1a3a"
+    },
+    {
+      "type": "color",
+      "id": "style_text_color",
+      "label": "Color texto",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "style_btn_font",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano botones",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "style_btn_pad_y",
+      "min": 6,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding vertical boton",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "style_btn_pad_x",
+      "min": 10,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding horizontal boton",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "style_btn_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Radio botones",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "style_btn_bg",
+      "label": "Boton fondo",
+      "default": "#e65600"
+    },
+    {
+      "type": "color",
+      "id": "style_btn_text",
+      "label": "Boton texto",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PG Producto PDP"
+    }
+  ]
+}
+{% endschema %}
