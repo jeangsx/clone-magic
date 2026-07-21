@@ -1,90 +1,59 @@
-{% doc %}
-  ProstaGenix offers catalog cards.
-  @param {collection} collection - Collection of offer products
-  @param {string} [heading] - Section heading
-  @param {string} [guarantee] - Guarantee line under CTA
-  @example
-  {% render 'pg-offers-list', collection: collection, heading: 'Ofertas', guarantee: '90 días' %}
-{% enddoc %}
+{% comment %} Ofertas = React /productos igualito {% endcomment %}
 
-<section class="pg-offers">
-  <div class="pg-offers__inner">
-    {% if heading != blank %}
-      <h2 class="pg-offers__heading">{{ heading }}</h2>
-    {% endif %}
+{% liquid
+  assign react_heading = heading | default: 'Special Internet-Only Offer'
+  if react_heading == blank
+    assign react_heading = 'Special Internet-Only Offer'
+  endif
+  assign react_guarantee = guarantee | default: '90 DAY MONEY BACK GUARANTEE'
+  if react_guarantee == blank
+    assign react_guarantee = '90 DAY MONEY BACK GUARANTEE'
+  endif
+  assign list_all = show_all_collections | default: false
+%}
 
-    {% if collection == blank %}
-      <p class="pg-offers__sub">Selecciona una colección en el editor del tema.</p>
-    {% elsif collection.products_count == 0 %}
-      <p class="pg-offers__sub">No hay productos en esta colección.</p>
+{{ 'pg-offers-react.css' | asset_url | stylesheet_tag }}
+
+<div class="lv-react-offers" data-embed-root>
+  <div class="lv-offers-wrap">
+    <h1 class="lv-offers-heading">{{ react_heading }}</h1>
+
+    {% if list_all %}
+      {% assign any_products = false %}
+      {% for col in collections %}
+        {% if col.products_count > 0 %}
+          {% assign any_products = true %}
+          <section class="lv-collection">
+            <h2 class="lv-collection-title">{{ col.title }}</h2>
+            {% if col.description != blank %}
+              <p class="lv-collection-desc">{{ col.description | strip_html }}</p>
+            {% endif %}
+            <div class="lv-offers-list">
+              {% for product in col.products %}
+                {% render 'pg-offer-card', product: product, guarantee: react_guarantee %}
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+      {% endfor %}
+      {% unless any_products %}
+        <p class="lv-offers-empty">No hay productos aún.</p>
+      {% endunless %}
+
+    {% elsif collection != blank and collection.products_count > 0 %}
+      <section class="lv-collection">
+        <h2 class="lv-collection-title">{{ collection.title }}</h2>
+        {% if collection.description != blank %}
+          <p class="lv-collection-desc">{{ collection.description | strip_html }}</p>
+        {% endif %}
+        <div class="lv-offers-list">
+          {% for product in collection.products %}
+            {% render 'pg-offer-card', product: product, guarantee: react_guarantee %}
+          {% endfor %}
+        </div>
+      </section>
     {% else %}
-      <div class="pg-offers__list">
-        {% for product in collection.products %}
-          {% liquid
-            assign pitch = product.metafields.custom.short_pitch.value
-            assign badge = product.metafields.custom.badge_text.value
-            if badge == blank
-              assign badge = 'OFERTA'
-            endif
-            assign price = product.price
-            assign compare = product.compare_at_price
-            if compare == blank or compare <= price
-              assign compare = price | times: 25 | divided_by: 10
-            endif
-            assign save_amount = compare | minus: price
-            assign save_pct = 0
-            if compare > 0
-              assign save_pct = save_amount | times: 100 | divided_by: compare
-            endif
-          %}
-
-          <article class="pg-offer">
-            <div class="pg-offer__media">
-              <span class="pg-offer__badge">{{ badge }}</span>
-              {% if product.featured_image %}
-                <img
-                  class="pg-offer__img"
-                  src="{{ product.featured_image | image_url: width: 900 }}"
-                  alt="{{ product.title | escape }}"
-                  loading="lazy"
-                  width="900"
-                  height="900"
-                >
-              {% endif %}
-            </div>
-
-            <div>
-              <h3 class="pg-offer__title">{{ product.title }}</h3>
-              {% if pitch != blank %}
-                <p class="pg-offer__pitch">{{ pitch }}</p>
-              {% endif %}
-
-              <ul class="pg-offer__meta">
-                <li>
-                  {{ retail_label | default: 'Precio retail' }}:
-                  <s style="color:var(--pg-red,#d40000);">{{ compare | money }}</s>
-                </li>
-                <li class="pg-offer__save">
-                  {{ save_label | default: 'Ahorras' }}: <strong>{{ save_amount | money }}</strong>
-                </li>
-              </ul>
-
-              <div style="margin-bottom:8px;font-size:12px;font-weight:800;letter-spacing:1px;color:#666;">
-                {{ savings_eyebrow | default: 'INSTANT SAVINGS' }}
-              </div>
-              <div style="font-size:32px;font-weight:900;margin-bottom:8px;">{{ price | money }}</div>
-              <span class="pg-offer__pct">{{ save_pct }}% {{ savings_badge | default: 'SAVINGS' }}</span>
-
-              <div>
-                <a class="pg-offer__cta" href="{{ product.url }}">{{ cta_label | default: 'ORDER NOW' }}</a>
-                {% if guarantee != blank %}
-                  <p class="pg-offer__guarantee">{{ guarantee }}</p>
-                {% endif %}
-              </div>
-            </div>
-          </article>
-        {% endfor %}
-      </div>
+      <p class="lv-offers-empty">No hay productos aún.</p>
     {% endif %}
   </div>
-</section>
+</div>

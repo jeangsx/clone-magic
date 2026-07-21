@@ -29,11 +29,7 @@
       <span class="lv-announce-item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
       {% unless forloop.last %}<span class="lv-announce-sep">•</span>{% endunless %}
     {% endfor %}
-    {% comment %} Duplicar para loop visual {% endcomment %}
-    {% for block in section.blocks %}
-      <span class="lv-announce-sep">•</span>
-      <span class="lv-announce-item">{{ block.settings.text }}</span>
-    {% endfor %}
+    {% comment %} Duplicar para loop visual — omitido (duplicar DOM + animacion congelaba) {% endcomment %}
   </div>
 </div>
 </div>

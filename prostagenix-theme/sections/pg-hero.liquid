@@ -22,14 +22,24 @@
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<div class="banner_special body_full_nomar">
+<div
+  class="banner_special body_full_nomar"
+  style="
+    --pg-counter-scale: {{ section.settings.counter_scale | divided_by: 100.0 }};
+    --pg-counter-width: {{ section.settings.counter_width }}%;
+    --pg-counter-digit-w: {{ section.settings.counter_digit_width }}px;
+    --pg-counter-digit-h: {{ section.settings.counter_digit_height }}px;
+    --pg-counter-digit-fs: {{ section.settings.counter_digit_font }}px;
+    --pg-counter-label-fs: {{ section.settings.counter_label_size }}px;
+  "
+>
   <div class="body_full" style="max-width:{{ section.settings.hero_content_max_width }}px;">
     <div class="headings">
       {% if section.settings.hero_subtitle != blank %}
         <span class="heading">{{ section.settings.hero_subtitle }}</span>
       {% endif %}
       {% if section.settings.hero_title != blank %}
-        <div class="pg-hero-title">{{ section.settings.hero_title }}</div>
+        <h1 class="pg-hero-title">{{ section.settings.hero_title | replace: '<p>', '' | replace: '</p>', '' }}</h1>
       {% endif %}
       {% if section.settings.banner_image != blank %}
         <img
@@ -60,7 +70,7 @@
       {% if section.settings.show_countdown %}
         <div class="counter">
           <div class="clock">
-            <div id="ticker"></div>
+            <div id="ticker" data-pg-ticker></div>
             <ul class="labels">
               <li>Días</li>
               <li>Horas</li>
@@ -181,6 +191,70 @@
     },
     {
       "type": "header",
+      "content": "Tamano del contador"
+    },
+    {
+      "type": "range",
+      "id": "counter_scale",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "label": "Escala del contador",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "counter_width",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Ancho del contador",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "counter_digit_width",
+      "min": 50,
+      "max": 140,
+      "step": 5,
+      "unit": "px",
+      "label": "Ancho de cada digito",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "counter_digit_height",
+      "min": 40,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Alto de cada digito",
+      "default": 75
+    },
+    {
+      "type": "range",
+      "id": "counter_digit_font",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano fuente digitos",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "counter_label_size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamano etiquetas (Dias/Horas)",
+      "default": 16
+    },
+    {
+      "type": "header",
       "content": "Estilos de seccion"
     },
     {
@@ -221,7 +295,7 @@
       "step": 1,
       "unit": "px",
       "label": "Tamano titulos",
-      "default": 28
+      "default": 48
     },
     {
       "type": "range",
@@ -231,7 +305,7 @@
       "step": 1,
       "unit": "px",
       "label": "Tamano texto",
-      "default": 16
+      "default": 18
     },
     {
       "type": "color",
