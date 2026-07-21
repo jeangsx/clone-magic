@@ -1,54 +1,38 @@
 /* FONTS */
 @font-face {
   font-family: Montserrat-Black;
-  font-display: auto;
-	src: url('Montserrat-Black.otf');
-	src: url('Montserrat-Black.eot');
-	src: url('Montserrat-Black.eot?#iefix') format('embedded-opentype'),
-			url('Montserrat-Black.woff') format('woff'),
-			url('Montserrat-Black.ttf')  format('truetype'),
-			url('Montserrat-Black.svg#svgFontName') format('svg');
+  font-display: swap;
+  src: url('Montserrat-Black.woff') format('woff'),
+       url('Montserrat-Black.ttf') format('truetype'),
+       url('Montserrat-Black.otf') format('opentype');
 }
 @font-face {
   font-family: Montserrat-Bold;
-  font-display: auto;
-	src: url('Montserrat-Bold.otf');
-	src: url('Montserrat-Bold.eot');
-	src: url('Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
-			url('Montserrat-Bold.woff') format('woff'),
-			url('Montserrat-Bold.ttf')  format('truetype'),
-			url('Montserrat-Bold.svg#svgFontName') format('svg');
+  font-display: swap;
+  src: url('Montserrat-Bold.woff') format('woff'),
+       url('Montserrat-Bold.ttf') format('truetype'),
+       url('Montserrat-Bold.otf') format('opentype');
 }
 @font-face {
   font-family: Montserrat-Regular;
-  font-display: auto;
-	src: url('Montserrat-Regular.otf');
-	src: url('Montserrat-Regular.eot');
-	src: url('Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
-			url('Montserrat-Regular.woff') format('woff'),
-			url('Montserrat-Regular.ttf')  format('truetype'),
-			url('Montserrat-Regular.svg#svgFontName') format('svg');
+  font-display: swap;
+  src: url('Montserrat-Regular.woff') format('woff'),
+       url('Montserrat-Regular.ttf') format('truetype'),
+       url('Montserrat-Regular.otf') format('opentype');
 }
 @font-face {
   font-family: Montserrat-Light;
-  font-display: auto;
-	src: url('Montserrat-Light.otf');
-	src: url('Montserrat-Light.eot');
-	src: url('Montserrat-Light.eot?#iefix') format('embedded-opentype'),
-			url('Montserrat-Light.woff') format('woff'),
-			url('Montserrat-Light.ttf')  format('truetype'),
-			url('Montserrat-Light.svg#svgFontName') format('svg');
+  font-display: swap;
+  src: url('Montserrat-Light.woff') format('woff'),
+       url('Montserrat-Light.ttf') format('truetype'),
+       url('Montserrat-Light.otf') format('opentype');
 }
 @font-face {
 	font-family: FranklinGothic;
-	font-display: auto;
-	  src: url('FranklinGothic-DemiCond.otf');
-	  src: url('FranklinGothic-DemiCond.eot');
-	  src: url('FranklinGothic-DemiCond.eot?#iefix') format('embedded-opentype'),
-			  url('FranklinGothic-DemiCond.woff') format('woff'),
-			  url('FranklinGothic-DemiCond.ttf')  format('truetype'),
-			  url('FranklinGothic-DemiCond.svg#svgFontName') format('svg');
-  }
+	font-display: swap;
+	src: url('FranklinGothic-DemiCond.woff') format('woff'),
+	     url('FranklinGothic-DemiCond.otf') format('opentype');
+}
 
 /* VARIABLES */
 :root {

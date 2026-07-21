@@ -1,13 +1,12 @@
 {
   "sections": {
-    "main": {
+    "offers_main": {
       "type": "pg-offers-page",
       "settings": {
-        "heading": "",
-        "subheading": "",
-        "guarantee_text": "Garantía 90 Días · Devolución Total"
+        "heading": "Special Internet-Only Offer",
+        "guarantee_text": "90 DAY MONEY BACK GUARANTEE"
       }
     }
   },
-  "order": ["main"]
+  "order": ["offers_main"]
 }

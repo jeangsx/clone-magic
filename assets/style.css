@@ -1,13 +1,11 @@
 /* FONTS */
 @font-face {
   font-family: CollegeBlock;
-  font-display: auto;
-	src: url('../fon/CollegeBlock.otf');
-	src: url('../fon/CollegeBlock.eot');
-	src: url('../fon/CollegeBlock.eot?#iefix') format('embedded-opentype'),
-			url('../fon/CollegeBlock.woff') format('woff'),
-			url('../fon/CollegeBlock.ttf')  format('truetype'),
-			url('../fon/CollegeBlock.svg#svgFontName') format('svg');
+  font-display: swap;
+  /* Archivo CollegeBlock no existe en el tema; Montserrat Black como sustituto */
+  src: url('Montserrat-Black.woff') format('woff'),
+       url('Montserrat-Black.ttf') format('truetype'),
+       url('Montserrat-Black.otf') format('opentype');
 }
 
 /* VARIABLES */
@@ -845,12 +843,13 @@
 .faqs .wrapper {
 	padding: 30px 2.5rem;
 }
-.faqs .wrapper > .title{
+.faqs .wrapper .title{
 	font-family: var(--txt-default);
 	font-size: 3.5rem;
 	margin: 0;
+	display: block;
 }
-.faqs .wrapper > .title::after {
+.faqs .wrapper .title::after {
 	width: 100%;
 	height: 2px;
 	content: "";
@@ -858,24 +857,33 @@
 	display: block;
 	margin-top: 10px;
 }
-.faqs .wrapper > .q {
+.faqs .wrapper .q {
 	font-size: 1.75em;
 	color: var(--col-brand-alt);
 	margin-bottom: 0;
+	display: block;
 }
-.faqs .wrapper > .a {
+.faqs .wrapper .a {
 	font-size: 1.15rem;
 	line-height: 1.4;
+	color: #333;
+	margin: 0.35em 0 1.25em;
 }
-.faqs .wrapper > .ing {
+.faqs .wrapper .a p {
+	margin: 0;
+	font-size: inherit;
+	line-height: inherit;
+	color: inherit;
+}
+.faqs .wrapper .ing {
 	width: 100%;
 	text-align: center;
 	margin-top: 20px;
 }
-.faqs .wrapper > .ing img {
+.faqs .wrapper .ing img {
 	vertical-align: middle;
 }
-.faqs .wrapper > .ing img:last-child {
+.faqs .wrapper .ing img:last-child {
 	margin-left: 10%;
 }
 
@@ -1388,29 +1396,29 @@
 	.faqs .wrapper {
 		padding: 30px 5%;
 	}
-	.faqs .wrapper > .title{
+	.faqs .wrapper .title{
 		font-size: 1.75rem;
 	}
-	.faqs .wrapper > .q {
+	.faqs .wrapper .q {
 		font-size: 1.25em;
 		line-height: 1.25em;
 	}
-	.faqs .wrapper > .a {
+	.faqs .wrapper .a {
 		font-size: 1rem;
 		line-height: 1.4;
 	}
-	.faqs .wrapper > .ing {
+	.faqs .wrapper .ing {
 		width: 100%;
 		text-align: center;
 	}
-	.faqs .wrapper > .ing img {
+	.faqs .wrapper .ing img {
 		display: block;
 		margin: 0 auto;
 	}
-	.faqs .wrapper > .ing img:first-child {
+	.faqs .wrapper .ing img:first-child {
 		margin-top: 20px;
 	}
-	.faqs .wrapper > .ing img:last-child {
+	.faqs .wrapper .ing img:last-child {
 		width: 75%;
 		display: block;
 		margin: 0 auto;
@@ -1564,16 +1572,17 @@
   flex-shrink: 0;
   align-items: center;
   width: max-content;
+  max-width: 100%;
   white-space: nowrap;
-  animation: lv-marquee 35s linear infinite;
-  will-change: transform;
+  /* Sin infinite animation: congelaba la tienda en Chrome */
+  animation: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  white-space: normal;
 }
 .lv-announce-item { padding: 0 22px; flex-shrink: 0; }
 .lv-announce-sep { opacity: .55; flex-shrink: 0; }
-@keyframes lv-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
 
 /* ===== Header WhatsApp button (replaces phone) ===== */
 .lv-header-wa {

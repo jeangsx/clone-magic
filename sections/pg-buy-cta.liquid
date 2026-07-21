@@ -37,12 +37,12 @@
     <div class="split">
       {% if section.settings.product_image != blank %}
         <img class="prod" src="{{ section.settings.product_image | image_url: width: 600 }}" alt="Product" width="400" height="400" loading="lazy">
-      {% else %}
+      {% elsif section.settings.product_image_url != blank %}
         <img class="prod" src="{{ section.settings.product_image_url }}" alt="ProstaGenix - Bottle & Box" width="400" height="400" loading="lazy">
       {% endif %}
       {% if section.settings.badge != blank %}
         <img class="badge" src="{{ section.settings.badge | image_url: width: 300 }}" alt="Guarantee" width="300" height="300" loading="lazy">
-      {% else %}
+      {% elsif section.settings.badge_url != blank %}
         <img class="badge" src="{{ section.settings.badge_url }}" alt="90 day money-back guarantee" width="300" height="300" loading="lazy">
       {% endif %}
       <a href="{{ cta_url }}" class="knd-ic-btn qcd-link">
@@ -53,10 +53,10 @@
     </div>
     <div class="split">
       {% if section.settings.heading != blank %}
-        <div class="heading">{{ section.settings.heading }}</div>
+        <span class="heading">{{ section.settings.heading | replace: '<p>', '' | replace: '</p>', '' }}</span>
       {% endif %}
       {% if section.settings.body != blank %}
-        <div>{{ section.settings.body }}</div>
+        {{ section.settings.body }}
       {% endif %}
     </div>
   </div>

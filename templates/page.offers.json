@@ -3,9 +3,8 @@
     "main": {
       "type": "pg-offers-page",
       "settings": {
-        "heading": "Ofertas especiales",
-        "subheading": "Elige tu paquete y ahorra hoy",
-        "guarantee_text": "Garantía 90 Días · Devolución Total"
+        "heading": "Special Internet-Only Offer",
+        "guarantee_text": "90 DAY MONEY BACK GUARANTEE"
       }
     }
   },

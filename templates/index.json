@@ -80,8 +80,9 @@
     "offers": {
       "type": "pg-offers-page",
       "settings": {
+        "collection": "products",
         "heading": "Special Internet-Only Offer",
-        "guarantee_text": "Garantía 90 Días · Devolución Total"
+        "guarantee_text": "90 DAY MONEY BACK GUARANTEE"
       }
     },
     "guarantee": {
