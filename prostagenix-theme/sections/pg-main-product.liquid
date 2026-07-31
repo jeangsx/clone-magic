@@ -1,4 +1,6 @@
-{% comment %} Estilos editables (toda la seccion) {% endcomment %}
+{% comment %} Estilos editables (toda la seccion) — mismo CSS que el producto del home {% endcomment %}
+{{ 'pg-product-react.css' | asset_url | stylesheet_tag }}
+
 <div
   class="pg-sec-style pg-sec-align-{{ section.settings.style_align }}{% if section.settings.style_hide_mobile %} pg-sec-hide-mobile{% endif %}{% if section.settings.style_hide_desktop %} pg-sec-hide-desktop{% endif %}"
   style="
@@ -52,7 +54,7 @@
     {
       "type": "checkbox",
       "id": "show_benefits",
-      "label": "Mostrar 3 beneficios",
+      "label": "Mostrar beneficios",
       "default": true
     },
     {
@@ -74,10 +76,22 @@
       "default": true
     },
     {
+      "type": "checkbox",
+      "id": "show_releasit",
+      "label": "Mostrar form Releasit COD",
+      "default": true,
+      "info": "Gancho del formulario debajo de la imagen"
+    },
+    {
       "type": "header",
       "content": "Textos / botones"
     },
     {
+      "type": "text",
+      "id": "releasit_label",
+      "label": "Texto boton Releasit COD",
+      "default": "PEDIR CONTRA ENTREGA (COD)"
+    },    {
       "type": "text",
       "id": "bar_text",
       "label": "Texto barra superior",
@@ -96,21 +110,26 @@
       "default": "RECOMENDADO POR MEDICOS"
     },
     {
+      "type": "header",
+      "content": "Beneficios (bloques abajo)"
+    },
+    {
       "type": "text",
       "id": "benefit_1",
-      "label": "Beneficio 1",
-      "default": "Reduce DHT"
+      "label": "Beneficio 1 (fallback)",
+      "default": "Reduce DHT",
+      "info": "Solo si no hay bloques Beneficio"
     },
     {
       "type": "text",
       "id": "benefit_2",
-      "label": "Beneficio 2",
+      "label": "Beneficio 2 (fallback)",
       "default": "100% Natural"
     },
     {
       "type": "text",
       "id": "benefit_3",
-      "label": "Beneficio 3",
+      "label": "Beneficio 3 (fallback)",
       "default": "Clinicamente Probado"
     },
     {
@@ -124,12 +143,12 @@
       "id": "hot_sale_text",
       "label": "Texto HOT SALE",
       "default": "Ordena hoy para asegurar tu descuento y regalos GRATIS"
-    },
-    {
+    },    {
       "type": "text",
       "id": "offer_badge",
-      "label": "Badge variante",
-      "default": "MEJOR OFERTA"
+      "label": "Badge por defecto (todas)",
+      "default": "MEJOR OFERTA",
+      "info": "Se usa solo si NO agregaste bloques 'Badge variante'. Con bloques, cada variante se edita por separado."
     },
     {
       "type": "text",
@@ -627,9 +646,106 @@
       "default": false
     }
   ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icono (emoji o simbolo)",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Beneficio"
+        }
+      ]
+    },
+    {
+      "type": "variant_badge",
+      "name": "Badge variante",
+      "settings": [
+        {
+          "type": "range",
+          "id": "variant_position",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "label": "Numero de variante",
+          "default": 1,
+          "info": "1 = primera caja, 2 = segunda, etc."
+        },
+        {
+          "type": "text",
+          "id": "variant_title",
+          "label": "Nombre variante (opcional)",
+          "info": "Si lo llenas, tiene prioridad sobre el numero. Usa el nombre exacto de la variante en Admin."
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Texto del badge",
+          "default": "MEJOR OFERTA"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_badge",
+          "label": "Mostrar badge",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "variant_compare",
+      "name": "Precio tachado variante",
+      "settings": [
+        {
+          "type": "range",
+          "id": "variant_position",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "label": "Numero de variante",
+          "default": 1,
+          "info": "1 = primera caja, 2 = segunda, etc."
+        },
+        {
+          "type": "text",
+          "id": "variant_title",
+          "label": "Nombre variante (opcional)",
+          "info": "Si lo llenas, tiene prioridad sobre el numero."
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Precio tachado (antes)",
+          "default": "187.25",
+          "info": "Solo el precio tachado. El precio en negrita sigue saliendo de la variante en Shopify. Ej: 187.25"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "PG Producto PDP"
+      "name": "PG Producto PDP",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": { "icon": "✓", "text": "Reduce DHT" }
+        },
+        {
+          "type": "benefit",
+          "settings": { "icon": "★", "text": "100% Natural" }
+        },
+        {
+          "type": "benefit",
+          "settings": { "icon": "♥", "text": "Clinicamente Probado" }
+        }
+      ]
     }
   ]
 }

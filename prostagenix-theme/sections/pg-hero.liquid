@@ -16,7 +16,7 @@
     --pg-sec-btn-radius: {{ section.settings.style_btn_radius }}px;
     --pg-sec-btn-bg: {{ section.settings.style_btn_bg }};
     --pg-sec-btn-color: {{ section.settings.style_btn_text }};
-    --pg-sec-min-h: {{ section.settings.style_min_height }}px;
+    --pg-sec-min-h: {% if section.settings.style_min_height > 0 %}{{ section.settings.style_min_height }}px{% else %}520px{% endif %};
     --pg-sec-img-w: {{ section.settings.style_image_width }}%;
     --pg-sec-img-h: {% if section.settings.style_image_max_height > 0 %}{{ section.settings.style_image_max_height }}px{% else %}none{% endif %};
     --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
@@ -31,6 +31,9 @@
     --pg-counter-digit-h: {{ section.settings.counter_digit_height }}px;
     --pg-counter-digit-fs: {{ section.settings.counter_digit_font }}px;
     --pg-counter-label-fs: {{ section.settings.counter_label_size }}px;
+    --pg-bottles-w: {{ section.settings.bottle_width }}px;
+    --pg-sec-min-h: {% if section.settings.style_min_height > 0 %}{{ section.settings.style_min_height }}px{% else %}520px{% endif %};
+    --pg-sec-pad-y: {% if section.settings.style_pad_y > 0 %}{{ section.settings.style_pad_y }}px{% else %}48px{% endif %};
   "
 >
   <div class="body_full" style="max-width:{{ section.settings.hero_content_max_width }}px;">
@@ -58,9 +61,21 @@
         {% assign bottle = section.settings.bottle_image %}
         {% for i in (1..3) %}
           {% if bottle != blank %}
-            <img src="{{ bottle | image_url: width: 400 }}" alt="ProstaGenix" width="400" height="400" loading="lazy" style="width:{{ section.settings.bottle_width }}px;max-width:100%;height:auto;">
+            <img
+              src="{{ bottle | image_url: width: 500 }}"
+              alt="ProstaGenix"
+              width="200"
+              height="400"
+              loading="{% if i == 1 %}eager{% else %}lazy{% endif %}"
+            >
           {% else %}
-            <img src="https://www.prostagenix.com/images/product/bottle.png" alt="ProstaGenix - bottle" width="400" height="400" loading="lazy" style="width:{{ section.settings.bottle_width }}px;max-width:100%;height:auto;">
+            <img
+              src="https://www.prostagenix.com/images/product/bottle.png"
+              alt="ProstaGenix - bottle"
+              width="200"
+              height="400"
+              loading="{% if i == 1 %}eager{% else %}lazy{% endif %}"
+            >
           {% endif %}
         {% endfor %}
       </div>
@@ -73,7 +88,7 @@
             <div id="ticker" data-pg-ticker></div>
             <ul class="labels">
               <li>Días</li>
-              <li>Horas</li>
+              <li>Hrs</li>
               <li>Min</li>
               <li>Seg</li>
             </ul>
@@ -186,8 +201,9 @@
       "max": 500,
       "step": 20,
       "unit": "px",
-      "label": "Ancho de cada botella",
-      "default": 400
+      "label": "Ancho bloque botellas (aprox)",
+      "default": 280,
+      "info": "Controla el bloque de las 3 botellas, no cada imagen por separado"
     },
     {
       "type": "header",
@@ -383,8 +399,9 @@
       "max": 1000,
       "step": 20,
       "unit": "px",
-      "label": "Altura minima (0 = auto)",
-      "default": 0
+      "label": "Altura minima del banner",
+      "default": 520,
+      "info": "0 = 520px por defecto. Sube o baja para cambiar la altura del hero."
     },
     {
       "type": "select",

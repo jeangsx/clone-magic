@@ -1,4 +1,6 @@
-{% comment %} Estilos editables (toda la seccion) {% endcomment %}
+{% comment %} Carrito — estilo alineado al buybox / landing {% endcomment %}
+{{ 'pg-cart.css' | asset_url | stylesheet_tag }}
+
 <div
   class="pg-sec-style pg-sec-align-{{ section.settings.style_align }}{% if section.settings.style_hide_mobile %} pg-sec-hide-mobile{% endif %}{% if section.settings.style_hide_desktop %} pg-sec-hide-desktop{% endif %}"
   style="
@@ -17,72 +19,102 @@
     --pg-sec-btn-bg: {{ section.settings.style_btn_bg }};
     --pg-sec-btn-color: {{ section.settings.style_btn_text }};
     --pg-sec-min-h: {{ section.settings.style_min_height }}px;
-    --pg-sec-img-w: {{ section.settings.style_image_width }}%;
-    --pg-sec-img-h: {% if section.settings.style_image_max_height > 0 %}{{ section.settings.style_image_max_height }}px{% else %}none{% endif %};
-    --pg-sec-img-radius: {{ section.settings.style_image_radius }}px;
   "
 >
-<section class="pg-simple pg-cart">
-  <h1 style="color:var(--pg-blue,#054497);font-weight:900;">Carrito</h1>
+  <section class="pg-cart">
+    <div class="pg-cart__inner">
+      <header class="pg-cart__head">
+        <h1 class="pg-cart__title">Carrito</h1>
+        {% if cart.item_count > 0 %}
+          <p class="pg-cart__count">{{ cart.item_count }} {% if cart.item_count == 1 %}producto{% else %}productos{% endif %}</p>
+        {% endif %}
+      </header>
 
-  {% if cart.item_count == 0 %}
-    <p>Tu carrito está vacío.</p>
-    <p><a href="{{ routes.all_products_collection_url }}">Ver productos</a></p>
-  {% else %}
-    <form action="{{ routes.cart_url }}" method="post" novalidate>
-      <table style="width:100%;border-collapse:collapse;margin:24px 0;">
-        <thead>
-          <tr style="text-align:left;border-bottom:2px solid var(--pg-blue,#054497);">
-            <th style="padding:8px;">Producto</th>
-            <th style="padding:8px;">Precio</th>
-            <th style="padding:8px;">Cant.</th>
-            <th style="padding:8px;">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in cart.items %}
-            <tr style="border-bottom:1px solid #e3e6ee;">
-              <td style="padding:12px 8px;">
-                <a href="{{ item.url }}" style="color:var(--pg-blue,#054497);font-weight:700;">{{ item.product.title }}</a>
-                {% unless item.variant.title == 'Default Title' %}
-                  <div style="font-size:13px;color:#666;">{{ item.variant.title }}</div>
-                {% endunless %}
-                <div style="margin-top:6px;">
-                  <a href="{{ item.url_to_remove }}" style="font-size:12px;color:#888;">Quitar</a>
-                </div>
-              </td>
-              <td style="padding:12px 8px;">{{ item.final_price | money }}</td>
-              <td style="padding:12px 8px;">
-                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" style="width:64px;padding:6px;">
-              </td>
-              <td style="padding:12px 8px;font-weight:800;">{{ item.final_line_price | money }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-
-      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
-        <button type="submit" name="update" style="padding:10px 18px;border:2px solid var(--pg-blue,#054497);background:#fff;color:var(--pg-blue,#054497);font-weight:800;border-radius:10px;cursor:pointer;">
-          Actualizar
-        </button>
-        <div style="text-align:right;">
-          <div style="font-size:20px;font-weight:900;margin-bottom:10px;">
-            Total: {{ cart.total_price | money }}
-          </div>
-          <button type="submit" name="checkout" style="padding:14px 28px;border:0;background:var(--pg-orange,#f39200);color:#fff;font-weight:900;border-radius:999px;cursor:pointer;letter-spacing:1px;">
-            IR A PAGAR
-          </button>
+      {% if cart.item_count == 0 %}
+        <div class="pg-cart__empty">
+          <p class="pg-cart__empty-text">Tu carrito está vacío.</p>
+          <a class="pg-cart__link-btn" href="{{ routes.root_url }}">Seguir comprando</a>
         </div>
-      </div>
-    </form>
-  {% endif %}
-</section>
+      {% else %}
+        <form class="pg-cart__form" action="{{ routes.cart_url }}" method="post" novalidate>
+          <ul class="pg-cart__list">
+            {% for item in cart.items %}
+              <li class="pg-cart__item">
+                <a class="pg-cart__thumb" href="{{ item.url }}">
+                  {% if item.image %}
+                    <img
+                      src="{{ item.image | image_url: width: 240 }}"
+                      alt="{{ item.product.title | escape }}"
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    <span class="pg-cart__thumb-ph" aria-hidden="true"></span>
+                  {% endif %}
+                </a>
+
+                <div class="pg-cart__info">
+                  <a class="pg-cart__name" href="{{ item.url }}">{{ item.product.title }}</a>
+                  {% unless item.variant.title == 'Default Title' %}
+                    <p class="pg-cart__variant">{{ item.variant.title }}</p>
+                  {% endunless %}
+                  <p class="pg-cart__unit">
+                    S/ {{ item.final_price | money_without_currency | strip | replace: ',', '.' }}
+                  </p>
+                  <a class="pg-cart__remove" href="{{ item.url_to_remove }}">Quitar</a>
+                </div>
+
+                <div class="pg-cart__qty">
+                  <label class="pg-cart__qty-label" for="updates-{{ item.key }}">Cant.</label>
+                  <input
+                    id="updates-{{ item.key }}"
+                    class="pg-cart__qty-input"
+                    type="number"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    inputmode="numeric"
+                  >
+                </div>
+
+                <div class="pg-cart__line">
+                  <span class="pg-cart__line-label">Total</span>
+                  <span class="pg-cart__line-price">
+                    S/ {{ item.final_line_price | money_without_currency | strip | replace: ',', '.' }}
+                  </span>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+
+          <div class="pg-cart__footer">
+            <button type="submit" name="update" class="pg-cart__btn pg-cart__btn--ghost">
+              Actualizar
+            </button>
+
+            <div class="pg-cart__summary">
+              <div class="pg-cart__total">
+                <span>Total</span>
+                <strong>S/ {{ cart.total_price | money_without_currency | strip | replace: ',', '.' }}</strong>
+              </div>
+              <button type="submit" name="checkout" class="pg-cart__btn pg-cart__btn--primary">
+                IR A PAGAR →
+              </button>
+              <a class="pg-cart__continue" href="{{ routes.root_url }}">← Seguir comprando</a>
+            </div>
+          </div>
+        </form>
+      {% endif %}
+    </div>
+  </section>
 </div>
 
 {% schema %}
 {
   "name": "ProstaGenix Cart",
   "tag": "section",
+  "class": "pg-section-cart",
   "settings": [
     {
       "type": "header",
@@ -96,7 +128,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding vertical",
-      "default": 0
+      "default": 24
     },
     {
       "type": "range",
@@ -106,7 +138,7 @@
       "step": 2,
       "unit": "px",
       "label": "Padding horizontal",
-      "default": 0
+      "default": 16
     },
     {
       "type": "range",
@@ -116,7 +148,7 @@
       "step": 20,
       "unit": "px",
       "label": "Ancho maximo (0 = auto)",
-      "default": 0
+      "default": 960
     },
     {
       "type": "range",
@@ -126,7 +158,7 @@
       "step": 1,
       "unit": "px",
       "label": "Tamano titulos",
-      "default": 28
+      "default": 32
     },
     {
       "type": "range",
@@ -141,7 +173,8 @@
     {
       "type": "color",
       "id": "style_bg",
-      "label": "Fondo seccion"
+      "label": "Fondo seccion",
+      "default": "#f7f8fb"
     },
     {
       "type": "color",
@@ -193,13 +226,13 @@
       "step": 2,
       "unit": "px",
       "label": "Radio botones",
-      "default": 24
+      "default": 12
     },
     {
       "type": "color",
       "id": "style_btn_bg",
       "label": "Boton fondo",
-      "default": "#e65600"
+      "default": "#054497"
     },
     {
       "type": "color",
@@ -222,50 +255,11 @@
       "id": "style_align",
       "label": "Alineacion del contenido",
       "options": [
-        {
-          "value": "left",
-          "label": "Izquierda"
-        },
-        {
-          "value": "center",
-          "label": "Centro"
-        },
-        {
-          "value": "right",
-          "label": "Derecha"
-        }
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
       ],
       "default": "left"
-    },
-    {
-      "type": "range",
-      "id": "style_image_width",
-      "min": 10,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "label": "Ancho maximo de imagenes",
-      "default": 100
-    },
-    {
-      "type": "range",
-      "id": "style_image_max_height",
-      "min": 0,
-      "max": 1000,
-      "step": 20,
-      "unit": "px",
-      "label": "Alto maximo imagenes (0 = auto)",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "style_image_radius",
-      "min": 0,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "label": "Radio de imagenes",
-      "default": 0
     },
     {
       "type": "checkbox",

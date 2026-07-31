@@ -1557,32 +1557,81 @@
   color: #fff;
   overflow: hidden;
   position: relative;
-  padding: 10px 0;
+  padding: 0;
+  margin: 0;
   font-family: 'Montserrat', system-ui, sans-serif;
   font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.3px;
-  border-bottom: 0;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  border: 0;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  line-height: 1;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  min-height: 36px;
 }
 .lv-announce-track {
   display: flex;
+  flex-wrap: nowrap;
   flex-shrink: 0;
   align-items: center;
+  justify-content: space-around;
+  gap: 0;
+  min-width: 100%;
   width: max-content;
-  max-width: 100%;
   white-space: nowrap;
-  /* Sin infinite animation: congelaba la tienda en Chrome */
-  animation: none;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-  white-space: normal;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  animation: lv-marquee 28s linear infinite;
 }
-.lv-announce-item { padding: 0 22px; flex-shrink: 0; }
-.lv-announce-sep { opacity: .55; flex-shrink: 0; }
+.lv-announce-item {
+  padding: 0 20px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  line-height: 36px;
+  display: inline-flex;
+  align-items: center;
+}
+.lv-announce-sep {
+  opacity: .55;
+  flex-shrink: 0;
+  line-height: 36px;
+  padding: 0 4px;
+}
+@keyframes lv-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-100%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lv-announce-track {
+    animation: none;
+    transform: none;
+  }
+  .lv-announce-track[aria-hidden="true"] {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .lv-announce,
+  .lv-announce-track {
+    min-height: 34px;
+    height: 34px;
+  }
+  .lv-announce {
+    font-size: 12px;
+  }
+  .lv-announce-item,
+  .lv-announce-sep {
+    line-height: 34px;
+  }
+  .lv-announce-item {
+    padding: 0 14px;
+  }
+}
 
 /* ===== Header WhatsApp button (replaces phone) ===== */
 .lv-header-wa {

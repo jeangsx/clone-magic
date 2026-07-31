@@ -1,14 +1,48 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "announce": {
       "type": "pg-announce",
       "blocks": {
-        "a1": { "type": "item", "settings": { "text": "✨ ¡Bienvenido(a) a ProstaGenix! ✨" } },
-        "a2": { "type": "item", "settings": { "text": "💎 Garantía de 90 Días · Devolución Total" } },
-        "a3": { "type": "item", "settings": { "text": "🔥 ¡Envíos a TODO el Perú! 🇵🇪" } },
-        "a4": { "type": "item", "settings": { "text": "⚡ Hasta 70% OFF · ¡Solo hoy!" } }
+        "a1": {
+          "type": "item",
+          "settings": {
+            "text": "✨ ¡Bienvenido(a) a ProstaGenix! ✨"
+          }
+        },
+        "a2": {
+          "type": "item",
+          "settings": {
+            "text": "💎 Garantía de 90 Días · Devolución Total"
+          }
+        },
+        "a3": {
+          "type": "item",
+          "settings": {
+            "text": "🔥 ¡Envíos a TODO el Perú! 🇵🇪"
+          }
+        },
+        "a4": {
+          "type": "item",
+          "settings": {
+            "text": "⚡ Hasta 70% OFF · ¡Solo hoy!"
+          }
+        }
       },
-      "block_order": ["a1", "a2", "a3", "a4"],
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4"
+      ],
       "settings": {}
     },
     "hero": {
@@ -24,8 +58,42 @@
     },
     "product": {
       "type": "pg-product-inline",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "✓",
+            "text": "Reduce DHT"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "★",
+            "text": "100% Natural"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "♥",
+            "text": "Clinicamente Probado"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
       "settings": {
-        "show_bar": false
+        "featured_product": "2x1-desatorador-multifuncional-premium",
+        "show_bar": false,
+        "show_rating": true,
+        "show_benefits": true,
+        "show_hot_sale": true,
+        "show_description": false,
+        "cta_label": "IR A PAGAR AHORA →"
       }
     },
     "consumerlab": {
@@ -58,23 +126,81 @@
           }
         }
       },
-      "block_order": ["t1", "t2"],
+      "block_order": [
+        "t1",
+        "t2"
+      ],
       "settings": {}
     },
     "benefits": {
       "type": "pg-benefits",
       "blocks": {
-        "b1": { "type": "left", "settings": { "text": "End Nighttime Bathroom Trips Get a full night's sleep" } },
-        "b2": { "type": "left", "settings": { "text": "Wake up with Energy" } },
-        "b3": { "type": "left", "settings": { "text": "Reduce your Constant daytime Bathrooms Trips" } },
-        "b4": { "type": "left", "settings": { "text": "Halt the embarrassing Dribbling or Hesitancy" } },
-        "b5": { "type": "left", "settings": { "text": "Stop the Burning and Urgency" } },
-        "b6": { "type": "right", "settings": { "text": "Empty Your bladder fully when you go" } },
-        "b7": { "type": "right", "settings": { "text": "Protect your prostate health" } },
-        "b8": { "type": "right", "settings": { "text": "Bedroom Boost - Enjoy The Return To Better Erections Our Customers RAVE About!" } },
-        "b9": { "type": "right", "settings": { "text": "Enjoy Sex Again!" } }
+        "b1": {
+          "type": "left",
+          "settings": {
+            "text": "End Nighttime Bathroom Trips Get a full night's sleep"
+          }
+        },
+        "b2": {
+          "type": "left",
+          "settings": {
+            "text": "Wake up with Energy"
+          }
+        },
+        "b3": {
+          "type": "left",
+          "settings": {
+            "text": "Reduce your Constant daytime Bathrooms Trips"
+          }
+        },
+        "b4": {
+          "type": "left",
+          "settings": {
+            "text": "Halt the embarrassing Dribbling or Hesitancy"
+          }
+        },
+        "b5": {
+          "type": "left",
+          "settings": {
+            "text": "Stop the Burning and Urgency"
+          }
+        },
+        "b6": {
+          "type": "right",
+          "settings": {
+            "text": "Empty Your bladder fully when you go"
+          }
+        },
+        "b7": {
+          "type": "right",
+          "settings": {
+            "text": "Protect your prostate health"
+          }
+        },
+        "b8": {
+          "type": "right",
+          "settings": {
+            "text": "Bedroom Boost - Enjoy The Return To Better Erections Our Customers RAVE About!"
+          }
+        },
+        "b9": {
+          "type": "right",
+          "settings": {
+            "text": "Enjoy Sex Again!"
+          }
+        }
       },
-      "block_order": ["b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7",
+        "b8",
+        "b9"
+      ],
       "settings": {}
     },
     "offers": {
@@ -106,7 +232,10 @@
             "answer": "<p>Each bottle is a full 30-day supply. Simply take three capsules every day.</p>"
           }
         },
-        "f3": { "type": "ingredients", "settings": {} },
+        "f3": {
+          "type": "ingredients",
+          "settings": {}
+        },
         "f4": {
           "type": "answer",
           "settings": {
@@ -129,8 +258,17 @@
           }
         }
       },
-      "block_order": ["f1", "f2", "f3", "f4", "f5", "f6"],
-      "settings": { "title": "FAQs" }
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6"
+      ],
+      "settings": {
+        "title": "FAQs"
+      }
     },
     "comparison": {
       "type": "pg-comparison",
@@ -172,7 +310,11 @@
           }
         }
       },
-      "block_order": ["s1", "s2", "s3"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
       "settings": {}
     }
   },

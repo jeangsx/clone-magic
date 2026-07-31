@@ -43,23 +43,66 @@
   }
 
   function ensureTicker(el, parts) {
+    var mobile =
+      window.matchMedia && window.matchMedia("(max-width: 900px)").matches;
+    var mode = mobile ? "simple" : "flip";
+    var built = el.getAttribute("data-pg-built");
+
+    if (mode === "simple") {
+      var html =
+        '<span class="pg-tick"><b>' +
+        pad(parts.days) +
+        "</b></span>" +
+        '<span class="pg-tick"><b>' +
+        pad(parts.hours) +
+        "</b></span>" +
+        '<span class="pg-tick"><b>' +
+        pad(parts.mins) +
+        "</b></span>" +
+        '<span class="pg-tick"><b>' +
+        pad(parts.secs) +
+        "</b></span>";
+      if (built !== "simple") {
+        el.innerHTML = html;
+        el.setAttribute("data-pg-built", "simple");
+        el.classList.add("pg-ticker--simple");
+      } else {
+        var nums = el.querySelectorAll(".pg-tick b");
+        var str =
+          pad(parts.days) +
+          pad(parts.hours) +
+          pad(parts.mins) +
+          pad(parts.secs);
+        for (var i = 0; i < nums.length; i++) {
+          nums[i].textContent = str.substr(i * 2, 2);
+        }
+      }
+      return;
+    }
+
+    if (built === "simple") {
+      el.removeAttribute("data-pg-built");
+      el.classList.remove("pg-ticker--simple");
+      el.innerHTML = "";
+    }
+
     if (!el.getAttribute("data-pg-built")) {
       el.innerHTML =
         flipUnit(parts.days) +
         flipUnit(parts.hours) +
         flipUnit(parts.mins) +
         flipUnit(parts.secs);
-      el.setAttribute("data-pg-built", "1");
+      el.setAttribute("data-pg-built", "flip");
       return;
     }
     var inns = el.querySelectorAll(".inn");
-    var str =
+    var s =
       pad(parts.days) + pad(parts.hours) + pad(parts.mins) + pad(parts.secs);
-    for (var i = 0; i < str.length; i++) {
-      var up = inns[i * 2];
-      var down = inns[i * 2 + 1];
-      if (up) up.textContent = str.charAt(i);
-      if (down) down.textContent = str.charAt(i);
+    for (var j = 0; j < s.length; j++) {
+      var up = inns[j * 2];
+      var down = inns[j * 2 + 1];
+      if (up) up.textContent = s.charAt(j);
+      if (down) down.textContent = s.charAt(j);
     }
   }
 
@@ -128,24 +171,17 @@
     });
   }
 
-  function applyVariant(root, btn) {
-    var input = root.querySelector('input[name="id"]');
+  function applyVariant(root, btn, updateImage) {
+    var input = root.querySelector('input[name="id"], [data-pg-variant-input]');
     var checkout = root.querySelector("[data-pg-checkout]");
     var totalPrice = root.querySelector("[data-pg-total-price]");
     var totalCompare = root.querySelector("[data-pg-total-compare]");
     var totalSave = root.querySelector("[data-pg-total-save]");
-    var shop =
-      root.getAttribute("data-shop") || (window.Shopify && Shopify.shop);
+    var hero = root.querySelector("[data-pg-hero]");
 
     function money(cents) {
-      try {
-        return (Number(cents) / 100).toLocaleString(undefined, {
-          style: "currency",
-          currency: root.getAttribute("data-currency") || "PEN",
-        });
-      } catch (e) {
-        return "S/ " + (Number(cents) / 100).toFixed(2);
-      }
+      var n = Number(cents) / 100;
+      return "S/ " + n.toFixed(2);
     }
 
     root.querySelectorAll("[data-pg-variant]").forEach(function (b) {
@@ -163,11 +199,40 @@
     if (totalSave) totalSave.textContent = money(save);
     if (checkout && id) {
       var numeric = String(id).replace(/\D/g, "");
-      var host =
-        root.getAttribute("data-checkout-host") ||
-        "https://" + (shop || location.host);
-      checkout.href = host.replace(/\/$/, "") + "/cart/" + numeric + ":1";
+      checkout.setAttribute("data-pg-variant-id", numeric);
+      if (checkout.tagName === "A") {
+        checkout.setAttribute("href", "/cart/" + numeric + ":1");
+      }
     }
+    if (!updateImage || !hero) return;
+    var imageUrl = btn.getAttribute("data-image");
+    var defaultUrl = hero.getAttribute("data-pg-hero-default");
+    if (imageUrl) {
+      hero.src = imageUrl;
+    } else if (defaultUrl) {
+      hero.src = defaultUrl;
+    }
+    var gallery = root.querySelector("[data-pg-gallery]");
+    if (gallery) {
+      var activeSrc = hero.src || "";
+      gallery.querySelectorAll("[data-pg-thumb]").forEach(function (thumb) {
+        var src = thumb.getAttribute("data-src") || "";
+        var match = false;
+        if (src && activeSrc) {
+          try {
+            match =
+              src.split("?")[0] === activeSrc.split("?")[0] ||
+              activeSrc.indexOf(src.split("/").pop().split("?")[0]) !== -1;
+          } catch (e) {}
+        }
+        thumb.classList.toggle("is-active", !!match);
+      });
+    }
+  }
+
+  function setupCheckoutButtons() {
+    /* Preventify/COD necesita el form product + button[name=add].
+       No interceptamos el submit nativo. */
   }
 
   function setupVariants() {
@@ -176,13 +241,13 @@
       root.setAttribute("data-pg-bound", "1");
       root.querySelectorAll("[data-pg-variant]").forEach(function (btn) {
         btn.addEventListener("click", function () {
-          applyVariant(root, btn);
+          applyVariant(root, btn, true);
         });
       });
       var active =
         root.querySelector("[data-pg-variant].is-active") ||
         root.querySelector("[data-pg-variant]");
-      if (active) applyVariant(root, active);
+      if (active) applyVariant(root, active, false);
     });
   }
 
@@ -212,6 +277,7 @@
     setupGallery();
     setupOfferThumbs();
     setupVariants();
+    setupCheckoutButtons();
     tickHeroCounters();
     tickPgCountdowns();
     if (designMode) return;

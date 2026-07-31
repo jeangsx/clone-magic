@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_blue": "#054497",
@@ -5,9 +14,50 @@
     "color_red": "#d40000",
     "color_page_bg": "#ffffff",
     "color_text": "#0b1a3a",
+    "whatsapp_url": "https://wa.me/51926827615",
     "font_body_size": 16,
     "font_heading_scale": 100,
     "section_gap": 0,
-    "whatsapp_url": "https://wa.me/51977750367?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20ProstaGenix"
+    "content_for_index": [],
+    "blocks": {
+      "6478312753674380289": {
+        "type": "shopify://apps/gempages-builder/blocks/embed-gp-script-head/20b379d4-1b20-474c-a6ca-665c331919f3",
+        "disabled": false,
+        "settings": {}
+      },
+      "8240775170660430883": {
+        "type": "shopify://apps/codform-cod-form-upsells/blocks/codform-whatsapp/80fcbf3f-4636-4422-91aa-9da0f7e04e23",
+        "disabled": true,
+        "settings": {
+          "phone": "+",
+          "prefill_message": "Hello! I have a question about your products",
+          "prefill_message_product_page": "Hello! I have a question about _product_",
+          "popup_text": "Chat with us on WhatsApp",
+          "bottom_offset": 20,
+          "right_offset": 20,
+          "button_color": "#25D366",
+          "badge_color": "#128C7E",
+          "badge_text": "Online",
+          "show_badge": true
+        }
+      },
+      "17754088914158789468": {
+        "type": "shopify://apps/easysell-cod-form/blocks/app-embed/7bfd0a95-6839-4f02-b2ee-896832dbe67e",
+        "disabled": true,
+        "settings": {}
+      },
+      "695895115113646532": {
+        "type": "shopify://apps/codform-cod-form-upsells/blocks/CodForm/80fcbf3f-4636-4422-91aa-9da0f7e04e23",
+        "disabled": true,
+        "settings": {}
+      },
+      "9431604518343006754": {
+        "type": "shopify://apps/preventify/blocks/preventify-app-embed/019b22be-ac00-720e-b4ee-4f9d67691b79",
+        "disabled": false,
+        "settings": {
+          "app_path": "/apps/preventify/"
+        }
+      }
+    }
   }
 }

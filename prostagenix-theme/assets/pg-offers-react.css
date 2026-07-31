@@ -309,30 +309,99 @@
 }
 
 @media (max-width: 760px) {
+  .lv-react-offers {
+    padding: 16px 10px 28px !important;
+    overflow-x: hidden !important;
+  }
+  .lv-react-offers .lv-offers-wrap {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
   .lv-react-offers .lv-offers-heading {
-    font-size: 22px !important;
+    font-size: 20px !important;
+    margin: 0 0 14px !important;
+    padding: 0 4px !important;
+  }
+  .lv-react-offers .lv-collection {
+    margin: 16px 0 8px !important;
+  }
+  .lv-react-offers .lv-collection-title {
+    font-size: 18px !important;
+  }
+  .lv-react-offers .lv-offers-list {
+    gap: 14px !important;
   }
   .lv-react-offers .lv-offer-pod {
     grid-template-columns: 1fr !important;
     padding: 10px !important;
-    gap: 8px !important;
+    gap: 10px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .lv-react-offers .lv-offer-visual {
+    min-height: 0 !important;
+    padding: 4px !important;
   }
   .lv-react-offers .lv-offer-bottles img {
-    max-height: 260px !important;
+    max-height: 220px !important;
+  }
+  .lv-react-offers .lv-offer-thumbs {
+    position: static !important;
+    margin-top: 6px !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+  }
+  .lv-react-offers .lv-offer-thumb {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .lv-react-offers .lv-offer-copy {
+    padding: 2px 2px 4px !important;
+    gap: 8px !important;
   }
   .lv-react-offers .lv-offer-title {
-    font-size: 20px !important;
+    font-size: 17px !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+  }
+  .lv-react-offers .lv-offer-pitch {
+    font-size: 13px !important;
   }
   .lv-react-offers .lv-offer-list {
-    font-size: 14px !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
   }
   .lv-react-offers .lv-offer-price {
-    font-size: 36px !important;
+    font-size: 32px !important;
+    line-height: 1.1 !important;
   }
   .lv-react-offers .lv-offer-pct {
-    font-size: 18px !important;
+    font-size: 16px !important;
+  }
+  .lv-react-offers .lv-offer-instant {
+    font-size: 11px !important;
   }
   .lv-react-offers .lv-offer-cta {
-    font-size: 17px !important;
+    font-size: 16px !important;
+    padding: 14px 16px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .lv-react-offers .lv-offer-guarantee {
+    font-size: 10px !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .lv-react-offers .lv-offer-price {
+    font-size: 28px !important;
+  }
+  .lv-react-offers .lv-offer-title {
+    font-size: 15px !important;
+  }
+  .lv-react-offers .lv-offer-bottles img {
+    max-height: 180px !important;
   }
 }

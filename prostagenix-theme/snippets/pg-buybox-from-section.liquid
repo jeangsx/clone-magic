@@ -11,16 +11,23 @@
     assign _show_bar = section.settings.show_bar
     assign _show_back = section.settings.show_back
   endif
+
+  assign _show_description = section.settings.show_description
+  if hide_description
+    assign _show_description = false
+  endif
 %}
 
 {% render 'pg-product-buybox',
   product: product,
   show_bar: section.settings.show_bar,
   show_back: section.settings.show_back,
-  show_description: section.settings.show_description,
+  show_description: _show_description,
   show_rating: section.settings.show_rating,
   show_benefits: section.settings.show_benefits,
   show_hot_sale: section.settings.show_hot_sale,
+  show_releasit: section.settings.show_releasit,
+  releasit_label: section.settings.releasit_label,
   bar_text: section.settings.bar_text,
   rating_text: section.settings.rating_text,
   doctor_badge: section.settings.doctor_badge,
