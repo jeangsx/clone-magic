@@ -9,6 +9,10 @@
   if show_description == nil
     assign show_description = true
   endif
+  assign show_videos = show_videos
+  if show_videos == nil
+    assign show_videos = true
+  endif
   assign show_rating = show_rating
   if show_rating == nil
     assign show_rating = true
@@ -35,6 +39,8 @@
   assign cta_label = cta_label | default: 'IR A PAGAR →'
   assign back_label = back_label | default: '← Volver a la oferta'
   assign description_title = description_title | default: 'Descripción'
+  assign videos_title = videos_title | default: 'Videos'
+  assign videos_subtitle = videos_subtitle
   assign off_prefix = off_prefix | default: 'UP TO'
   assign off_suffix = off_suffix | default: '% OFF'
 
@@ -71,6 +77,97 @@
       <div class="pg-p-desc-title">{{ description_title }}</div>
       <div class="pg-p-desc">{{ product.description }}</div>
     </div>
+  {% endif %}
+{% endcapture %}
+
+{% capture videos_panel %}
+  {% if show_videos and product != blank %}
+    {% liquid
+      assign has_product_videos = false
+      for media in product.media
+        if media.media_type == 'video' or media.media_type == 'external_video'
+          assign has_product_videos = true
+          break
+        endif
+      endfor
+
+      assign has_manual_videos = false
+      for video_block in video_blocks
+        if video_block.type == 'product_video'
+          if video_block.settings.video != blank or video_block.settings.video_url != blank
+            assign has_manual_videos = true
+            break
+          endif
+        endif
+      endfor
+    %}
+
+    {% if has_product_videos or has_manual_videos %}
+      <div class="pg-p-videos-panel" data-pg-videos>
+        {% if videos_title != blank %}
+          <div class="pg-p-videos-title">{{ videos_title }}</div>
+        {% endif %}
+        {% if videos_subtitle != blank %}
+          <div class="pg-p-videos-subtitle">{{ videos_subtitle }}</div>
+        {% endif %}
+
+        <div class="pg-p-videos-grid">
+          {% for media in product.media %}
+            {% if media.media_type == 'video' or media.media_type == 'external_video' %}
+              <div class="pg-p-video-card">
+                <div class="pg-p-video-frame">
+                  {% if media.media_type == 'video' %}
+                    {{ media | video_tag: controls: true, image_size: '900x', class: 'pg-p-video-media' }}
+                  {% else %}
+                    {{ media | external_video_tag: class: 'pg-p-video-media' }}
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {% for video_block in video_blocks %}
+            {% if video_block.type == 'product_video' %}
+              {% liquid
+                assign manual_video = video_block.settings.video
+                assign manual_url = video_block.settings.video_url
+              %}
+              {% if manual_video != blank or manual_url != blank %}
+                <div class="pg-p-video-card" {{ video_block.shopify_attributes }}>
+                  <div class="pg-p-video-frame">
+                    {% if manual_video != blank %}
+                      {{ manual_video | video_tag: controls: true, image_size: '900x', class: 'pg-p-video-media' }}
+                    {% elsif manual_url.type == 'youtube' %}
+                      <iframe
+                        class="pg-p-video-media"
+                        src="https://www.youtube.com/embed/{{ manual_url.id }}"
+                        title="{{ video_block.settings.title | default: videos_title | escape }}"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      ></iframe>
+                    {% elsif manual_url.type == 'vimeo' %}
+                      <iframe
+                        class="pg-p-video-media"
+                        src="https://player.vimeo.com/video/{{ manual_url.id }}"
+                        title="{{ video_block.settings.title | default: videos_title | escape }}"
+                        allow="autoplay; encrypted-media; picture-in-picture"
+                        allowfullscreen
+                      ></iframe>
+                    {% endif %}
+                  </div>
+                  {% if video_block.settings.title != blank %}
+                    <div class="pg-p-video-title">{{ video_block.settings.title }}</div>
+                  {% endif %}
+                  {% if video_block.settings.text != blank %}
+                    <div class="pg-p-video-text">{{ video_block.settings.text }}</div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
   {% endif %}
 {% endcapture %}
 
@@ -181,6 +278,7 @@
           </div>
         </div>
         {% if description_placement == 'under_gallery' %}
+          {{ videos_panel }}
           {{ description_panel }}
         {% endif %}
       </section>
@@ -320,12 +418,14 @@
         {% endif %}
 
         {% if description_placement == 'under_buybox' %}
+          {{ videos_panel }}
           {{ description_panel }}
         {% endif %}
       </section>
     </main>
 
     {% if description_placement == 'below' %}
+      {{ videos_panel }}
       {{ description_panel }}
     {% endif %}
   </div>

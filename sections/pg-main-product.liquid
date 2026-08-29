@@ -69,6 +69,12 @@
     },
     {
       "type": "checkbox",
+      "id": "show_videos",
+      "label": "Mostrar seccion de videos",
+      "default": true
+    },
+    {
+      "type": "checkbox",
       "id": "show_back",
       "label": "Mostrar enlace volver",
       "default": true
@@ -184,6 +190,17 @@
       "id": "description_title",
       "label": "Titulo descripcion",
       "default": "Descripcion"
+    },
+    {
+      "type": "text",
+      "id": "videos_title",
+      "label": "Titulo videos",
+      "default": "Videos"
+    },
+    {
+      "type": "text",
+      "id": "videos_subtitle",
+      "label": "Subtitulo videos"
     },
     {
       "type": "header",
@@ -625,6 +642,35 @@
       "id": "style_hide_desktop",
       "label": "Ocultar en desktop",
       "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video Shopify"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Video YouTube o Vimeo",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titulo del video"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto del video"
+        }
+      ]
     }
   ],
   "presets": [
