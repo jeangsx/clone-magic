@@ -94,7 +94,7 @@
       assign has_manual_videos = false
       for video_block in video_blocks
         if video_block.type == 'product_video'
-          if video_block.settings.video != blank or video_block.settings.video_url != blank
+          if video_block.settings.video != blank or video_block.settings.video_url != blank or video_block.settings.tiktok_url != blank
             assign has_manual_videos = true
             break
           endif
@@ -131,8 +131,9 @@
               {% liquid
                 assign manual_video = video_block.settings.video
                 assign manual_url = video_block.settings.video_url
+                assign tiktok_url = video_block.settings.tiktok_url
               %}
-              {% if manual_video != blank or manual_url != blank %}
+              {% if manual_video != blank or manual_url != blank or tiktok_url != blank %}
                 <div class="pg-p-video-card" {{ video_block.shopify_attributes }}>
                   <div class="pg-p-video-frame">
                     {% if manual_video != blank %}
@@ -151,6 +152,17 @@
                         src="https://player.vimeo.com/video/{{ manual_url.id }}"
                         title="{{ video_block.settings.title | default: videos_title | escape }}"
                         allow="autoplay; encrypted-media; picture-in-picture"
+                        allowfullscreen
+                      ></iframe>
+                    {% elsif tiktok_url != blank %}
+                      {% liquid
+                        assign tiktok_id = tiktok_url | split: '/video/' | last | split: '?' | first
+                      %}
+                      <iframe
+                        class="pg-p-video-media"
+                        src="https://www.tiktok.com/embed/v2/{{ tiktok_id }}"
+                        title="{{ video_block.settings.title | default: videos_title | escape }}"
+                        allow="encrypted-media; picture-in-picture"
                         allowfullscreen
                       ></iframe>
                     {% endif %}

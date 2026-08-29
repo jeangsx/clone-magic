@@ -12,12 +12,25 @@
     },
     "main": {
       "type": "pg-main-product",
+      "blocks": {
+        "video_tiktok_preview": {
+          "type": "product_video",
+          "settings": {
+            "tiktok_url": "https://www.tiktok.com/@liangeraldvargas.29/video/7679054519124118804?is_from_webapp=1&sender_device=pc",
+            "title": "Video del producto",
+            "text": ""
+          }
+        }
+      },
+      "block_order": ["video_tiktok_preview"],
       "settings": {
         "show_bar": true,
         "show_rating": true,
         "show_benefits": true,
         "show_hot_sale": true,
         "show_description": true,
+        "show_videos": true,
+        "videos_title": "Videos",
         "show_back": true,
         "cta_label": "IR A PAGAR →"
       }
