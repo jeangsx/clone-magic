@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_blue": "#054497",
@@ -5,9 +14,17 @@
     "color_red": "#d40000",
     "color_page_bg": "#ffffff",
     "color_text": "#0b1a3a",
+    "whatsapp_url": "https://wa.me/51977750367?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20ProstaGenix",
     "font_body_size": 16,
     "font_heading_scale": 100,
     "section_gap": 0,
-    "whatsapp_url": "https://wa.me/51977750367?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20ProstaGenix"
-  }
+    "blocks": {
+      "6478312753674380289": {
+        "type": "shopify://apps/gempages-builder/blocks/embed-gp-script-head/20b379d4-1b20-474c-a6ca-665c331919f3",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  },
+  "presets": null
 }

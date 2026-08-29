@@ -1,0 +1,128 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "order": [
+    "announce",
+    "main",
+    "guarantee",
+    "faqs",
+    "buy",
+    "footer"
+  ],
+  "sections": {
+    "announce": {
+      "block_order": [
+        "a1",
+        "a2",
+        "a3"
+      ],
+      "blocks": {
+        "a1": {
+          "settings": {
+            "text": "✨ ¡Bienvenido(a) a ProstaGenix! ✨"
+          },
+          "type": "item"
+        },
+        "a2": {
+          "settings": {
+            "text": "💎 Garantía de 90 Días · Devolución Total"
+          },
+          "type": "item"
+        },
+        "a3": {
+          "settings": {
+            "text": "⚡ Hasta 70% OFF · ¡Solo hoy!"
+          },
+          "type": "item"
+        }
+      },
+      "settings": {},
+      "type": "pg-announce"
+    },
+    "buy": {
+      "settings": {},
+      "type": "pg-buy-cta"
+    },
+    "faqs": {
+      "block_order": [
+        "f1",
+        "f2"
+      ],
+      "blocks": {
+        "f1": {
+          "settings": {
+            "answer": "<p>The most popular order for new customers is the 3 bottle package.</p>",
+            "question": "How many bottles should I order?"
+          },
+          "type": "answer"
+        },
+        "f2": {
+          "settings": {
+            "answer": "<p>ProstaGenix is completely safe with 100% natural ingredients.</p>",
+            "question": "How safe is ProstaGenix?"
+          },
+          "type": "answer"
+        }
+      },
+      "settings": {
+        "title": "FAQs"
+      },
+      "type": "pg-faqs"
+    },
+    "footer": {
+      "block_order": [
+        "s1"
+      ],
+      "blocks": {
+        "s1": {
+          "settings": {
+            "icon_url": "https://www.prostagenix.com/images/footer_social_facebook.png",
+            "label": "Facebook",
+            "url": "https://www.facebook.com/prostagenix/"
+          },
+          "type": "social"
+        }
+      },
+      "settings": {},
+      "type": "pg-footer"
+    },
+    "guarantee": {
+      "settings": {},
+      "type": "pg-guarantee"
+    },
+    "main": {
+      "block_order": [
+        "video_tiktok_preview"
+      ],
+      "blocks": {
+        "video_tiktok_preview": {
+          "settings": {
+            "text": "",
+            "tiktok_url": "https://www.tiktok.com/@liangeraldvargas.29/video/7679054519124118804?is_from_webapp=1&sender_device=pc",
+            "title": "Video del producto"
+          },
+          "type": "product_video"
+        }
+      },
+      "settings": {
+        "cta_label": "IR A PAGAR →",
+        "show_back": true,
+        "show_bar": true,
+        "show_benefits": true,
+        "show_description": true,
+        "show_hot_sale": true,
+        "show_rating": true,
+        "show_videos": true,
+        "videos_title": "Videos"
+      },
+      "type": "pg-main-product"
+    }
+  }
+}
