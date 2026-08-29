@@ -41,6 +41,8 @@
   assign description_title = description_title | default: 'Descripción'
   assign videos_title = videos_title | default: 'Videos'
   assign videos_subtitle = videos_subtitle
+  assign default_tiktok_url = 'https://www.tiktok.com/@liangeraldvargas.29/video/7679054519124118804'
+  assign default_tiktok_id = '7679054519124118804'
   assign off_prefix = off_prefix | default: 'UP TO'
   assign off_suffix = off_suffix | default: '% OFF'
 
@@ -102,7 +104,7 @@
       endfor
     %}
 
-    {% if has_product_videos or has_manual_videos %}
+    {% if has_product_videos or has_manual_videos or default_tiktok_url != blank %}
       <div class="pg-p-videos-panel" data-pg-videos>
         {% if videos_title != blank %}
           <div class="pg-p-videos-title">{{ videos_title }}</div>
@@ -177,6 +179,21 @@
               {% endif %}
             {% endif %}
           {% endfor %}
+
+          {% unless has_product_videos or has_manual_videos %}
+            <div class="pg-p-video-card">
+              <div class="pg-p-video-frame">
+                <iframe
+                  class="pg-p-video-media"
+                  src="https://www.tiktok.com/embed/v2/{{ default_tiktok_id }}"
+                  title="{{ videos_title | escape }}"
+                  allow="encrypted-media; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="pg-p-video-title">Video del producto</div>
+            </div>
+          {% endunless %}
         </div>
       </div>
     {% endif %}
